@@ -1,0 +1,67 @@
+// ----- 放到body空间下，避免加载顺序导致不生效------
+body {
+  .mint-msgbox-confirm {
+    color: $primary-color;
+  }
+  .mint-msgbox-message {
+    table {}
+    th {
+      font-weight: normal;
+      text-align: right;
+    }
+  }
+  .mint-field .mint-cell-title {
+    width: 120px;
+  }
+  .mint-header-title {
+    flex: 2;
+  }
+}
+
+.mint-header {
+  height: $header-height;
+  font-size: 18px;
+  background-color: $primary-color;
+}
+
+.mint-button--primary {
+  background-color: $primary-color;
+  &:active {
+    background-color: darken($primary-color, 5%);
+  }
+}
+
+.mint-button {
+  &:not(.is-disabled):active::after {
+    opacity: 0.05;
+  }
+  &.mint-button-block {
+    display: block;
+    width: 100%;
+  }
+}
+
+.mint-toast-icon {
+  font-size: 56px;
+  &.mintui-field-error {
+    color: $error-color;
+  }
+  &.ui-icon-warn-block {
+    color: $error-color;
+  }
+}
+
+.mint-field-other {
+  position: static;
+  &:not(:empty) {
+    margin-right: -10px;
+  }
+  .mint-button {
+    font-size: 16px;
+    border-radius: 0;
+    height: 48px;
+    background: none;
+    box-shadow: none;
+    color: $font-color-em;
+  }
+}
