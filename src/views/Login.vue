@@ -9,7 +9,7 @@ section
       mt-field(label='', placeholder='请输入验证码', v-model='user.code', :state="getFieldState('user.code')", @click.native="showFieldError($event, 'user.code')")
         mt-button(type='default', @click.stop.prevent='toGetMsgCode()', :disabled='countdownVisible')
           span(v-show='!countdownVisible') 发送验证码
-          fb-countdown(ref='fnCountdown', v-show='countdownVisible' @countdown-over='onCountdownOver()')
+          fb-countdown(ref='fnCountdown', v-show='countdownVisible', @countdown-over='onCountdownOver()')
     .form-buttons
         mt-button.mint-button-block(type='primary', size='large') 登录
 </template>
@@ -40,7 +40,7 @@ export default {
 
   mounted() {
     this.$route.query.openid && (this.user.openid = this.$route.query.openid) // eslint-disable-line
-    this.user.phone = this.$store.getters.user.phone || null
+    this.user.phone = this.$store.getters.user.phone || ''
   },
 
   methods: {
@@ -84,8 +84,10 @@ export default {
     return {
       countdownVisible: false,
       user: {
-        phone: null,
-        code: null
+        UserinfoValLogin: {},
+        integraluserlevel: {},
+        phone: '',
+        code: ''
       }
     }
   }

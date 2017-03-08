@@ -1,8 +1,9 @@
 <template lang="pug">
 .app
-  n-progress(parent='.app')
-  mt-header(fixed='', :title='headerTitle', v-show="headerShow")
-  .container
+  n-progress(parent=".app")
+  mt-header(fixed="", :title="headerTitle", v-show="headerShow")
+    mt-button(v-show='headerBackShow', icon='back', slot='left', @click='back()')
+  .container(:class="{'header-show': headerShow}")
     router-view
 </template>
 
@@ -19,7 +20,10 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getUser'])
+    ...mapActions(['getUser']),
+    back() {
+      this.$router.back()
+    }
   },
 
   mounted() {
@@ -32,10 +36,14 @@ export default {
   computed: {
     ...mapGetters['route'],
     headerShow() {
-      return !this.$store.state.route.meta.headerHidden
+      return !this.$route.meta.headerHidden
+    },
+    headerBackShow() {
+      return this.$route.meta.headerBackShow
     },
     headerTitle() {
-      return this.$store.state.route.meta.title
+      return this.$route.meta.title
+        // return this.$store.state.route.meta.title
     }
   }
 }
@@ -57,12 +65,16 @@ body {
   font-family: '-apple-system', "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
   background-color: #f8f9fb;
   min-height: 100%;
-  color: #000;
+  color: #353535;
   font-size: 16px;
 }
 
 #nprogress .spinner {
   display: none!important;
+}
+
+small {
+  color: #888;
 }
 
 .ui-icon-warn {
@@ -80,7 +92,9 @@ body {
 }
 
 .container {
-  padding-top: $header-height;
+  &.header-show {
+    padding-top: $header-height;
+  }
 }
 
 .dn,

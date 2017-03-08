@@ -17,8 +17,11 @@ export default {
   // 获取用户业务状态码
   async getCustStateCode({ commit, dispatch }) {
     const data = await getCustState.get().then(res => res.json())
-    console.log(data.data.StateCode = '1011')
-    commit('updateCustStateCode', data.data.StateCode)
+    if (data.data) {
+      // console.log(data.data.StateCode = '1007')
+      commit('updateStateCode', data.data.StateCode)
+      commit('updateStateMsg', data.data.StateMsg)
+    }
     return data
   },
 
@@ -26,8 +29,10 @@ export default {
   async getUser({ commit, dispatch }, params = {}) {
     const data = await queryMyAccount.get(params).then(res => res.json())
     const user = data.data
-    user.phone = user.UserinfoValLogin.Userphone
-    dispatch('updateUser', user)
+    if (user) {
+      user.phone = user.UserinfoValLogin.Userphone // eslint-disable
+      dispatch('updateUser', user)
+    }
     return data
   },
 
@@ -40,10 +45,9 @@ export default {
 
   async login({ commit, dispatch }, user) {
     // let data = await Promise.resolve({ ret: '10000' })
-    // console.log(loginByPhone)
     let data = await loginByPhone.save({}, user).then(res => res.json())
-
     if (data.ret === RET_CODE_MAP.OK) await dispatch('getUser')
+
     return data
   },
 

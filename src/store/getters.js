@@ -11,7 +11,11 @@ export default {
     return state.route
   },
 
-  custStateCode(state) {
+  stateCode(state) {
     return state.stateCode
+  },
+
+  stateMsg(state) {
+    return state.stateMsg
   }
 }

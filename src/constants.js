@@ -3,7 +3,8 @@ export const STORE_KEY_USER = 'user'
 export const STORE_KEY_ACCESS_TOKEN = 'user.access_token'
 export const RET_CODE_MAP = { // ajax api ret code
   OK: '10000', // 成功,
-  FAILED: '10001' // 失败
+  FAILED: '10001', // 失败,
+  BANK_CARD_NOT_SUPPORTED: '403328' // 银行卡不支持
 }
 
 // cust state code

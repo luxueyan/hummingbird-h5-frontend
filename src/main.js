@@ -84,8 +84,8 @@ window.onpageshow = function(event) {
 
 // 提示框icon样式
 const ToastClasses = {
-  'success': 'mintui mintui-success',
-  'error': 'mintui mintui-field-error',
+  'success': 'iconfont ui-icon-success',
+  'error': 'iconfont ui-icon-warn',
   'warn': 'iconfont ui-icon-warn-block'
 }
 

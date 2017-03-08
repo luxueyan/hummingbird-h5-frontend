@@ -3,16 +3,18 @@
 }
 
 .single-page-tip {
-  padding-top: 50px;
+  padding-top: 20px;
   h3 {
     font-weight: normal;
     margin-bottom: 10px;
   }
   .logo {
     text-align: center;
-    .ui-icon-success {
+    .iconfont {
       font-size: 90px;
       line-height: 90px;
+    }
+    .ui-icon-success {
       color: #00bb21;
     }
   }
@@ -24,7 +26,35 @@
     text-align: center;
     margin-bottom: 15px;
   }
+  table {
+    table-layout: fixed;
+    width: 100%;
+    margin-bottom: 20px;
+    background: #f3f3f3;
+    th,
+    td {
+      padding: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    th {
+      // width: 40%;
+      font-weight: normal;
+      text-align: right;
+    }
+    td {
+      text-align: left;
+      color: #888;
+    }
+  }
   .footer {
     padding: 10px;
+  }
+  .btns-group {
+    display: flex;
+    .mint-button {
+      margin: 0 10px;
+    }
   }
 }

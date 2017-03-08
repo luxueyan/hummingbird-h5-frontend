@@ -1,24 +1,48 @@
 <template lang="pug">
   #panel
-
 </template>
 
 <script>
 import EPaper from '../../common/epaper.js'
+import {
+  SetAgreementSign
+} from '../../common/resources.js'
+import {
+  mapGetters
+} from 'vuex'
+import {
+  RET_CODE_MAP
+} from '../../constants.js'
+import borrowMixins from './borrow_mixins.js'
 
 export default {
-  /* beautify ignore:start */
-  mounted() {
-    const myepaper = EPaper.init('panel')
+  mixins: [borrowMixins],
+  mounted: function() {
+    const myepaper = EPaper.init('panel', {
+      name: this.user.UserinfoValLogin.Name
+    })
+
     myepaper.setCallback((pngData, pointsData, isCancel) => {
-      console.log(pngData, pointsData, isCancel)
+      if (!isCancel) {
+        if (!pngData) {
+          this.$root.toast(`请手写您的姓${this.user.UserinfoValLogin.Name}名：`, 'error')
+          return
+        }
+        SetAgreementSign
+          .save({
+            sign: pngData
+          })
+          .then(res => res.json())
+          .then(data => {
+            if (data.ret === RET_CODE_MAP.OK) {
+              this.drawMoney()
+            }
+          })
+      }
     })
   },
-  /* beautify ignore:end */
-  methods: {
-    confirmSignature(pngData, pointsData, isCancel) {
-      console.log(pngData, pointsData, isCancel)
-    }
+  computed: {
+    ...mapGetters(['user'])
   }
 }
 </script>

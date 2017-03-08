@@ -7,7 +7,11 @@ export default {
     state.token = token
   },
 
-  updateCustStateCode(state, stateCode) {
+  updateStateCode(state, stateCode) {
     state.stateCode = stateCode
+  },
+
+  updateStateMsg(state, stateMsg) {
+    state.stateMsg = stateMsg
   }
 }

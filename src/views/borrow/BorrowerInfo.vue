@@ -30,7 +30,7 @@
               fb-countdown(ref='fnCountdown', v-show='countdownVisible' @countdown-over='onCountdownOver()')
         template(v-if='contractInfoHasHistory')
           mt-cell(title='身份证号', :value="model.idCard")
-          mt-cell(title='银行卡号', is-link)
+          mt-cell(title='银行卡号', is-link, @click.native="goChangeBankCard()")
             span {{bankCardForShow}} 修改
           mt-cell(title="开户行", :value="model.bank | fbFalse")
           mt-cell(title='银行预留手机号',  :value="model.bankPhone")
@@ -67,7 +67,7 @@ export default {
           // hack data
           data.content = {
             idCard: '12313123',
-            bankCard: '123123131',
+            bankCard: '1231231311231231311',
             bank: '测试银行',
             bankPhone: 123123123
           }
@@ -85,15 +85,6 @@ export default {
     'bankCardForShow' () {
       this.model.bankCard = this.bankCardForShow = this.bankCardForShow.replace(/\s/g, '')
       this.bankCardForShow = this.bankCardForShow.replace(/\d{4}(?=(\d{1,4}))/g, '$& ') //展示空格分隔的银行卡号
-        // this.$nextTick(() => {
-        //   if (this.validation.isPassed('model.bankCard')) {
-        //     isDetectionBankCard.get({
-        //       bankCard: this.model.bankCard
-        //     }).then(res => res.json()).then(data => {
-        //       this.model.bank = data.data.bank
-        //     })
-        //   }
-        // })
     }
   },
   validators: {
@@ -124,7 +115,7 @@ export default {
     // }
   },
   methods: {
-    ...mapMutations(['updateCustStateCode']),
+    ...mapMutations(['updateStateCode']),
     // 显示服务费详情
     showServiceChargeTip() {
       const {
@@ -144,6 +135,7 @@ export default {
           bankCard: this.model.bankCard
         }).then(res => res.json()).then(data => {
           this.model.bank = data.data.bank
+          this.bankCardNotSupported = data.ret === RET_CODE_MAP.BANK_CARD_NOT_SUPPORTED
         })
       }
     },
@@ -160,17 +152,23 @@ export default {
             .then(res => res.json)
             .then(data => {
               if (data.ret === RET_CODE_MAP.OK) {
-                this.updateCustStateCode(CUST_STATE_CODE_MAP.CONTRACT_INFO_FILLED)
+                this.updateStateCode(CUST_STATE_CODE_MAP.CONTRACT_INFO_FILLED)
               }
             })
         } else {
           this.$root.toast(this.validation.firstError(), 'error')
         }
       })
+    },
+    // 去修改银行卡
+    goChangeBankCard() {
+      this.$router.push({
+        name: 'changeBankCardStep1'
+      })
     }
   },
   computed: {
-    ...mapGetters(['custStateCode']),
+    ...mapGetters(['stateCode']),
     borrowDuration() {
       return 14
     },
@@ -194,7 +192,7 @@ export default {
     const stateUser = JSON.parse(JSON.stringify(this.$store.getters.user))
     return {
       contractInfoHasHistory: false,
-      bankCardNotSupported: false,
+      bankCardNotSupported: false, // 银行卡不支持标记
       countdownVisible: false,
       bankCardForShow: '',
       model: {

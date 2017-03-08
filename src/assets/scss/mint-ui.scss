@@ -4,7 +4,6 @@ body {
     color: $primary-color;
   }
   .mint-msgbox-message {
-    table {}
     th {
       font-weight: normal;
       text-align: right;
@@ -15,6 +14,38 @@ body {
   }
   .mint-header-title {
     flex: 2;
+  }
+  .mint-cell-title {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .mint-cell-value {
+    min-width: 0;
+    span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+  .mintui-field-error {
+    font-family: 'iconfont'!important;
+    &:before {
+      content: "\e608";
+    }
+  }
+  .mintui-field-success {
+    font-family: 'iconfont'!important;
+    &:before {
+      content: "\e607";
+    }
+  }
+  .mint-field-clear {
+    .mintui-field-error {
+      font-family: "mintui" !important;
+      &:before {
+        content: "\E605";
+      }
+    }
   }
 }
 

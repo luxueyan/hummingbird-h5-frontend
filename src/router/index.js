@@ -25,23 +25,22 @@ const custStateRedirectMap = {
   [CUST_STATE_CODE_MAP.DEBT_SETTELED]: { name: 'borrowerInfo' }, // 借款结清
   [CUST_STATE_CODE_MAP.CONTRACT_INFO_FILLED]: { name: 'signature' }, // 合同信息已完成
   [CUST_STATE_CODE_MAP.NOT_INVITED]: { name: 'unauthorizedTip' }, // 未邀请
-  [CUST_STATE_CODE_MAP.LOANING]: {}, // 放款中
-  [CUST_STATE_CODE_MAP.LOAN_FAILED]: {}, // 放款失败
-  [CUST_STATE_CODE_MAP.DEBT_NOT_SETTLED]: {}, // 借款未结清
-  [CUST_STATE_CODE_MAP.REPAYING]: {}, // 还款中
-  [CUST_STATE_CODE_MAP.REPAY_FAILED]: {}, // 还款失败
+  [CUST_STATE_CODE_MAP.LOANING]: { name: 'loaning' }, // 放款中
+  [CUST_STATE_CODE_MAP.LOAN_FAILED]: { name: 'loanFailed' }, // 放款失败
+  [CUST_STATE_CODE_MAP.DEBT_NOT_SETTLED]: { name: 'repayInfo' }, // 借款未结清
+  [CUST_STATE_CODE_MAP.REPAYING]: { name: 'repaying' }, // 还款中
+  [CUST_STATE_CODE_MAP.REPAY_FAILED]: { name: 'repayFaild' }, // 还款失败
   [CUST_STATE_CODE_MAP.BLACKLIST]: { name: 'blacklistTip' }, // 黑名单客户
   [CUST_STATE_CODE_MAP.FIRST_BORROWER]: { name: 'authorizedTip' }, // 首次借款
   [CUST_STATE_CODE_MAP.UNKNOWN]: { name: 'login' } // 未知状态
 }
 
-function getRedirectRoute(custStateCode) {
-  return custStateRedirectMap[custStateCode] || { name: 'login' }
+function getRedirectRoute(stateCode) {
+  return custStateRedirectMap[stateCode] || { name: 'login' }
 }
 
 router.beforeEach((to, from, next) => {
   const { user, token, stateCode } = store.getters
-
   if (!to.meta.skipAuth) { // 需要登录权限的页面
     if (!token || !user.phone) {
       next({ name: 'login' })
@@ -61,6 +60,7 @@ router.beforeEach((to, from, next) => {
       })
 
       stateCodePromise.then(code => {
+        console.log(to.meta.permits)
         if (includes(to.meta.permits, code)) {
           next()
         } else {

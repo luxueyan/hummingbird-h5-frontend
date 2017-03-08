@@ -148,8 +148,38 @@ function EPaper(a, d) {
   u(this)
 }
 
-EPaper.init = function(a) {
-  document.getElementById(a).innerHTML = "<div id='writingDiv' class='writingDiv'><div class='topBar'><input class='textButton' type='button' value='\u53d6\u6d88'/><input class='textButton_Done' type='button' value='\u5b8c\u6210'/></div><div class='paperCanvas'><canvas id='ePaperCanvas' class='ePaperCanvas'></canvas></div><div class='bottomBar'><div class='bottomCol'><input class='bottomButton undo' type='button'/></div><div class='bottomCol'><input class='bottomButton redo' type='button'/></div><div class='bottomCol'><input class='bottomButton clear' type='button'/></div><div class='bottomCol'><input class='bottomButton color' type='button'/></div><div class='bottomCol'><input class='bottomButton stroke' type='button'/></div></div><ol class='palette' id='palette'><li value='rgba(111,138,37,1)' style='background:rgb(111,138,37)'>\u7eff\u8272</li><li value='rgba(255,198,2,1)' style='background:rgb(255,198,2)'>\u9ec4\u8272</li><li value='rgba(51,111,172,1)' style='background:rgb(51,111,172)'>\u84dd\u8272</li><li value='rgba(0,0,0,1)' style='background:rgb(0,0,0)'>\u9ed1\u8272</li><li value='rgba(255,0,0,1)' style='background:rgb(255,0,0)'>\u7ea2\u8272</li></ol><ol class='penSize' id='penSize'><li><input type='radio' name='fSize' value='18'/><div value='18'>\u7279</div><div>\u7c97</div></li><li><input type='radio' name='fSize' value='12'/><div style='margin-top:14px;' value='12'>\u7c97</div></li><li><input type='radio' name='fSize' value='8' checked/><div style='margin-top:14px;' value='8'>\u4e2d</div></li><li><input type='radio' name='fSize' value='6'/><div style='margin-top:14px;' value='6'>\u7ec6</div></li><li><input type='radio' name='fSize' value='3'/><div value='3'>\u7279</div><div>\u7ec6</div></li></ol></div>";
+EPaper.init = function(a, data = {}) {
+  document.getElementById(a).innerHTML = `<div id='writingDiv' class='writingDiv'>
+                                            <div class='topBar'>
+                                              <input class='textButton' type='button' value='\u53d6\u6d88'/>
+                                              <label>手写您的姓名（${data.name}）</label>
+                                              <input class='textButton_Done' type='button' value='\u5b8c\u6210'/>
+                                            </div>
+                                            <div class='paperCanvas'>
+                                              <canvas id='ePaperCanvas' class='ePaperCanvas'></canvas>
+                                            </div>
+                                            <div class='bottomBar'>
+                                              <div class='bottomCol'><input class='bottomButton undo' type='button'/></div>
+                                              <div class='bottomCol'><input class='bottomButton redo' type='button'/></div>
+                                              <div class='bottomCol'><input class='bottomButton clear' type='button'/></div>
+                                              <div class='bottomCol'><input class='bottomButton color' type='button'/></div>
+                                              <div class='bottomCol'><input class='bottomButton stroke' type='button'/></div>
+                                            </div>
+                                            <ol class='palette' id='palette'>
+                                              <li value='rgba(111,138,37,1)' style='background:rgb(111,138,37)'>\u7eff\u8272</li>
+                                              <li value='rgba(255,198,2,1)' style='background:rgb(255,198,2)'>\u9ec4\u8272</li>
+                                              <li value='rgba(51,111,172,1)' style='background:rgb(51,111,172)'>\u84dd\u8272</li>
+                                              <li value='rgba(0,0,0,1)' style='background:rgb(0,0,0)'>\u9ed1\u8272</li>
+                                              <li value='rgba(255,0,0,1)' style='background:rgb(255,0,0)'>\u7ea2\u8272</li>
+                                            </ol>
+                                            <ol class='penSize' id='penSize'>
+                                              <li><input type='radio' name='fSize' value='18'/><div value='18'>\u7279</div><div>\u7c97</div></li>
+                                              <li><input type='radio' name='fSize' value='12'/><div style='margin-top:14px;' value='12'>\u7c97</div></li>
+                                              <li><input type='radio' name='fSize' value='8' checked/><div style='margin-top:14px;' value='8'>\u4e2d</div></li>
+                                              <li><input type='radio' name='fSize' value='6'/><div style='margin-top:14px;' value='6'>\u7ec6</div></li>
+                                              <li><input type='radio' name='fSize' value='3'/><div value='3'>\u7279</div><div>\u7ec6</div></li>
+                                            </ol>
+                                          </div>`
   return new EPaper("ePaperCanvas", a)
 }
 

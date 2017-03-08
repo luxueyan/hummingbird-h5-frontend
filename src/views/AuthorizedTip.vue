@@ -28,9 +28,9 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['updateCustStateCode']),
+    ...mapMutations(['updateStateCode']),
     getMoney() {
-      this.updateCustStateCode(CUST_STATE_CODE_MAP.DEBT_SETTELED)
+      this.updateStateCode(CUST_STATE_CODE_MAP.DEBT_SETTELED)
       this.$router.push({
         name: 'borrowerInfo'
       })
