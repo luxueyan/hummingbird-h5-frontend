@@ -1,5 +1,5 @@
 <template lang="pug">
-  #panel
+  #panel(:style="panelStyle")
 </template>
 
 <script>
@@ -17,7 +17,7 @@ import borrowMixins from './borrow_mixins.js'
 
 export default {
   mixins: [borrowMixins],
-  mounted: function() {
+  mounted() {
     const myepaper = EPaper.init('panel', {
       name: this.user.UserinfoValLogin.Name
     })
@@ -38,11 +38,22 @@ export default {
               this.drawMoney()
             }
           })
+      } else {
+        this.$root.toast('请签署合同', 'error')
       }
     })
   },
+
   computed: {
     ...mapGetters(['user'])
+  },
+
+  data() {
+    return {
+      panelStyle: {
+        height: window.innerHeight + 'px' // 初始化一下panel的高度，否则epaper初始化时取其高度导致canvas初始高度有问题
+      }
+    }
   }
 }
 </script>
@@ -57,5 +68,12 @@ export default {
   position: absolute;
   z-index: 0;
   background-color: #fff;
+  .ePaperCanvas {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: block;
+  }
 }
 </style>

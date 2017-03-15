@@ -141,7 +141,7 @@ function EPaper(a, d) {
   var b = document.getElementById(d),
     c = b.offsetHeight;
   this.canvas.width = b.offsetWidth;
-  this.canvas.height = c - 44 - 44;
+  this.canvas.height = c - 44 - 45;
   E(this);
   this.b = [];
   this.B = [];
@@ -156,7 +156,7 @@ EPaper.init = function(a, data = {}) {
                                               <input class='textButton_Done' type='button' value='\u5b8c\u6210'/>
                                             </div>
                                             <div class='paperCanvas'>
-                                              <canvas id='ePaperCanvas' class='ePaperCanvas'></canvas>
+                                              <canvas id='ePaperCanvas' height='100%' width='100%' class='ePaperCanvas'></canvas>
                                             </div>
                                             <div class='bottomBar'>
                                               <div class='bottomCol'><input class='bottomButton undo' type='button'/></div>

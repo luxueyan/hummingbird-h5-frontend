@@ -9,6 +9,9 @@ export default {
       return PayContract.get().then(res => res.json()).then(data => {
         if (data.ret === RET_CODE_MAP.OK) {
           this.updateStateCode(CUST_STATE_CODE_MAP.LOANING)
+          this.$router.push({
+            name: 'loaning'
+          })
         }
       })
     }

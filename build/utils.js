@@ -54,8 +54,9 @@ exports.cssLoaders = function(options) {
 exports.styleLoaders = function(options) {
   var output = []
   var loaders = exports.cssLoaders(options)
+
   for (var extension in loaders) {
-    var loader = loaders[extension].split('!')
+    var loader = loaders[extension]
       // var loader = loaders[extension]
     var isPreProcesser = ['less', 'sass', 'scss', 'stylus', 'styl'].some(function(v) {
       return v === extension

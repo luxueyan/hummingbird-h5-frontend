@@ -1,5 +1,6 @@
 import { CUST_STATE_CODE_MAP } from '../constants.js'
 import { values } from 'lodash'
+const allStates = values(CUST_STATE_CODE_MAP)
 
 export default [{
   path: '/',
@@ -9,7 +10,7 @@ export default [{
   name: 'login',
   component: resolve => require(['../views/Login.vue'], resolve),
   meta: {
-    title: '练习App开发-登录',
+    title: '蜂鸟速贷',
     skipAuth: true
       // permits: [999, 7777]
   }
@@ -18,7 +19,7 @@ export default [{
   name: 'blacklistTip',
   component: resolve => require(['../views/BlacklistTip.vue'], resolve),
   meta: {
-    title: '练习App开发-黑名单',
+    title: '蜂鸟速贷',
     permits: [CUST_STATE_CODE_MAP.BLACKLIST]
   }
 }, {
@@ -26,7 +27,7 @@ export default [{
   name: 'unauthorizedTip',
   component: resolve => require(['../views/UnauthorizedTip.vue'], resolve),
   meta: {
-    title: '练习App开发-未授权',
+    title: '蜂鸟速贷',
     permits: [CUST_STATE_CODE_MAP.NOT_INVITED]
   }
 }, {
@@ -34,8 +35,17 @@ export default [{
   name: 'authorizedTip',
   component: resolve => require(['../views/AuthorizedTip.vue'], resolve),
   meta: {
-    title: '练习App开发-欢迎',
+    title: '蜂鸟速贷',
     permits: [CUST_STATE_CODE_MAP.FIRST_BORROWER]
+  }
+}, {
+  path: '/h5/loan_agreement',
+  name: 'loanAgreement',
+  component: resolve => require(['../views/LoanAgreement.vue'], resolve),
+  meta: {
+    title: '借款服务协议',
+    headerBackShow: true,
+    permits: allStates
   }
 }, {
   path: '/h5/borrow',
@@ -112,7 +122,7 @@ export default [{
     component: resolve => require(['../views/repay/RepayFailed.vue'], resolve),
     meta: {
       title: '还款失败',
-      permits: [CUST_STATE_CODE_MAP.DEBT_NOT_SETTLED]
+      permits: [CUST_STATE_CODE_MAP.REPAY_FAILED]
     }
   }]
 }, {
@@ -131,7 +141,7 @@ export default [{
     meta: {
       title: '变更银行卡（1/2）',
       headerBackShow: true,
-      permits: values(CUST_STATE_CODE_MAP)
+      permits: allStates
     }
   }, {
     path: 'step2',
@@ -140,7 +150,7 @@ export default [{
     meta: {
       title: '变更银行卡（2/2）',
       headerBackShow: true,
-      permits: values(CUST_STATE_CODE_MAP)
+      permits: allStates
     }
   }, {
     path: 'step3',
@@ -149,7 +159,7 @@ export default [{
     meta: {
       title: '银行卡变更成功',
       // headerBackShow: true,
-      permits: values(CUST_STATE_CODE_MAP)
+      permits: allStates
     }
   }]
 }, {

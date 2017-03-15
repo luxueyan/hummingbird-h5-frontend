@@ -8,16 +8,16 @@ section.change-bank-card-step3.single-page-tip
     table
       tr
         th 提款金额：
-        td {{contractInfo.bankCard | fbFalse}}
+        td {{contractInfo.loanAmount | fbCurrency('', '元')}}
       tr
-        th 中国工商银行：
+        th {{contractInfo.bank}}：
         td {{bankCardForShow | fbFalse}}
       tr
         th 还款日期：
-        td {{contractInfo.bankPhone | fbFalse}}
+        td {{contractInfo.endDate | fbFalse}}
       tr
         th 还款金额：
-        td {{contractInfo.bankPhone | fbFalse}}
+        td {{contractInfo.totalAmount | fbCurrency('', '元')}}
     small 您的提款请求已发送成功，请耐心等待。
   //- .footer
     mt-button.mint-button-block(type='primary', size='large') 关闭
@@ -30,6 +30,9 @@ import {
 import {
   QueryContract
 } from '../../common/resources.js'
+import {
+  contractInfo
+} from '../../common/adaptors.js'
 
 export default {
   computed: {
@@ -40,17 +43,8 @@ export default {
     QueryContract.get().then(res => res.json())
       .then(data => {
         next(vm => {
-          // hack data
-          data.content = {
-            idCard: '12313123',
-            bankCard: '123123131',
-            bank: '测试银行',
-            bankPhone: 123123123
-          }
-
-          if (data.content) {
-            vm.contractInfoHasHistory = true
-            Object.assign(vm.contractInfo, data.content)
+          if (data.data.content) {
+            Object.assign(vm.contractInfo, contractInfo(data.data.content))
             vm.bankCardForShow = vm.contractInfo.bankCard.replace(/\d{4}(?=(\d{1,4}))/g, '$& ')
           }
         })
@@ -69,5 +63,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>

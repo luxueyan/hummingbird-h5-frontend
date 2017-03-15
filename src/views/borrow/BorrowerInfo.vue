@@ -3,16 +3,19 @@
     form.borrow-form(@submit.prevent='submit()')
       .fields-header
         | 借款方案
+        small.fr.loan-agreement 查看
+          router-link(:to="{name:'loanAgreement'}")
+            |《借款服务协议》
       .fields
-        mt-cell(title="借款金额", :value="user.integraluserlevel.Limit | fbCurrency('¥', '元')")
+        mt-cell(title="借款金额", :value="user.integraluserlevel.Limit | fbCurrency('', '元')")
         mt-cell(title="借款天数", :value="borrowDuration | fbAppend('天')")
-        mt-cell(:value="serviceCharge | fbCurrency('¥', '元')")
+        mt-cell(:value="serviceCharge | fbCurrency('', '元')")
           span(slot="title") 服务费
             i.iconfont.ui-icon-info(@click="showServiceChargeTip")
-        mt-cell(title="实际到账", :value="virtualMoney | fbCurrency('¥', '元')")
+        mt-cell(title="实际到账", :value="virtualMoney | fbCurrency('', '元')")
       .fields-header
         | 账户信息
-        small
+        small(v-if="!contractInfoHasHistory")
           i.iconfont.ui-icon-warn
           | 请填写您的真实信息，否则会影响借款。
       .fields
@@ -31,7 +34,7 @@
         template(v-if='contractInfoHasHistory')
           mt-cell(title='身份证号', :value="model.idCard")
           mt-cell(title='银行卡号', is-link, @click.native="goChangeBankCard()")
-            span {{bankCardForShow}} 修改
+            span {{bankCardForShow}}
           mt-cell(title="开户行", :value="model.bank | fbFalse")
           mt-cell(title='银行预留手机号',  :value="model.bankPhone")
       .form-buttons
@@ -54,6 +57,9 @@ import {
   isBankCard
 } from '../../common/utils.js'
 import {
+  contractInfo
+} from '../../common/adaptors.js'
+import {
   mapMutations,
   mapGetters
 } from 'vuex'
@@ -64,17 +70,9 @@ export default {
     QueryContract.get().then(res => res.json())
       .then(data => {
         next(vm => {
-          // hack data
-          data.content = {
-            idCard: '12313123',
-            bankCard: '1231231311231231311',
-            bank: '测试银行',
-            bankPhone: 123123123
-          }
-
-          if (data.content) {
+          if (data.data.content) {
             vm.contractInfoHasHistory = true
-            Object.assign(vm.model, data.content)
+            Object.assign(vm.model, contractInfo(data.data.content))
             vm.bankCardForShow = vm.model.bankCard.replace(/\d{4}(?=(\d{1,4}))/g, '$& ')
           }
         })
@@ -207,3 +205,10 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+// @import '../../assets/scss/epaper.scss';
+.loan-agreement {
+  margin-top: 5px;
+}
+</style>

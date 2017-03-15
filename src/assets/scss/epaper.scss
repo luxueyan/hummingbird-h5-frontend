@@ -31,7 +31,7 @@
     left: 0;
     bottom: 44px;
     top: 44px;
-    background: url(../../assets/images/bg_paper.jpg);
+    background: url(~assets/images/bg_paper.jpg);
     width: 100%;
   }
   .ePaperCanvas {
@@ -86,46 +86,46 @@
     bottom: 0;
   }
   .redo {
-    background: url(../../assets/images/next.png) no-repeat;
+    background: url(~assets/images/next.png) no-repeat;
     background-size: 28px;
     border: none;
     top: 10px;
   }
   .redo:active {
-    background: url(../../assets/images/next_press.png) no-repeat;
+    background: url(~assets/images/next_press.png) no-repeat;
     background-size: 28px;
   }
   .undo {
-    background: url(../../assets/images/previous.png) no-repeat;
+    background: url(~assets/images/previous.png) no-repeat;
     background-size: 28px;
   }
   .undo:active {
-    background: url(../../assets/images/previous_press.png) no-repeat;
+    background: url(~assets/images/previous_press.png) no-repeat;
     background-size: 28px;
   }
   .clear {
-    background: url(../../assets/images/clear.png) no-repeat;
+    background: url(~assets/images/clear.png) no-repeat;
     background-size: 28px;
     top: 10px;
   }
   // .clear:active {
-  //   background: url(../../assets/images/clear_press.png) no-repeat;
+  //   background: url(~assets/images/clear_press.png) no-repeat;
   //   background-size: 28px;
   // }
   .color {
-    background: url(../../assets/images/color.png) no-repeat;
+    background: url(~assets/images/color.png) no-repeat;
     background-size: 28px;
   }
   // .color:active {
-  //   background: url(../../assets/images/color_press.png) no-repeat;
+  //   background: url(~assets/images/color_press.png) no-repeat;
   //   background-size: 28px;
   // }
   .stroke {
-    background: url(../../assets/images/stroke.png) no-repeat;
+    background: url(~assets/images/stroke.png) no-repeat;
     background-size: 28px;
   }
   // .stroke:active {
-  //   background: url(../../assets/images/stroke_press.png) no-repeat;
+  //   background: url(~assets/images/stroke_press.png) no-repeat;
   //   background-size: 28px;
   // }
   .palette {

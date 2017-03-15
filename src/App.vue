@@ -56,6 +56,7 @@ export default {
 @import './assets/scss/common.scss';
 @import './assets/scss/form.scss';
 @import './assets/scss/mint-ui.scss';
+
 html {
   height: 100%;
 }

@@ -7,7 +7,7 @@ section
       mt-field(v-mt-field-blur="{blur:getBank}", label='银行卡号', placeholder='请输入银行卡号', v-model="bankCardForShow", :state="getFieldState('model.bankCard')", @click.native="showFieldError($event, 'model.bankCard')")
       input(type="hidden", v-model='model.bankCard')
       mt-field(label='银行预留手机号', placeholder='请输入银行预留手机号', v-model="model.bankPhone", :state="getFieldState('model.bankPhone')", @click.native="showFieldError($event, 'model.bankPhone')")
-      mt-cell(title="开户行", :value="model.bank | fbFalse")
+      mt-cell(title="开户行", :value="model.bankName | fbFalse")
     .form-buttons
       mt-button.mint-button-block(type='primary', size='large') 下一步
 </template>
@@ -44,7 +44,7 @@ export default {
     'model.bankPhone' (value) {
       return this.validate(value).required('请输入手机号').digit('请正确输入手机号').regex('^1[3-9]\\d{9}$', '请正确输入手机号')
     },
-    'model.bank' (value) {
+    'model.bankName' (value) {
       return this.validate(value).required()
     }
   },
@@ -64,7 +64,7 @@ export default {
         isDetectionBankCard.get({
           bankCard: this.model.bankCard
         }).then(res => res.json()).then(data => {
-          this.model.bank = data.data.bank
+          this.model.bankName = data.data.bank
           this.bankCardNotSupported = data.ret === RET_CODE_MAP.BANK_CARD_NOT_SUPPORTED
         })
       }
@@ -77,9 +77,13 @@ export default {
 
       this.$validate().then(success => {
         if (success) {
-          updateBankInfo.get(this.model).then(res => res.json()).then(data => {
+          updateBankInfo.save(this.model).then(res => res.json()).then(data => {
             if (data.ret === RET_CODE_MAP.OK) {
-              this.updateUser(Object.assign({}, this.user, this.model)) // 添加更新银行卡state信息
+              // 添加更新银行卡state信息
+              this.updateUser(Object.assign({}, this.user, {
+                bank: this.model.bank
+              }, this.model))
+
               this.$router.push({
                 name: 'changeBankCardStep3'
               })
@@ -103,7 +107,7 @@ export default {
       model: {
         bankCard: '',
         bankPhone: null,
-        bank: ''
+        bankName: ''
       }
     }
   }

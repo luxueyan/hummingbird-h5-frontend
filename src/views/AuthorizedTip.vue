@@ -6,8 +6,8 @@ section.authorized-tip.single-page-tip
       em {{user.userCall}}
   article
     p 您已获得
-      em {{user.integraluserlevel.Limit | fbCurrency}}
-      | 元速贷特权
+      em {{user.integraluserlevel.Limit | fbCurrency('', '元')}}
+      | 速贷特权
     p 点击下一步，立刻领取
   .footer
     mt-button.mint-button-block(type='primary', size='large', @click='getMoney()') 立刻领取

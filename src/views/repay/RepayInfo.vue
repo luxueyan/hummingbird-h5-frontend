@@ -1,12 +1,12 @@
 <template lang="pug">
   .borrow-info
-    form.borrow-form(@submit.prevent='submit()')
+    .form
       .fields-header
         | 借款方案
       .fields
-        mt-cell(title="借款金额", :value="user.integraluserlevel.Limit | fbCurrency('¥', '元')")
-        mt-cell(title="应还日期", :value="borrowDuration")
-        mt-cell(title="应还金额", :value="virtualMoney | fbCurrency('¥', '元')")
+        mt-cell(title="借款金额", :value="model.loanAmount | fbCurrency('', '元')")
+        mt-cell(title="应还日期", :value="model.endDate | fbFalse")
+        mt-cell(title="应还金额", :value="model.totalAmount | fbCurrency('', '元')")
       .fields-header
         | 账户信息
         //- small
@@ -17,7 +17,7 @@
         //- mt-cell(title="登录手机号", :value="user.UserinfoValLogin.Userphone")
         mt-cell(title='身份证号', :value="model.idCard")
         mt-cell(title='银行卡号', is-link, @click.native="goChangeBankCard()")
-          span {{bankCardForShow}} 修改
+          span {{bankCardForShow}}
         mt-cell(title="开户行", :value="model.bank | fbFalse")
         mt-cell(title='银行预留手机号',  :value="model.bankPhone")
       .form-buttons
@@ -32,6 +32,9 @@ import repayMixins from './repay_mixins.js'
 import {
   mapGetters
 } from 'vuex'
+import {
+  contractInfo
+} from '../../common/adaptors.js'
 
 export default {
   mixins: [repayMixins],
@@ -39,17 +42,8 @@ export default {
     QueryContract.get().then(res => res.json())
       .then(data => {
         next(vm => {
-          // hack data
-          data.content = {
-            idCard: '12313123',
-            bankCard: '123123131',
-            bank: '测试银行',
-            bankPhone: 123123123
-          }
-
-          if (data.content) {
-            vm.contractInfoHasHistory = true
-            Object.assign(vm.model, data.content)
+          if (data.data.content) {
+            Object.assign(vm.model, contractInfo(data.data.content))
             vm.bankCardForShow = vm.model.bankCard.replace(/\d{4}(?=(\d{1,4}))/g, '$& ')
           }
         })
@@ -65,15 +59,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['stateCode']),
-    virtualMoney() {
-      const {
-        Limit,
-        Creditmoney,
-        Managemoney
-      } = this.user.integraluserlevel
-      return Limit - Creditmoney - Managemoney
-    }
+    ...mapGetters(['stateCode'])
   },
   data() {
     const stateUser = JSON.parse(JSON.stringify(this.$store.getters.user))

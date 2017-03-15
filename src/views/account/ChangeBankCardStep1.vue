@@ -42,7 +42,7 @@ export default {
   methods: {
     // 获取验证码
     toGetMsgCode() {
-      updateInfoSendMsgFromPhone.get(this.user.phone).then(res => res.json()).then(data => {
+      updateInfoSendMsgFromPhone.get().then(res => res.json()).then(data => {
         if (data.ret === RET_CODE_MAP.OK) {
           this.countdownVisible = true
           this.$refs.fnCountdown.start()
