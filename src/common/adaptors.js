@@ -9,6 +9,7 @@ export function contractInfo(data) {
     bank: data.Bankname,
     loanAmount: data.Loanamount,
     totalAmount: data.Totalamount,
-    endDate: moment(data.Enddate).format('YYYY-MM-DD')
+    endDate: moment(data.Enddate).format('YYYY年MM月DD日'),
+    startDate: moment(data.Startdate).format('YYYY年MM月DD日')
   }
 }

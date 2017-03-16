@@ -50,9 +50,7 @@ export default {
         })
       })
   },
-  methods: {
 
-  },
   data() {
     return {
       bankCardForShow: '',

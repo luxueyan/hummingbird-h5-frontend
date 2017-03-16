@@ -168,7 +168,7 @@ export default {
   computed: {
     ...mapGetters(['stateCode']),
     borrowDuration() {
-      return 14
+      return 14 // 目前写死，借款天数
     },
     serviceCharge() {
       const {
@@ -207,7 +207,6 @@ export default {
 </script>
 
 <style lang="scss">
-// @import '../../assets/scss/epaper.scss';
 .loan-agreement {
   margin-top: 5px;
 }

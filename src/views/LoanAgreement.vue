@@ -17,9 +17,9 @@
         </tr>
         <tr>
           <td>姓名</td>
-          <td></td>
+          <td>{{user.UserinfoValLogin.Name}}</td>
           <td>身份证号</td>
-          <td></td>
+          <td>{{user.UserinfoValLogin.Idcard}}</td>
         </tr>
         <tr>
           <td colspan="4">服务方及收取费用明细</td>
@@ -30,41 +30,41 @@
         </tr>
         <tr>
           <td>综合服务费</td>
-          <td colspan="3">￥%&gt;</td>
+          <td colspan="3">{{serviceCharge | fbCurrency('￥', '元')}}</td>
         </tr>
         <tr>
           <td colspan="4">借款明细</td>
         </tr>
         <tr>
           <td>借款本金</td>
-          <td colspan="3">￥</td>
+          <td colspan="3">{{user.integraluserlevel.Limit | fbCurrency('￥', '元')}}</td>
         </tr>
         <tr>
           <td>借款年利率</td>
-          <td>0</td>
+          <td>0%</td>
           <td>每日利息</td>
           <td>￥0</td>
         </tr>
         <tr>
           <td>借款出借日</td>
-          <td></td>
+          <td>{{contractInfo.startDate}}</td>
           <td>借款到期日</td>
-          <td></td>
+          <td>{{contractInfo.endDate}}</td>
         </tr>
         <tr>
           <td>起息日</td>
-          <td></td>
+          <td>{{contractInfo.startDate}}</td>
           <td>还款方式</td>
-          <td>从自动扣款</td>
+          <td>从{{contractInfo.bank}}（{{bankCardShort}}）自动扣款</td>
         </tr>
         <tr>
           <td colspan="4">还款计划</td>
         </tr>
         <tr>
           <td>还款日</td>
-          <td></td>
+          <td>{{contractInfo.endDate}}</td>
           <td>还款金额</td>
-          <td>应还款￥元</td>
+          <td>应还款{{user.integraluserlevel.Limit | fbCurrency('￥', '元')}}</td>
         </tr>
       </tbody>
     </table>
@@ -132,6 +132,58 @@
     <p class="ui-txt-justify"></p>
   </section>
 </template>
+
+<script>
+import {
+  QueryContract
+} from '../common/resources.js'
+import {
+  contractInfo
+} from '../common/adaptors.js'
+import {
+  mapGetters
+} from 'vuex'
+
+export default {
+  beforeRouteEnter: function(to, from, next) {
+    QueryContract.get().then(res => res.json())
+      .then(data => {
+        next(vm => {
+          if (data.data.content) {
+            vm.contractInfo = Object.assign({}, contractInfo(data.data.content))
+          }
+        })
+      })
+  },
+  computed: {
+    ...mapGetters(['user']),
+    serviceCharge() {
+      const {
+        Creditmoney,
+        Managemoney
+      } = this.user.integraluserlevel
+      return Creditmoney + Managemoney
+    },
+    virtualMoney() {
+      const {
+        Limit,
+        Creditmoney,
+        Managemoney
+      } = this.user.integraluserlevel
+      return Limit - Creditmoney - Managemoney
+    },
+    bankCardShort() {
+      return this.contractInfo.bankCard ? this.contractInfo.bankCard.slice(0, 4) : ''
+    }
+  },
+  data() {
+    return {
+      contractInfo: {}
+    }
+  }
+}
+</script>
+
 <style lang="scss" scoped>
 .ui-container {
   font-size: 14px;
