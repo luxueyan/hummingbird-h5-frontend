@@ -149,7 +149,6 @@ export default {
           SetAgreementMsg.get(this.model)
             .then(res => res.json())
             .then(data => {
-              console.log(data)
               if (data.ret === RET_CODE_MAP.OK) {
                 this.updateStateCode(CUST_STATE_CODE_MAP.CONTRACT_INFO_FILLED)
                 this.$router.push({
