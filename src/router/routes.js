@@ -63,6 +63,7 @@ export default [{
     meta: {
       title: '立即提款',
       headerHidden: true,
+      hasFixedButtons: true,
       permits: [CUST_STATE_CODE_MAP.DEBT_SETTELED]
     }
   }, {
@@ -106,6 +107,7 @@ export default [{
     meta: {
       title: '立即还款',
       headerHidden: true,
+      hasFixedButtons: true,
       permits: [CUST_STATE_CODE_MAP.DEBT_NOT_SETTLED]
     }
   }, {

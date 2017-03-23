@@ -81,7 +81,7 @@ export default {
             if (data.ret === RET_CODE_MAP.OK) {
               // 添加更新银行卡state信息
               this.updateUser(Object.assign({}, this.user, {
-                bank: this.model.bank
+                bank: this.model.bankName
               }, this.model))
 
               this.$router.push({

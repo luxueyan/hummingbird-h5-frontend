@@ -4,6 +4,7 @@ import routes from './routes'
 import store from '../store'
 import { includes } from 'lodash'
 import { RET_CODE_MAP, CUST_STATE_CODE_MAP } from '../constants.js'
+import { Toast } from 'mint-ui'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -52,6 +53,12 @@ router.beforeEach((to, from, next) => {
           store.dispatch('getCustStateCode').then(res => {
             if (res.ret === RET_CODE_MAP.OK) {
               resolve(res.data.StateCode)
+              if (res.data.StateCode === CUST_STATE_CODE_MAP.CONTRACT_INFO_FILLED) {
+                Toast({
+                  message: '您有一笔合同已提交但没有签署'
+                    // position: 'top'
+                })
+              }
             } else {
               reject(null)
             }

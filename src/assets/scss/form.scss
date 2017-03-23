@@ -3,7 +3,7 @@ form,
   .fields-header {
     line-height: 1.8em;
     // font-size: 15px;
-    color: #00a5e0;
+    // color: #00a5e0;
     padding: 8px 10px;
     small {
       color: black;
@@ -16,4 +16,11 @@ form,
 
 .form-buttons {
   padding: 10px;
+  &.fixed {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: white;
+  }
 }

@@ -45,7 +45,7 @@ export default {
         next(vm => {
           if (data.data.content) {
             Object.assign(vm.contractInfo, contractInfo(data.data.content))
-            vm.bankCardForShow = vm.contractInfo.bankCard.replace(/\d{4}(?=(\d{1,4}))/g, '$& ')
+            vm.bankCardForShow = vm.contractInfo.bankCard.replace(/(\d{4})\d+(\d{4})/g, '$1****$2')
           }
         })
       })

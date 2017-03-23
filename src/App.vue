@@ -3,7 +3,7 @@
   n-progress(parent=".app")
   mt-header(fixed="", :title="headerTitle", v-show="headerShow")
     mt-button(v-show='headerBackShow', icon='back', slot='left', @click='back()')
-  .container(:class="{'header-show': headerShow}")
+  .container(:class="{'header-show': headerShow, 'has-fixed-buttons': hasFixedButtons}")
     router-view
 </template>
 
@@ -38,6 +38,9 @@ export default {
     headerShow() {
       return !this.$route.meta.headerHidden
     },
+    hasFixedButtons() {
+      return this.$route.meta.hasFixedButtons
+    },
     headerBackShow() {
       return this.$route.meta.headerBackShow
     },
@@ -56,7 +59,6 @@ export default {
 @import './assets/scss/common.scss';
 @import './assets/scss/form.scss';
 @import './assets/scss/mint-ui.scss';
-
 html {
   height: 100%;
 }
@@ -95,6 +97,9 @@ small {
 .container {
   &.header-show {
     padding-top: $header-height;
+  }
+  &.has-fixed-buttons {
+    padding-bottom: 80px;
   }
 }
 

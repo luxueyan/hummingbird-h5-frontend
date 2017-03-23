@@ -16,11 +16,13 @@
         mt-cell(title="姓名", :value="user.UserinfoValLogin.Name | fbFalse")
         //- mt-cell(title="登录手机号", :value="user.UserinfoValLogin.Userphone")
         mt-cell(title='身份证号', :value="model.idCard")
-        mt-cell(title='银行卡号', is-link, @click.native="goChangeBankCard()")
+        mt-cell(title='银行卡号')
           span {{bankCardForShow}}
         mt-cell(title="开户行", :value="model.bank | fbFalse")
         mt-cell(title='银行预留手机号',  :value="model.bankPhone")
-      .form-buttons
+        mt-cell(@click.native="goChangeBankCard()")
+          a.small 变更银行卡
+      .form-buttons.fixed
           mt-button.mint-button-block(type='primary', size='large', @click="repay()") 立即还款
 </template>
 

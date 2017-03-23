@@ -151,7 +151,7 @@ function EPaper(a, d) {
 EPaper.init = function(a, data = {}) {
   document.getElementById(a).innerHTML = `<div id='writingDiv' class='writingDiv'>
                                             <div class='topBar'>
-                                              <input class='textButton' type='button' value='\u53d6\u6d88'/>
+                                              <input class='textButton' type='button' value='返回'/>
                                               <label>手写您的姓名（${data.name}）</label>
                                               <input class='textButton_Done' type='button' value='\u5b8c\u6210'/>
                                             </div>

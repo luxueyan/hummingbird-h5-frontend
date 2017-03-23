@@ -5,7 +5,8 @@
 <script>
 import EPaper from '../../common/epaper.js'
 import {
-  SetAgreementSign
+  SetAgreementSign,
+  GiveUpContract
 } from '../../common/resources.js'
 import {
   mapGetters,
@@ -27,7 +28,7 @@ export default {
     myepaper.setCallback((pngData, pointsData, isCancel) => {
       if (!isCancel) {
         if (!pngData) {
-          this.$root.toast(`请手写您的姓${this.user.UserinfoValLogin.Name}名：`, 'error')
+          this.$root.toast(`请手写您的姓名：${this.user.UserinfoValLogin.Name}`, 'error')
           return
         }
 
@@ -42,11 +43,12 @@ export default {
             }
           })
       } else {
-        this.updateStateCode(CUST_STATE_CODE_MAP.DEBT_SETTELED)
-        this.$router.push({
-          name: 'borrowerInfo'
+        GiveUpContract.get().then(() => {
+          this.updateStateCode(CUST_STATE_CODE_MAP.DEBT_SETTELED)
+          this.$router.push({
+            name: 'borrowerInfo'
+          })
         })
-
         // this.$root.toast('请签署合同', 'error')
       }
     })

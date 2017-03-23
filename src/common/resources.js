@@ -30,6 +30,7 @@ const QueryContractList = resource('?method=QueryContractList', {}, {}, { _showL
 const QueryContract = resource('?method=QueryContract', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 查询我的合同信息
 const CustRepayment = resource('?method=CustRepayment', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 提前还款
 const PayContract = resource('?method=PayContract', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 请求放款
+const GiveUpContract = resource('?method=GiveUpContract', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 取消合同
 
 export {
   loginByPhone,
@@ -45,5 +46,6 @@ export {
   QueryContractList,
   QueryContract,
   CustRepayment,
-  PayContract
+  PayContract,
+  GiveUpContract
 }
