@@ -8,7 +8,7 @@
             |《借款服务协议》
       .fields
         mt-cell(title="借款金额", :value="user.integraluserlevel.Limit | fbCurrency('', '元')")
-        mt-cell(title="借款天数", :value="borrowDuration | fbAppend('天')")
+        mt-cell(title="借款天数", :value="user.product.Length | fbAppend('天')")
         mt-cell(:value="serviceCharge | fbCurrency('', '元')")
           span(slot="title") 服务费
             i.iconfont.ui-icon-info(@click="showServiceChargeTip")
@@ -23,7 +23,9 @@
         //- mt-cell(title="登录手机号", :value="user.UserinfoValLogin.Userphone")
         template(v-if='!contractInfoHasHistory')
           mt-field(label='身份证号', placeholder='请输入身份证号', v-model="model.idCard", :state="getFieldState('model.idCard')", @click.native="showFieldError($event, 'model.idCard')")
-          mt-field(v-mt-field-blur="{blur:getBank}", label='银行卡号', placeholder='请输入银行卡号', v-model="bankCardForShow", :state="getFieldState('model.bankCard')", @click.native="showFieldError($event, 'model.bankCard')")
+          fb-field(v-mt-field-blur="{blur:getBank}", label='银行卡号', placeholder='请输入银行卡号', v-model="bankCardForShow", :state="getFieldState('model.bankCard')", @click.native="showFieldError($event, 'model.bankCard')")
+            span(slot="label") 银行卡号
+              i.iconfont.ui-icon-info(@click="showSupportBanks()")
           input(type="hidden", v-model='model.bankCard')
           mt-cell(title="开户行", :value="model.bank | fbFalse")
           mt-field(label='银行预留手机号', placeholder='请输入银行预留手机号', v-model="model.bankPhone", :state="getFieldState('model.bankPhone')", @click.native="showFieldError($event, 'model.bankPhone')")
@@ -35,6 +37,7 @@
           mt-cell(title='身份证号', :value="model.idCard")
           mt-cell(title='银行卡号')
             span {{bankCardForShow}}
+
           mt-cell(title="开户行", :value="model.bank | fbFalse")
           mt-cell(title='银行预留手机号',  :value="model.bankPhone")
           mt-cell(@click.native="goChangeBankCard()")
@@ -45,6 +48,7 @@
 
 <script>
 import ValidatorMixin from '../validator_mixin.js'
+import CommonMixin from '../common_mixin.js'
 import {
   isDetectionBankCard,
   SetAgreementMsg,
@@ -65,9 +69,13 @@ import {
   mapMutations,
   mapGetters
 } from 'vuex'
+import FbField from '../../components/FbField.vue'
 
 export default {
-  mixins: [ValidatorMixin],
+  mixins: [ValidatorMixin, CommonMixin],
+  components: {
+    FbField
+  },
   beforeRouteEnter(to, from, next) {
     QueryContract.get().then(res => res.json())
       .then(data => {
@@ -172,9 +180,6 @@ export default {
   },
   computed: {
     ...mapGetters(['stateCode']),
-    borrowDuration() {
-      return 14 // 目前写死，借款天数
-    },
     serviceCharge() {
       const {
         Creditmoney,

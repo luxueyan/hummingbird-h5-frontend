@@ -4,7 +4,9 @@ section
     .fields-header
       | 更新银行卡信息
     .fields
-      mt-field(v-mt-field-blur="{blur:getBank}", label='银行卡号', placeholder='请输入银行卡号', v-model="bankCardForShow", :state="getFieldState('model.bankCard')", @click.native="showFieldError($event, 'model.bankCard')")
+      fb-field(v-mt-field-blur="{blur:getBank}", label='银行卡号', placeholder='请输入银行卡号', v-model="bankCardForShow", :state="getFieldState('model.bankCard')", @click.native="showFieldError($event, 'model.bankCard')")
+        span(slot="label") 银行卡号
+          i.iconfont.ui-icon-info(@click="showSupportBanks()")
       input(type="hidden", v-model='model.bankCard')
       mt-field(label='银行预留手机号', placeholder='请输入银行预留手机号', v-model="model.bankPhone", :state="getFieldState('model.bankPhone')", @click.native="showFieldError($event, 'model.bankPhone')")
       mt-cell(title="开户行", :value="model.bankName | fbFalse")
@@ -14,9 +16,12 @@ section
 
 <script>
 import ValidatorMixin from '../validator_mixin.js'
+import CommonMixin from '../common_mixin.js'
+import FbField from '../../components/FbField.vue'
 import {
   isDetectionBankCard,
-  updateBankInfo
+  updateBankInfo,
+  QueryContract
 } from '../../common/resources.js'
 import {
   RET_CODE_MAP
@@ -25,12 +30,31 @@ import {
   isBankCard
 } from '../../common/utils.js'
 import {
+  contractInfo
+} from '../../common/adaptors.js'
+import {
   mapGetters,
   mapMutations
 } from 'vuex'
 
 export default {
-  mixins: [ValidatorMixin],
+  mixins: [ValidatorMixin, CommonMixin],
+  components: {
+    FbField
+  },
+  beforeRouteEnter(to, from, next) {
+    QueryContract.get().then(res => res.json())
+      .then(data => {
+        next(vm => {
+          if (data.data.content) {
+            vm.contractInfoHasHistory = true
+            Object.assign(vm.model, contractInfo(data.data.content))
+            vm.model.bankName = vm.model.bank
+            vm.bankCardForShow = vm.model.bankCard.replace(/\d{4}(?=(\d{1,4}))/g, '$& ')
+          }
+        })
+      })
+  },
 
   validators: {
     'model.bankCard' (value) {
@@ -80,9 +104,9 @@ export default {
           updateBankInfo.save(this.model).then(res => res.json()).then(data => {
             if (data.ret === RET_CODE_MAP.OK) {
               // 添加更新银行卡state信息
-              this.updateUser(Object.assign({}, this.user, {
+              this.updateUser(Object.assign({}, this.user, this.model, {
                 bank: this.model.bankName
-              }, this.model))
+              }))
 
               this.$router.push({
                 name: 'changeBankCardStep3'

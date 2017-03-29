@@ -4,6 +4,10 @@ body {
     color: $primary-color;
   }
   .mint-msgbox-message {
+    line-height: 1.5em;
+    &.text-left {
+      text-align: left;
+    }
     th {
       font-weight: normal;
       text-align: right;

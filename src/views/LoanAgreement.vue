@@ -4,12 +4,18 @@
     <table class="ui-table ui-border-tb">
       <tbody>
         <tr>
+          <td class="title-td">姓名</td>
+          <td>杨爱军</td>
+          <td class="title-td">身份证号</td>
+          <td>11022419630805246X</td>
+        </tr>
+        <tr>
           <td colspan="4">出借人</td>
         </tr>
         <tr>
-          <td>姓名</td>
+          <td class="title-td">姓名</td>
           <td>杨爱军</td>
-          <td>身份证号</td>
+          <td class="title-td">身份证号</td>
           <td>11022419630805246X</td>
         </tr>
         <tr>
@@ -173,7 +179,7 @@ export default {
       return Limit - Creditmoney - Managemoney
     },
     bankCardShort() {
-      return this.contractInfo.bankCard ? this.contractInfo.bankCard.slice(0, 4) : ''
+      return this.contractInfo.bankCard ? this.contractInfo.bankCard.slice(-4) : ''
     }
   },
   data() {
@@ -189,10 +195,21 @@ export default {
   font-size: 14px;
 }
 
+table {
+  table-layout: fixed;
+  width: 100%;
+  word-wrap: break-word;
+  word-break: break-all;
+  margin-bottom: 10px;
+}
+
 td {
   text-align: left !important;
-  width: 25%;
+  // width: 35%;
   padding: 5px;
+  &.title-td {
+    width: 4em;
+  }
 }
 
 .ui-whitespace {
