@@ -19,8 +19,10 @@ section.change-bank-card-step3.single-page-tip
         th 还款金额：
         td {{contractInfo.totalAmount | fbCurrency('', '元')}}
     small 您的提款请求已发送成功，请耐心等待。
-  //- .footer
-    mt-button.mint-button-block(type='primary', size='large') 关闭
+  .footer
+    .check-loan-agreement
+      a(type='primary', size='large', @click="checkLoanAgreement()") 查看《借款服务协议》
+    //- mt-button.mint-button-block(type='primary', size='large') 关闭
 </template>
 
 <script>
@@ -51,6 +53,14 @@ export default {
       })
   },
 
+  methods: {
+    checkLoanAgreement() {
+      this.$router.push({
+        name: 'loanAgreement'
+      })
+    }
+  },
+
   data() {
     return {
       bankCardForShow: '',
@@ -61,4 +71,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.footer {
+  padding: 0!important;
+}
+
+.check-loan-agreement {
+  text-align: center;
+  font-size: 12px;
+}
 </style>

@@ -59,6 +59,12 @@ router.beforeEach((to, from, next) => {
                     // position: 'top'
                 })
               }
+              // 状态异常账户
+              if (res.data.StateCode === CUST_STATE_CODE_MAP.UNKNOWN) {
+                Toast({
+                  message: '账户状态异常！'
+                })
+              }
             } else {
               reject(null)
             }

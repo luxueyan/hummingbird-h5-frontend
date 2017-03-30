@@ -16,10 +16,24 @@ body {
   .mint-field .mint-cell-title {
     width: 120px;
   }
+  .mint-field-core {
+    display: flex;
+  }
+  .mint-button--primary,
+  .mint-header-button {
+    a {
+      color: white;
+    }
+  }
   .mint-header-title {
     flex: 2;
     margin: 0;
     line-height: 1.1em;
+  }
+  .mint-header-button {
+    small {
+      color: white;
+    }
   }
   .mint-cell-title {
     flex-shrink: 0;

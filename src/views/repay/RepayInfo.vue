@@ -3,6 +3,9 @@
     .form
       .fields-header
         | 借款方案
+        small.fr.loan-agreement 查看
+          router-link(:to="{name:'loanAgreement'}")
+            |《借款服务协议》
       .fields
         mt-cell(title="借款金额", :value="model.loanAmount | fbCurrency('', '元')")
         mt-cell(title="应还日期", :value="model.endDate | fbFalse")

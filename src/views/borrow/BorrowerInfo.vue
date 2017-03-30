@@ -3,7 +3,7 @@
     form.borrow-form(@submit.prevent='submit()')
       .fields-header
         | 借款方案
-        small.fr.loan-agreement 查看
+        //- small.fr.loan-agreement 查看
           router-link(:to="{name:'loanAgreement'}")
             |《借款服务协议》
       .fields

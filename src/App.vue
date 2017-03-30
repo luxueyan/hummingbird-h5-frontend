@@ -3,6 +3,9 @@
   n-progress(parent=".app")
   mt-header(fixed="", :title="headerTitle", v-show="headerShow")
     mt-button(v-show='headerBackShow', icon='back', slot='left', @click='back()')
+    mt-button(slot='right', v-show="rightCheckLoadAgreementVisible(['signature'])")
+      small
+        router-link(:to="{name:'loanAgreement'}") 查看
   .container(:class="{'header-show': headerShow, 'has-fixed-buttons': hasFixedButtons}")
     router-view
 </template>
@@ -13,6 +16,9 @@ import {
   mapGetters,
   mapActions
 } from 'vuex'
+import {
+  includes
+} from 'lodash'
 
 export default {
   components: {
@@ -23,6 +29,10 @@ export default {
     ...mapActions(['getUser']),
     back() {
       this.$router.back()
+    },
+    // 查看借款服务协议按钮在哪一页可见
+    rightCheckLoadAgreementVisible(routes = []) {
+      return includes(routes, this.$route.name)
     }
   },
 

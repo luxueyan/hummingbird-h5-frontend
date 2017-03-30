@@ -4,11 +4,11 @@ section
     .fields-header
       | 更新银行卡信息
     .fields
-      fb-field(v-mt-field-blur="{blur:getBank}", label='银行卡号', placeholder='请输入银行卡号', v-model="bankCardForShow", :state="getFieldState('model.bankCard')", @click.native="showFieldError($event, 'model.bankCard')")
+      fb-field(v-mt-field-blur="{blur:getBank}", label='银行卡号', :placeholder='placeholders.bankCard', v-model="bankCardForShow", :state="getFieldState('model.bankCard')", @click.native="showFieldError($event, 'model.bankCard')")
         span(slot="label") 银行卡号
           i.iconfont.ui-icon-info(@click="showSupportBanks()")
       input(type="hidden", v-model='model.bankCard')
-      mt-field(label='银行预留手机号', placeholder='请输入银行预留手机号', v-model="model.bankPhone", :state="getFieldState('model.bankPhone')", @click.native="showFieldError($event, 'model.bankPhone')")
+      mt-field(label='银行预留手机号', :placeholder='placeholders.bankPhone', v-model="model.bankPhone", :state="getFieldState('model.bankPhone')", @click.native="showFieldError($event, 'model.bankPhone')")
       mt-cell(title="开户行", :value="model.bankName | fbFalse")
     .form-buttons
       mt-button.mint-button-block(type='primary', size='large') 下一步
@@ -45,12 +45,16 @@ export default {
   beforeRouteEnter(to, from, next) {
     QueryContract.get().then(res => res.json())
       .then(data => {
+        const contract = contractInfo(data.data.content)
         next(vm => {
           if (data.data.content) {
             vm.contractInfoHasHistory = true
-            Object.assign(vm.model, contractInfo(data.data.content))
-            vm.model.bankName = vm.model.bank
-            vm.bankCardForShow = vm.model.bankCard.replace(/\d{4}(?=(\d{1,4}))/g, '$& ')
+            vm.placeholders.bankCard = contract.bankCard.replace(/\d{4}(?=(\d{1,4}))/g, '$& ')
+            vm.placeholders.bankPhone = contract.bankPhone
+            vm.model.bankName = contract.bank
+              // Object.assign(vm.model, contractInfo(data.data.content))
+              // vm.model.bankName = vm.model.bank
+              // vm.bankCardForShow = vm.model.bankCard.replace(/\d{4}(?=(\d{1,4}))/g, '$& ')
           }
         })
       })
@@ -99,6 +103,15 @@ export default {
         return
       }
 
+      // 将placeholder复制给Model
+      if (!this.model.bankCard) {
+        this.bankCardForShow = this.placeholders.bankCard
+        this.model.bankCard = this.placeholders.bankCard.replace(/\s/g, '')
+      }
+      if (!this.model.bankPhone) {
+        this.model.bankPhone = this.placeholders.bankPhone
+      }
+
       this.$validate().then(success => {
         if (success) {
           updateBankInfo.save(this.model).then(res => res.json()).then(data => {
@@ -128,6 +141,10 @@ export default {
     return {
       bankCardNotSupported: false,
       bankCardForShow: '',
+      placeholders: {
+        bankCard: '',
+        bankPhone: null
+      },
       model: {
         bankCard: '',
         bankPhone: null,
@@ -139,4 +156,19 @@ export default {
 </script>
 
 <style lang="scss">
+.change-bank-card-form {
+  input::-moz-placeholder {
+    color: #c5c9d2;
+    font-size: 14px;
+    opacity: 1;
+  }
+  input:-ms-input-placeholder {
+    color: #c5c9d2;
+    font-size: 14px;
+  }
+  input::-webkit-input-placeholder {
+    color: #c5c9d2;
+    font-size: 14px;
+  }
+}
 </style>
