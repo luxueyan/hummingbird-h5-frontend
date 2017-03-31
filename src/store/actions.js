@@ -51,9 +51,9 @@ export default {
     return data
   },
 
-  logout({ commit }, silent) {
+  logout({ commit, state }, silent) {
     Storage.clearMulti([STORE_KEY_USER, STORE_KEY_ACCESS_TOKEN])
-    commit('updateUser', {})
+    commit('updateUser', { phone: state.user.phone })
     commit('updateToken')
 
     if (silent) return

@@ -3,6 +3,13 @@ body {
   .mint-msgbox-confirm {
     color: $primary-color;
   }
+  .mint-field-state {
+    margin-left: 5px;
+    .mintui {
+      font-size: 25px;
+      vertical-align: 5px;
+    }
+  }
   .mint-msgbox-message {
     line-height: 1.5em;
     &.text-left {
@@ -62,6 +69,7 @@ body {
   .mint-field-clear {
     .mintui-field-error {
       font-family: "mintui" !important;
+      font-size: 20px;
       &:before {
         content: "\E605";
       }

@@ -4,12 +4,6 @@
     <table class="ui-table ui-border-tb">
       <tbody>
         <tr>
-          <td class="title-td">姓名</td>
-          <td>杨爱军</td>
-          <td class="title-td">身份证号</td>
-          <td>11022419630805246X</td>
-        </tr>
-        <tr>
           <td colspan="4">出借人</td>
         </tr>
         <tr>
