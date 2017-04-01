@@ -96,7 +96,7 @@ small {
 
 .logo {
   text-align: center;
-  background: white;
+  // background: white;
   padding: 10px;
   img {
     max-width: 50%;

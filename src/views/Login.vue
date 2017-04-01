@@ -94,7 +94,11 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.logo {
+  background: white;
+}
+
 .login-form {
   // padding: 10px 0;
 }
