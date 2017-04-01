@@ -19,6 +19,11 @@ body {
       font-weight: normal;
       text-align: right;
     }
+    ol > li {
+      text-align: left;
+      list-style: decimal;
+      list-style-position: inside;
+    }
   }
   .mint-field .mint-cell-title {
     width: 120px;

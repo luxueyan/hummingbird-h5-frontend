@@ -1,6 +1,6 @@
 <template lang="pug">
 section
-  //- div.logo
+  div.logo
     img(src='../assets/images/logo.jpg')
     small 免审核借款1000元
   form.login-form(@submit.prevent='submit()')
@@ -96,6 +96,6 @@ export default {
 
 <style lang="scss">
 .login-form {
-  padding: 10px 0;
+  // padding: 10px 0;
 }
 </style>

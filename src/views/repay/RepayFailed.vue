@@ -2,12 +2,17 @@
 section.change-bank-card-step3.single-page-tip
   .logo
     i.iconfont.ui-icon-warn
-    h3 还款失败！
+    //- h3 还款失败！
   article
-    p 原因：
+    p 我们将在24小时内人工处理您的请求。
+    p 如有任何疑问，欢迎联系客服咨询。
+    //- p 原因：
       em {{stateMsg}}
-  .footer
-    .btns-group
+  .footer.no-padding-top
+    .simple-btns
+      a(@click="showCommonFailedReasons()") 常见原因
+      a(@click="repay()") 重试
+    //- .btns-group
       mt-button.mint-button-block(type='default', size='large', @click="$router.push({name: 'changeBankCardStep1'})") 更换银行卡
       mt-button.mint-button-block(type='primary', size='large', @click="repay()") 重试
 </template>
@@ -22,6 +27,19 @@ export default {
   mixins: [repayMixins],
   computed: {
     ...mapGetters(['stateMsg'])
+  },
+  methods: {
+    showCommonFailedReasons() {
+      this.$root.MessageBox({
+        title: '常见原因',
+        message: `<ol>
+          <li>账户余额是否充足</li>
+          <li>银行卡号是否正确</li>
+          <li>银行预留手机号是否正确</li>
+        </ol>`,
+        confirmButtonText: '我知道了'
+      })
+    }
   }
 }
 </script>
