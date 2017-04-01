@@ -100,6 +100,7 @@ small {
   padding: 10px;
   img {
     max-width: 50%;
+    max-width: 30vh;
   }
   small {
     display: block;

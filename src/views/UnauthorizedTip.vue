@@ -9,10 +9,14 @@ section.unauthorized-tip.single-page-tip
     p 欢迎继续关注蜂鸟速贷！
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .unauthorized-tip {
   article {
     text-align: center;
   }
+}
+
+.logo {
+  background: white;
 }
 </style>

@@ -10,8 +10,8 @@ section.change-bank-card-step3.single-page-tip
       em {{stateMsg}}
   .footer.no-padding-top
     .simple-btns
-      a(@click="showCommonFailedReasons()") 常见原因
-      a(@click="repay()") 重试
+      a.large(@click="showCommonFailedReasons()") 常见原因
+      a.large(@click="repay()") 重试
     //- .btns-group
       mt-button.mint-button-block(type='default', size='large', @click="$router.push({name: 'changeBankCardStep1'})") 更换银行卡
       mt-button.mint-button-block(type='primary', size='large', @click="repay()") 重试

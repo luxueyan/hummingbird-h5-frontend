@@ -76,11 +76,17 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
+    font-size: 13px;
     a {
       display: inline-block;
       min-width: 100px;
       text-align: center;
+      &.large {
+        font-size: 15px;
+      }
+      &.small {
+        font-size: 11px;
+      }
     }
   }
   .btns-group {
