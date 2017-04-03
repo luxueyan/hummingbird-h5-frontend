@@ -42,6 +42,7 @@
           mt-cell(title='银行预留手机号',  :value="model.bankPhone")
           mt-cell(@click.native="goChangeBankCard()")
             a.small 变更银行卡
+      small.note *由于清明假期三方支付休假，今日放款预计4月5日下午到账，还款日期会根据实际到账时间顺延。
       .form-buttons.fixed
           mt-button.mint-button-block(type='primary', size='large') 立即提款
 </template>
@@ -70,6 +71,7 @@ import {
   mapGetters
 } from 'vuex'
 import FbField from '../../components/FbField.vue'
+import moment from 'moment'
 
 export default {
   mixins: [ValidatorMixin, CommonMixin],
@@ -199,6 +201,7 @@ export default {
   data() {
     const stateUser = JSON.parse(JSON.stringify(this.$store.getters.user))
     return {
+      qmNoteVisible: +moment().toDate() <= +new Date('2017-04-05 12:00:00'), // 4月5日下午以后不显示
       contractInfoHasHistory: false,
       bankCardNotSupported: false, // 银行卡不支持标记
       countdownVisible: false,
@@ -216,8 +219,17 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .loan-agreement {
   margin-top: 5px;
+}
+
+small {
+  &.note {
+    display: block;
+    padding: 10px;
+    color: #888;
+    line-height: 1.8em;
+  }
 }
 </style>

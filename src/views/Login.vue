@@ -23,6 +23,7 @@ import {
 import {
   mapActions
 } from 'vuex'
+import store from '../store'
 
 export default {
   components: {
@@ -38,13 +39,25 @@ export default {
     }
   },
 
+  beforeRouteEnter(to, from, next) {
+    if (to.query.accesstoken) {
+      (to.query.accesstoken)
+      store.dispatch('updateToken', to.query.accesstoken)
+      next({
+        name: 'authorizedTip'
+      })
+    } else {
+      next()
+    }
+  },
+
   mounted() {
     this.$route.query.openid && (this.user.openid = this.$route.query.openid) // eslint-disable-line
     this.user.phone = this.$store.getters.user.phone || ''
   },
 
   methods: {
-    ...mapActions(['login', 'getMsgCode', 'getUser']),
+    ...mapActions(['login', 'getMsgCode', 'getUser', 'updateToken']),
     submit() {
       this.$validate().then(success => {
         if (success) {
