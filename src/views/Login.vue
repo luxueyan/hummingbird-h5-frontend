@@ -43,8 +43,10 @@ export default {
     if (to.query.accesstoken) {
       (to.query.accesstoken)
       store.dispatch('updateToken', to.query.accesstoken)
-      next({
-        name: 'authorizedTip'
+      store.dispatch('getUser').then(data => {
+        next({
+          name: to.query.to || 'authorizedTip'
+        })
       })
     } else {
       next()

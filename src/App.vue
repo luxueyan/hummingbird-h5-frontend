@@ -36,12 +36,13 @@ export default {
     }
   },
 
-  mounted() {
+  /*mounted() {
     // 保证每次刷新页面时候更新一下用户信息
+    if (this.$route.name === 'login') return
     this.getUser({
       skipAuth: true
     })
-  },
+  },*/
 
   computed: {
     ...mapGetters['route'],
