@@ -78,6 +78,8 @@ router.beforeEach((to, from, next) => {
         } else {
           next(getRedirectRoute(code))
         }
+      }).catch(() => {
+        next({ name: 'login' })
       })
     }
   } else { // 不需要权限的页面不拦截
