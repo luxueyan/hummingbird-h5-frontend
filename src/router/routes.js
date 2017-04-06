@@ -94,14 +94,14 @@ export default [{
 }, {
   path: '/h5/repay',
   name: 'repay',
-  redirect: { name: 'repayerInfo' },
+  redirect: { name: 'repayInfo' },
   component: {
     render(h) {
       return h('router-view')
     }
   },
   children: [{
-    path: '/h5/repay_info',
+    path: 'repay_info',
     name: 'repayInfo',
     component: resolve => require(['../views/repay/RepayInfo.vue'], resolve),
     meta: {
@@ -111,7 +111,7 @@ export default [{
       permits: [CUST_STATE_CODE_MAP.DEBT_NOT_SETTLED]
     }
   }, {
-    path: '/h5/repaying',
+    path: 'repaying',
     name: 'repaying',
     component: resolve => require(['../views/repay/Repaying.vue'], resolve),
     meta: {
@@ -119,7 +119,7 @@ export default [{
       permits: [CUST_STATE_CODE_MAP.REPAYING]
     }
   }, {
-    path: '/h5/repay_failed',
+    path: 'repay_failed',
     name: 'repayFailed',
     component: resolve => require(['../views/repay/RepayFailed.vue'], resolve),
     meta: {
