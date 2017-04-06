@@ -42,7 +42,7 @@
           mt-cell(title='银行预留手机号',  :value="model.bankPhone")
           mt-cell(@click.native="goChangeBankCard()")
             a.small 变更银行卡
-      small.note *由于清明假期三方支付休假，今日放款预计4月5日下午到账，还款日期会根据实际到账时间顺延。
+      //- small.note *由于清明假期三方支付休假，今日放款预计4月5日下午到账，还款日期会根据实际到账时间顺延。
       .form-buttons.fixed
           mt-button.mint-button-block(type='primary', size='large') 立即提款
 </template>

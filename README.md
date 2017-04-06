@@ -6,6 +6,10 @@
 
 ``` bash
 # install dependencies
+suggest using yarn:
+First globally install yarn. Run `npm install yarn -g` and then run `yarn install`
+
+Fallback:
 npm install
 
 # serve with hot reload at localhost:8080
