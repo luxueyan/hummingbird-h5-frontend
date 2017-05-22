@@ -12,7 +12,14 @@ export default [{
   meta: {
     title: '蜂鸟速贷',
     skipAuth: true
-      // permits: [999, 7777]
+  }
+}, {
+  path: '/h5/notification',
+  name: 'notification',
+  component: resolve => require(['../views/Notification.vue'], resolve),
+  meta: {
+    title: '蜂鸟搬家了',
+    skipAuth: true
   }
 }, {
   path: '/h5/blacklist_tip',

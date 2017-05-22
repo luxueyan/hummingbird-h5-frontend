@@ -8,7 +8,7 @@ import { Toast } from 'mint-ui'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: ~process.env.NODE_ENV.indexOf('app') ? 'hash' : 'history',
   base: __dirname,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {

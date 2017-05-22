@@ -8,6 +8,8 @@
     "hooks": "cp pre-commit .git/hooks/ && chmod +x .git/hooks/pre-commit",
     "dev": "node build/dev-server.js",
     "build": "node build/build.js",
+    "build-app-dev": "node build/build-app-dev.js",
+    "build-app-prod": "node build/build-app-prod.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",

@@ -62,7 +62,9 @@ Vue.use(SimpleVueValidation, {
 // http初始化
 const envApiPaths = {
   'development': '/api.aspx',
-  'production': '/api.aspx'
+  'production': '/api.aspx',
+  'app-development': 'http://fn.91zhengxin.com:9111/api.aspx',
+  'app-production': 'http://fn.91zhengxin.com:9111/api.aspx'
 }
 Vue.http.options.root = envApiPaths[process.env.NODE_ENV] || '/api.aspx'
   // Vue.http.headers.common['Authorization'] = window.localStorage.token || ''
@@ -89,21 +91,32 @@ const ToastClasses = {
   'warn': 'iconfont ui-icon-warn-block'
 }
 
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  store,
-  template: '<App/>',
-  methods: {
-    toast(msg = '', type = '') {
-      Toast({
-        message: msg,
-        duration: getReadTime(msg),
-        iconClass: type ? ToastClasses[type] : ''
-      })
+function main() {
+  /* eslint-disable no-new */
+  new Vue({
+    el: '#app',
+    router,
+    store,
+    template: '<App/>',
+    methods: {
+      toast(msg = '', type = '') {
+        Toast({
+          message: msg,
+          duration: getReadTime(msg),
+          iconClass: type ? ToastClasses[type] : ''
+        })
+      },
+      MessageBox
     },
-    MessageBox
-  },
-  components: { App }
-})
+    components: { App }
+  })
+}
+
+// 启动应用
+if (process.env.NODE_ENV.indexOf('app') > -1) {
+  document.addEventListener('deviceready', e => {
+    main()
+  })
+} else {
+  main()
+}

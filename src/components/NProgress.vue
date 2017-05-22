@@ -32,7 +32,8 @@ export default {
 }
 </script>
 <style lang="scss">
-.nprogress-custom-parent #nprogress .spinner #nprogress .spinner {
+.nprogress-custom-parent #nprogress .spinner,
+#nprogress .spinner {
   display: none;
 }
 </style>

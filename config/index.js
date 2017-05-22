@@ -21,9 +21,23 @@ module.exports = {
     // Set to `true` or `false` to always turn it on or off
     bundleAnalyzerReport: process.env.npm_config_report
   },
+  appDev: {
+    env: require('./app.dev.env'),
+    index: path.resolve(__dirname, '../../hummingbird-h5-app/www/index.html'),
+    assetsRoot: path.resolve(__dirname, '../../hummingbird-h5-app/www'),
+    assetsSubDirectory: 'static',
+    assetsPublicPath: '', // 去掉绝对路径 '/', cordova打包后的app是file://本地协议
+    productionSourceMap: true,
+    // Gzip off by default as many popular static hosts such as
+    // Surge or Netlify already gzip all static assets for you.
+    // Before setting to `true`, make sure to:
+    // npm install --save-dev compression-webpack-plugin
+    productionGzip: false,
+    productionGzipExtensions: ['js', 'css']
+  },
   dev: {
     env: require('./dev.env'),
-    port: 8080,
+    port: 8888,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
