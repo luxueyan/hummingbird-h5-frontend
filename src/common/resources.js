@@ -31,3 +31,4 @@ export const QueryContract = resource('?method=QueryContract', {}, {}, { _showLo
 export const CustRepayment = resource('?method=CustRepayment', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 提前还款
 export const PayContract = resource('?method=PayContract', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 请求放款
 export const GiveUpContract = resource('?method=GiveUpContract', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 取消合同
+export const Messages = resource('?method=Messages', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 取消合同

@@ -10,6 +10,53 @@ body {
       vertical-align: 5px;
     }
   }
+  .mint-tab-item-menu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    transform: translateY(-100%);
+    a {
+      font-size: 14px;
+      display: block;
+      text-align: left;
+      line-height: 55px;
+      padding: 0 10px;
+      background: $small-gray-color;
+      background-image: linear-gradient(180deg, #d9d9d9, #d9d9d9 50%, transparent 50%);
+      background-size: 100% 1px;
+      background-repeat: no-repeat;
+      background-position: top left;
+      &.is-selected {
+        background: #eaeaea;
+      }
+    }
+  }
+  .mint-tabbar > .mint-tab-item {
+    color: inherit;
+    position: relative;
+    &.is-selected {
+      color: $primary-color;
+      svg {
+        path {
+          fill: $primary-color;
+        }
+      }
+    }
+    &.is-disabled {
+      color: $mid-gray-color;
+      svg {
+        path {
+          fill: $mid-gray-color;
+        }
+      }
+    }
+    .icon-arrow-bottom-right {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+    }
+  }
   .mint-msgbox-message {
     line-height: 1.5em;
     &.text-left {
@@ -50,6 +97,11 @@ body {
   .mint-cell-title {
     flex-shrink: 0;
     white-space: nowrap;
+    overflow: hidden;
+  }
+  .mint-cell-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .mint-cell-value {
     min-width: 0;

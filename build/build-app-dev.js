@@ -18,7 +18,7 @@ var assetsPath = path.join(config.appDev.assetsRoot, config.appDev.assetsSubDire
 shell.rm('-rf', assetsPath)
 shell.mkdir('-p', assetsPath)
 shell.config.silent = true
-shell.cp('-R', 'static/*', assetsPath)
+// shell.cp('-R', 'static/*', assetsPath)
 shell.config.silent = false
 
 webpack(webpackConfig, function (err, stats) {
@@ -31,6 +31,8 @@ webpack(webpackConfig, function (err, stats) {
     chunks: false,
     chunkModules: false
   }) + '\n\n')
+
+  shell.exec('npm run manifest:dev')
 
   console.log(chalk.cyan('  Build complete.\n'))
   console.log(chalk.yellow(

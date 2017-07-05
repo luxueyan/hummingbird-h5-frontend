@@ -7,6 +7,7 @@ import { RET_CODE_MAP } from '../constants.js'
 
 const CACHE_URLS = [] // 需要缓存的接口
 const requestMap = {} // 请求地址
+let indicatorHandle = 0
 
 export default [
   // 请求超时
@@ -20,11 +21,14 @@ export default [
     }
     if (request._showLoadingStatus) { // 是否显示loading状态
       Indicator.open()
+      clearTimeout(indicatorHandle)
     }
 
     next(res => {
       clearTimeout(timeout)
-      Indicator.close()
+      indicatorHandle = setTimeout(() => {
+        Indicator.close()
+      }, 300)
     })
   },
   // 控制重复请求
@@ -93,7 +97,7 @@ export default [
       } else if (res.status === 500 || res.status === 502) {
         MessageBox('提示', res.body.msg || '抱歉！服务器忙。')
       } else if (res.status === 200) {
-        if (!request.params.skipAuth && (!res.body || res.body.ret !== RET_CODE_MAP.OK)) {
+        if (!request.notApi && !request.params.skipAuth && (!res.body || res.body.ret !== RET_CODE_MAP.OK)) {
           MessageBox('提示', res.body ? res.body.msg : '登录失败或者访问无权限')
           if (!res.body || res.body.ret === RET_CODE_MAP.FAILED) {
             store.dispatch('logout')

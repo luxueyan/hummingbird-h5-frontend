@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from './routes'
 import store from '../store'
-import { includes } from 'lodash'
+import { includes, find, map, flattenDeep } from 'lodash'
 import { RET_CODE_MAP, CUST_STATE_CODE_MAP } from '../constants.js'
 import { Toast } from 'mint-ui'
 Vue.use(VueRouter)
@@ -44,7 +44,7 @@ router.beforeEach((to, from, next) => {
   const { user, token, stateCode } = store.getters
   if (!to.meta.skipAuth) { // 需要登录权限的页面
     if (!token || !user.phone) {
-      next({ name: 'login' })
+      next({ name: 'login', query: { redirect: to.fullPath } })
     } else {
       const stateCodePromise = new Promise((resolve, reject) => {
         if (stateCode) {
@@ -79,7 +79,7 @@ router.beforeEach((to, from, next) => {
           next(getRedirectRoute(code))
         }
       }).catch(() => {
-        next({ name: 'login' })
+        next({ name: 'login', query: { redirect: to.fullPath } })
       })
     }
   } else { // 不需要权限的页面不拦截
@@ -109,5 +109,26 @@ router.afterEach((to) => {
     }
   }
 })
+
+// 扁平化路由
+function flattenRoutes(routes) {
+  return map(routes, r => {
+    if (!r.children) {
+      return r
+    }
+    return [r].concat(flattenRoutes(r.children))
+  })
+}
+
+const flatRoutes = flattenDeep(flattenRoutes(routes))
+
+Vue.getPermits = Vue.prototype.getPermits = function(routeName) {
+  const router = find(flatRoutes, r => r.name === routeName)
+  return router ? router.meta.permits : []
+}
+
+Vue.isPermit = Vue.prototype.isPermit = function(routeName) {
+  return includes(Vue.getPermits(routeName), store.getters.stateCode)
+}
 
 export default router

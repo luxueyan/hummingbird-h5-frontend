@@ -99,7 +99,7 @@ export default {
     },
     submit() {
       if (this.bankCardNotSupported) {
-        this.$root.toast('抱歉，您选择的银行卡不支持！', 'error')
+        this.$toast('抱歉，您选择的银行卡不支持！', 'error')
         return
       }
 
@@ -127,7 +127,7 @@ export default {
             }
           })
         } else {
-          this.$root.toast(this.validation.firstError(), 'error')
+          this.$toast(this.validation.firstError(), 'error')
         }
       })
     }

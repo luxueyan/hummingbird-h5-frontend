@@ -1,0 +1,159 @@
+{
+  "files": {
+    "static/fonts/iconfont.eot": {
+      "version": "9b56ab8d8eeb68d3920ec383089c2a41f07d7a22",
+      "filename": "static/fonts/iconfont.eot"
+    },
+    "static/img/clear.png": {
+      "version": "7e88e4f656a4f42515c4d0bb0dd5e70488329349",
+      "filename": "static/img/clear.png"
+    },
+    "static/img/iconfont.svg": {
+      "version": "25c0cb80b858c0e7bbbc0f06595b29fcbe35bd3c",
+      "filename": "static/img/iconfont.svg"
+    },
+    "static/fonts/iconfont.ttf": {
+      "version": "15cc96fee37b5d434933b364b79ca730bb1b01bb",
+      "filename": "static/fonts/iconfont.ttf"
+    },
+    "static/fonts/iconfont.woff": {
+      "version": "b599b0b39d9a6307a7d5b6b951b1de6ca354c05c",
+      "filename": "static/fonts/iconfont.woff"
+    },
+    "static/img/logo.jpg": {
+      "version": "083560c93fd2e51f2bf1387eed4ee7f0676dfa9b",
+      "filename": "static/img/logo.jpg"
+    },
+    "static/img/bg_paper.jpg": {
+      "version": "275ea9a10308b8f79b3e83f87c2f28ad77cfd678",
+      "filename": "static/img/bg_paper.jpg"
+    },
+    "static/img/color.png": {
+      "version": "ca03999e582430bab9979388a7ec17105260855c",
+      "filename": "static/img/color.png"
+    },
+    "static/img/new_public_qrcode.jpeg": {
+      "version": "929c2cd1ff9daa1e398922071be0dee39d900cd8",
+      "filename": "static/img/new_public_qrcode.jpeg"
+    },
+    "static/img/next.png": {
+      "version": "009b5893bd7fd137ce891634d509452a704b1573",
+      "filename": "static/img/next.png"
+    },
+    "static/img/next_press.png": {
+      "version": "4625c229c29fc6278c7be0fb44247eb5a2206761",
+      "filename": "static/img/next_press.png"
+    },
+    "static/img/previous.png": {
+      "version": "85f57e1a6069728f78cec248dd0744253d257cce",
+      "filename": "static/img/previous.png"
+    },
+    "static/img/previous_press.png": {
+      "version": "4dfca015a80ee75ffcad8049e839668304d5818d",
+      "filename": "static/img/previous_press.png"
+    },
+    "static/img/stroke.png": {
+      "version": "c338dbe4c51fe2894436fd5248fd1882b3523c2e",
+      "filename": "static/img/stroke.png"
+    },
+    "static/js/0.js": {
+      "version": "1b538374929dbe3575d728b889b223bb763e5baa",
+      "filename": "static/js/0.js"
+    },
+    "static/js/1.js": {
+      "version": "874d3b4b484e7e1a94de5bf12023f715532178ff",
+      "filename": "static/js/1.js"
+    },
+    "static/js/2.js": {
+      "version": "1ee87fca8c34c1bee45506e24de398730f13926f",
+      "filename": "static/js/2.js"
+    },
+    "static/js/3.js": {
+      "version": "eef81cc9a24a3394a28f7bf0364b1c1e2730b40c",
+      "filename": "static/js/3.js"
+    },
+    "static/js/4.js": {
+      "version": "365a89af65c29387146e10fe81bafbc5caed95a2",
+      "filename": "static/js/4.js"
+    },
+    "static/js/5.js": {
+      "version": "ec3dec1e0685e9104d3601db545f8ff59df53acf",
+      "filename": "static/js/5.js"
+    },
+    "static/js/6.js": {
+      "version": "f25e976d8cda7622b3052631c7c263741ce08f3b",
+      "filename": "static/js/6.js"
+    },
+    "static/js/7.js": {
+      "version": "fa657d561b9cd0f808b276fd80bac99671a69cef",
+      "filename": "static/js/7.js"
+    },
+    "static/js/8.js": {
+      "version": "256405624f8a95192109facc3abf8097c23deca6",
+      "filename": "static/js/8.js"
+    },
+    "static/js/9.js": {
+      "version": "4bc3a0f0a606b7217a0146aa7e88757dbe3c4016",
+      "filename": "static/js/9.js"
+    },
+    "static/js/10.js": {
+      "version": "3f5e120ec78dc797263659e88dfc174d4172dd96",
+      "filename": "static/js/10.js"
+    },
+    "static/js/11.js": {
+      "version": "2e7d6a5ea82cf2e2c640f2f296e8b8f64a3b6032",
+      "filename": "static/js/11.js"
+    },
+    "static/js/12.js": {
+      "version": "7384f5d4f4a2e627c05f80dddd9cde5465ec206d",
+      "filename": "static/js/12.js"
+    },
+    "static/js/13.js": {
+      "version": "c39f62ce8e8765014cd675e82f9553a1a2ced9f7",
+      "filename": "static/js/13.js"
+    },
+    "static/js/14.js": {
+      "version": "484a2d343ccf3a5a43fa20153e38412d9c9c4d71",
+      "filename": "static/js/14.js"
+    },
+    "static/js/15.js": {
+      "version": "e6c0fbf0c19d640a2060c1e2aa924d3df3230ed8",
+      "filename": "static/js/15.js"
+    },
+    "static/js/16.js": {
+      "version": "aea9aeb7dfa4c1a000c6399080322d1babe42a2d",
+      "filename": "static/js/16.js"
+    },
+    "static/js/17.js": {
+      "version": "397ff0b8fc1d542736e21909d37c351b1df7e0c8",
+      "filename": "static/js/17.js"
+    },
+    "static/js/vendor.js": {
+      "version": "b5c98da7a6bfc48e4ef9ea01db34f3741f2f4602",
+      "filename": "static/js/vendor.js"
+    },
+    "static/js/app.js": {
+      "version": "4dc4de4fb8dc66e1a7992ab72d14ffdd608cc922",
+      "filename": "static/js/app.js"
+    },
+    "static/js/manifest.js": {
+      "version": "2b7e44f4b9c72c29df82795d723217d51abc54ee",
+      "filename": "static/js/manifest.js"
+    },
+    "static/css/app.css": {
+      "version": "e17dff8fdb9509b6711c567acf84c7b4dde84b8e",
+      "filename": "static/css/app.css"
+    },
+    "index.html": {
+      "version": "ad292a482bb69d560da8f88530262fccc16403e0",
+      "filename": "index.html"
+    }
+  },
+  "load": [
+    "static/css/app.css",
+    "static/js/manifest.js",
+    "static/js/vendor.js",
+    "static/js/app.js"
+  ],
+  "version": "9c03e847511d273b51c5bfaca51738a3e1c4a687"
+}

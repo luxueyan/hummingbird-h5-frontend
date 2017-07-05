@@ -10,7 +10,9 @@ const state = {
   user: JSON.parse(user || '{}') || {}, // 很奇怪，JSON.parse(user || '{}')结果竟然是null
   stateCode: null,
   stateMsg: '',
-  token: token
+  token: token,
+  updaterProgressValue: 0,
+  updaterProgressVisible: false
 }
 
 Vue.use(Vuex)

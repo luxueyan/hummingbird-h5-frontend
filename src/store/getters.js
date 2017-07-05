@@ -17,5 +17,13 @@ export default {
 
   stateMsg(state) {
     return state.stateMsg
+  },
+
+  updaterProgressValue(state) {
+    return state.updaterProgressValue
+  },
+
+  updaterProgressVisible(state) {
+    return state.updaterProgressVisible
   }
 }

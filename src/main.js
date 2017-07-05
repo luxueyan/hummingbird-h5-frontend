@@ -11,12 +11,50 @@ import FbFilters from './common/filters.js'
 import FbDirectives from './common/directives.js'
 import SimpleVueValidation from 'simple-vue-validator'
 import { getReadTime } from './common/utils.js'
+import Env from './env.js'
 
-import { Cell, Field, Header, Button, Toast, MessageBox } from 'mint-ui'
+import {
+  Cell,
+  CellSwipe,
+  Field,
+  Header,
+  Button,
+  Toast,
+  MessageBox,
+  Indicator,
+  Progress,
+  Tabbar,
+  TabItem,
+  Spinner,
+  InfiniteScroll
+} from 'mint-ui'
 Vue.component(Cell.name, Cell)
+Vue.component(CellSwipe.name, CellSwipe)
 Vue.component(Field.name, Field)
 Vue.component(Header.name, Header)
 Vue.component(Button.name, Button)
+Vue.component(Progress.name, Progress)
+Vue.component(Tabbar.name, Tabbar)
+Vue.component(TabItem.name, TabItem)
+Vue.component(Spinner.name, Spinner)
+Vue.use(InfiniteScroll)
+
+// 提示框icon样式
+const ToastClasses = {
+  'success': 'iconfont ui-icon-success',
+  'error': 'iconfont ui-icon-warn',
+  'warn': 'iconfont ui-icon-warn-block'
+}
+
+Vue.$toast = Vue.prototype.$toast = function(msg = '', type = '') {
+  Toast({
+    message: msg,
+    duration: getReadTime(msg),
+    iconClass: type ? ToastClasses[type] : ''
+  })
+}
+Vue.$messagebox = Vue.prototype.$messagebox = MessageBox
+Vue.$indicator = Vue.prototype.$indicator = Indicator
 
 sync(store, router)
 
@@ -84,13 +122,6 @@ window.onpageshow = function(event) {
   }
 }
 
-// 提示框icon样式
-const ToastClasses = {
-  'success': 'iconfont ui-icon-success',
-  'error': 'iconfont ui-icon-warn',
-  'warn': 'iconfont ui-icon-warn-block'
-}
-
 function main() {
   /* eslint-disable no-new */
   new Vue({
@@ -98,16 +129,6 @@ function main() {
     router,
     store,
     template: '<App/>',
-    methods: {
-      toast(msg = '', type = '') {
-        Toast({
-          message: msg,
-          duration: getReadTime(msg),
-          iconClass: type ? ToastClasses[type] : ''
-        })
-      },
-      MessageBox
-    },
     components: { App }
   })
 }
@@ -116,6 +137,10 @@ function main() {
 if (process.env.NODE_ENV.indexOf('app') > -1) {
   document.addEventListener('deviceready', e => {
     main()
+    const AppUpdater = require('./app.updater.js').default
+    new AppUpdater({
+      root: Env.getManifestServer()
+    })
   })
 } else {
   main()

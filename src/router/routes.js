@@ -1,6 +1,7 @@
 import { CUST_STATE_CODE_MAP } from '../constants.js'
 import { values } from 'lodash'
 const allStates = values(CUST_STATE_CODE_MAP)
+  // const isApp = !!~process.env.NODE_ENV.indexOf('app')
 
 export default [{
   path: '/',
@@ -11,6 +12,7 @@ export default [{
   component: resolve => require(['../views/Login.vue'], resolve),
   meta: {
     title: '蜂鸟速贷',
+    tabBarVisible: false,
     skipAuth: true
   }
 }, {
@@ -19,6 +21,7 @@ export default [{
   component: resolve => require(['../views/Notification.vue'], resolve),
   meta: {
     title: '蜂鸟搬家了',
+    tabBarVisible: false,
     skipAuth: true
   }
 }, {
@@ -27,6 +30,7 @@ export default [{
   component: resolve => require(['../views/BlacklistTip.vue'], resolve),
   meta: {
     title: '蜂鸟速贷',
+    tabBarVisible: false,
     permits: [CUST_STATE_CODE_MAP.BLACKLIST]
   }
 }, {
@@ -35,6 +39,7 @@ export default [{
   component: resolve => require(['../views/UnauthorizedTip.vue'], resolve),
   meta: {
     title: '蜂鸟速贷',
+    tabBarVisible: false,
     permits: [CUST_STATE_CODE_MAP.NOT_INVITED]
   }
 }, {
@@ -43,6 +48,7 @@ export default [{
   component: resolve => require(['../views/AuthorizedTip.vue'], resolve),
   meta: {
     title: '蜂鸟速贷',
+    tabBarVisible: false,
     permits: [CUST_STATE_CODE_MAP.FIRST_BORROWER]
   }
 }, {
@@ -51,6 +57,7 @@ export default [{
   component: resolve => require(['../views/LoanAgreement.vue'], resolve),
   meta: {
     title: '借款服务协议',
+    tabBarVisible: false,
     headerBackShow: true,
     permits: allStates
   }
@@ -69,6 +76,7 @@ export default [{
     component: resolve => require(['../views/borrow/BorrowerInfo.vue'], resolve),
     meta: {
       title: '立即提款',
+      tabBarVisible: true,
       headerHidden: true,
       hasFixedButtons: true,
       permits: [CUST_STATE_CODE_MAP.DEBT_SETTELED]
@@ -79,6 +87,7 @@ export default [{
     component: resolve => require(['../views/borrow/Signature.vue'], resolve),
     meta: {
       title: '合同签署',
+      tabBarVisible: false,
       permits: [CUST_STATE_CODE_MAP.CONTRACT_INFO_FILLED]
     }
   }, {
@@ -87,6 +96,7 @@ export default [{
     component: resolve => require(['../views/borrow/Loaning.vue'], resolve),
     meta: {
       title: '提款请求已确认',
+      tabBarVisible: true,
       permits: [CUST_STATE_CODE_MAP.LOANING]
     }
   }, {
@@ -95,6 +105,7 @@ export default [{
     component: resolve => require(['../views/borrow/LoanFailed.vue'], resolve),
     meta: {
       title: '提款失败',
+      tabBarVisible: true,
       permits: [CUST_STATE_CODE_MAP.LOAN_FAILED]
     }
   }]
@@ -113,6 +124,7 @@ export default [{
     component: resolve => require(['../views/repay/RepayInfo.vue'], resolve),
     meta: {
       title: '立即还款',
+      tabBarVisible: true,
       headerHidden: true,
       hasFixedButtons: true,
       permits: [CUST_STATE_CODE_MAP.DEBT_NOT_SETTLED]
@@ -123,6 +135,7 @@ export default [{
     component: resolve => require(['../views/repay/Repaying.vue'], resolve),
     meta: {
       title: '还款请求已确认',
+      tabBarVisible: true,
       permits: [CUST_STATE_CODE_MAP.REPAYING]
     }
   }, {
@@ -131,6 +144,7 @@ export default [{
     component: resolve => require(['../views/repay/RepayFailed.vue'], resolve),
     meta: {
       title: '还款失败',
+      tabBarVisible: true,
       permits: [CUST_STATE_CODE_MAP.REPAY_FAILED]
     }
   }]
@@ -149,6 +163,7 @@ export default [{
     component: resolve => require(['../views/account/ChangeBankCardStep1.vue'], resolve),
     meta: {
       title: '变更银行卡（1/2）',
+      tabBarVisible: true,
       headerBackShow: true,
       permits: allStates
     }
@@ -158,6 +173,7 @@ export default [{
     component: resolve => require(['../views/account/ChangeBankCardStep2.vue'], resolve),
     meta: {
       title: '变更银行卡（2/2）',
+      tabBarVisible: true,
       headerBackShow: true,
       permits: allStates
     }
@@ -167,7 +183,38 @@ export default [{
     component: resolve => require(['../views/account/ChangeBankCardStep3.vue'], resolve),
     meta: {
       title: '银行卡变更成功',
+      tabBarVisible: true,
       // headerBackShow: true,
+      permits: allStates
+    }
+  }]
+}, {
+  path: '/h5/messages',
+  name: 'messages',
+  redirect: { name: 'messageList' },
+  component: {
+    render(h) {
+      return h('router-view')
+    }
+  },
+  children: [{
+    path: 'list',
+    name: 'messageList',
+    component: resolve => require(['../views/account/Messages.vue'], resolve),
+    meta: {
+      title: '消息中心',
+      tabBarVisible: true,
+      headerBackShow: true,
+      permits: allStates
+    }
+  }, {
+    path: ':id',
+    name: 'messageDetail',
+    component: resolve => require(['../views/account/Message.vue'], resolve),
+    meta: {
+      title: '消息通知',
+      tabBarVisible: true,
+      headerBackShow: true,
       permits: allStates
     }
   }]

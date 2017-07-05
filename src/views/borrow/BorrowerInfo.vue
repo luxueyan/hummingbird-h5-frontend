@@ -132,7 +132,7 @@ export default {
         Creditmoney,
         Managemoney
       } = this.user.integraluserlevel
-      this.$root.MessageBox('服务费包含', `
+      this.$messagebox('服务费包含', `
         <table>
           <tr><th>审核费用：</th><td>${Creditmoney}元</td></tr>
           <tr><th>账户管理费：</th><td>${Managemoney}元</td></tr>
@@ -152,7 +152,7 @@ export default {
     // 立刻提款
     submit() {
       if (this.bankCardNotSupported) {
-        this.$root.toast('抱歉，您选择的银行卡不支持！', 'error')
+        this.$toast('抱歉，您选择的银行卡不支持！', 'error')
         return
       }
 
@@ -169,7 +169,7 @@ export default {
               }
             })
         } else {
-          this.$root.toast(this.validation.firstError(), 'error')
+          this.$toast(this.validation.firstError(), 'error')
         }
       })
     },

@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     showCommonFailedReasons() {
-      this.$root.MessageBox({
+      this.$messagebox({
         title: '常见失败原因',
         message: `<ol>
           <li>账户余额是否充足</li>

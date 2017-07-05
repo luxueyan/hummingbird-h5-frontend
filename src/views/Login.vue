@@ -54,6 +54,7 @@ export default {
   },
 
   mounted() {
+    this.redirect = this.$route.query.redirect
     this.$route.query.openid && (this.user.openid = this.$route.query.openid) // eslint-disable-line
     this.user.phone = this.$store.getters.user.phone || ''
   },
@@ -65,11 +66,11 @@ export default {
         if (success) {
           this.login(this.user).then(data => {
             this.$router.push({
-              name: 'authorizedTip'
+              name: this.redirect || 'authorizedTip'
             })
           })
         } else {
-          this.$root.toast(this.validation.firstError(), 'error')
+          this.$toast(this.validation.firstError(), 'error')
         }
       })
     },
@@ -85,7 +86,7 @@ export default {
             }
           })
         } else {
-          this.$root.toast(this.validation.firstError('user.phone'), 'error')
+          this.$toast(this.validation.firstError('user.phone'), 'error')
         }
       })
     },
@@ -97,6 +98,7 @@ export default {
 
   data() {
     return {
+      redirect: null, //登录后跳转页面
       countdownVisible: false,
       user: {
         UserinfoValLogin: {},

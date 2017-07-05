@@ -28,7 +28,7 @@ export default {
     myepaper.setCallback((pngData, pointsData, isCancel) => {
       if (!isCancel) {
         if (!pngData) {
-          this.$root.toast(`请手写您的姓名：${this.user.UserinfoValLogin.Name}`, 'error')
+          this.$toast(`请手写您的姓名：${this.user.UserinfoValLogin.Name}`, 'error')
           return
         }
 
@@ -49,7 +49,7 @@ export default {
             name: 'borrowerInfo'
           })
         })
-        // this.$root.toast('请签署合同', 'error')
+        // this.$toast('请签署合同', 'error')
       }
     })
   },
