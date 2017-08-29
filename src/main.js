@@ -11,7 +11,6 @@ import FbFilters from './common/filters.js'
 import FbDirectives from './common/directives.js'
 import SimpleVueValidation from 'simple-vue-validator'
 import { getReadTime } from './common/utils.js'
-import Env from './env.js'
 
 import {
   Cell,
@@ -139,7 +138,7 @@ if (process.env.NODE_ENV.indexOf('app') > -1) {
     main()
     const AppUpdater = require('./app.updater.js').default
     new AppUpdater({
-      root: Env.getManifestServer()
+      root: process.env.APP_MANIFEST_HOST
     })
   })
 } else {

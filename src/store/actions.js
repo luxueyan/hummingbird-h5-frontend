@@ -18,7 +18,7 @@ export default {
   async getCustStateCode({ commit, dispatch }) {
     const data = await getCustState.get().then(res => res.json())
     if (data.data) {
-      // console.log(data.data.StateCode = '1008')
+      console.log(data.data.StateCode = '1008')
       commit('updateStateCode', data.data.StateCode)
       commit('updateStateMsg', data.data.StateMsg)
     }

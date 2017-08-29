@@ -54,7 +54,7 @@ export default {
   },
 
   mounted() {
-    this.redirect = this.$route.query.redirect
+    this.redirect = decodeURIComponent(this.$route.query.redirect)
     this.$route.query.openid && (this.user.openid = this.$route.query.openid) // eslint-disable-line
     this.user.phone = this.$store.getters.user.phone || ''
   },
@@ -66,7 +66,7 @@ export default {
         if (success) {
           this.login(this.user).then(data => {
             this.$router.push({
-              name: this.redirect || 'authorizedTip'
+              path: this.redirect || '/'
             })
           })
         } else {

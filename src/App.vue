@@ -25,8 +25,8 @@
         | 我的
         i.icon-arrow-bottom-right
         .mint-tab-item-menu(v-show="mineMenuVisible", ref="mineMenu")
-          router-link(:to="{name: 'changeBankCardStep1'}") 修改信息
-          router-link(:to="{name: 'messageList'}") 消息中心
+          router-link(:to="{name: 'changeBankCardStep1'}", :class="{'is-selected': tabIsSelected(['changeBankCardStep1', 'changeBankCardStep2', 'changeBankCardStep3'])}") 修改信息
+          router-link(:to="{name: 'messageList'}", :class="{'is-selected': tabIsSelected(['messageList', 'messageDetail'])}") 消息中心
 </template>
 
 <script>
@@ -61,7 +61,6 @@ export default {
     each(this.$refs.tabbar.$children, v => {
       v.$el.addEventListener('touchstart', e => {
         this.tabClick(e, v.id)
-        console.log(e)
       })
     })
   },
@@ -88,10 +87,10 @@ export default {
           })
         } else {
           this.$toast('当前状态不能访问此页面！')
-          event.preventDefault()
-          event.stopPropagation()
         }
       }
+      event.preventDefault()
+      event.stopPropagation()
     },
 
     tabIsSelected(routeNames) {

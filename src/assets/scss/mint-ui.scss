@@ -27,7 +27,9 @@ body {
       background-size: 100% 1px;
       background-repeat: no-repeat;
       background-position: top left;
+      color: #353535;
       &.is-selected {
+        color: inherit;
         background: #eaeaea;
       }
     }
