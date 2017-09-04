@@ -26,7 +26,7 @@
         mt-cell(@click.native="goChangeBankCard()")
           a.small 变更银行卡
       .form-buttons.fixed
-          mt-button.mint-button-block(type='primary', size='large', @click="repay()") 立即还款
+          mt-button.mint-button-block(type='primary', size='large', @click="repayConfirm()") 立即还款
 </template>
 
 <script>
@@ -40,6 +40,7 @@ import {
 import {
   contractInfo
 } from '../../common/adaptors.js'
+import moment from 'moment'
 
 export default {
   mixins: [repayMixins],
@@ -61,6 +62,18 @@ export default {
       this.$router.push({
         name: 'changeBankCardStep1'
       })
+    },
+
+    repayConfirm() {
+      if (new Date() - moment(this.model.startDateTs).toDate() <= 86400000) { // 如果小于一天就还款，给出提示
+        this.$msgBox.confirm('确认提交还款?').then(action => {
+          if (action === 'confirm') {
+            this.repay()
+          }
+        }).catch(() => {})
+      } else {
+        this.repay()
+      }
     }
   },
   computed: {

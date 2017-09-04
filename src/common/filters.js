@@ -61,6 +61,10 @@ export default {
       return !value ? '-' : (str || value)
     })
 
+    Vue.filter('fbCardNo', (value) => {
+      return value ? value.replace(/(\d{4})\d+(\d{4})/g, '$1****$2') : '-'
+    })
+
     Vue.filter('moment', (date, format) => {
       return moment(date).format(format)
     })
