@@ -12,7 +12,7 @@ import FbDirectives from './common/directives.js'
 import SimpleVueValidation from 'simple-vue-validator'
 import { getReadTime } from './common/utils.js'
 
-import { Cell, Field, Header, Button, Toast, MessageBox } from 'mint-ui'
+import { Cell, Field, Header, Button, Toast, MessageBox, Indicator } from 'mint-ui'
 Vue.component(Cell.name, Cell)
 Vue.component(Field.name, Field)
 Vue.component(Header.name, Header)
@@ -67,7 +67,7 @@ const envApiPaths = {
   'app-production': 'http://fn.91zhengxin.com:9111/api.aspx'
 }
 Vue.http.options.root = envApiPaths[process.env.NODE_ENV] || '/api.aspx'
-  // Vue.http.headers.common['Authorization'] = window.localStorage.token || ''
+// Vue.http.headers.common['Authorization'] = window.localStorage.token || ''
 
 // 拦截器统一注入
 interceptors.forEach((v) => {
@@ -98,19 +98,19 @@ function main() {
     router,
     store,
     template: '<App/>',
-    methods: {
-      toast(msg = '', type = '') {
-        Toast({
-          message: msg,
-          duration: getReadTime(msg),
-          iconClass: type ? ToastClasses[type] : ''
-        })
-      },
-      MessageBox
-    },
     components: { App }
   })
 }
+
+Vue.$msgBox = Vue.prototype.$msgBox = MessageBox
+Vue.$toast = Vue.prototype.$toast = function toast(msg = '', type = '') {
+  Toast({
+    message: msg,
+    duration: getReadTime(msg),
+    iconClass: type ? ToastClasses[type] : ''
+  })
+}
+Vue.$indicator = Vue.prototype.$indicator = Indicator
 
 // 启动应用
 if (process.env.NODE_ENV.indexOf('app') > -1) {

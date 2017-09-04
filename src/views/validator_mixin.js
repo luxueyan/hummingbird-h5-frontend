@@ -16,7 +16,7 @@ export default {
     showFieldError(event, field) {
       const et = event.target
       if (et.classList.contains('mintui-field-error') && et.parentNode.classList.contains('mint-field-state')) {
-        this.$root.toast(this.validation.firstError(field), 'error')
+        this.$toast(this.validation.firstError(field), 'error')
       }
     }
   }

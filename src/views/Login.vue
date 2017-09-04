@@ -69,7 +69,7 @@ export default {
             })
           })
         } else {
-          this.$root.toast(this.validation.firstError(), 'error')
+          this.$toast(this.validation.firstError(), 'error')
         }
       })
     },
@@ -85,7 +85,7 @@ export default {
             }
           })
         } else {
-          this.$root.toast(this.validation.firstError('user.phone'), 'error')
+          this.$toast(this.validation.firstError('user.phone'), 'error')
         }
       })
     },
