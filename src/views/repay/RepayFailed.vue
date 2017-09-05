@@ -27,7 +27,7 @@ section.change-bank-card-step3.single-page-tip
         | 更换一张余额充足的银行卡，更改成功后点击
         em 重试
         |；
-      li 二、线下转账至我们支付宝公户：fengniaosudai@163.com（请备注姓名+手机号），转账后公众号中联系客服为您操作合同状态。
+      li 二、线下转账至我们支付宝公户：fengniaosudai@163.com【北京极速蜂鸟科技有限公司】（请备注姓名+手机号），转账后公众号中联系客服为您操作合同状态。
   .footer.no-padding-top
     //- .simple-btns
       a.large(@click="showCommonFailedReasons()") 常见失败原因
