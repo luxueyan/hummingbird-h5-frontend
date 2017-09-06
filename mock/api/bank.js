@@ -1,0 +1,47 @@
+module.exports = router => {
+  // 添加银行卡
+  router.post('/bank_cards', (req, res) => {
+    const data = req.body
+    if (req.session.captcha !== parseInt(data.captcha, 10)) {
+      res.json({
+        code: 200003,
+        message: '验证码错误'
+      })
+    } else {
+      res.jsonOk({
+        'id': '599794a4f87ca703c05df02c'
+      })
+    }
+  })
+
+  // 银行卡列表
+  router.get('/bank_cards', (req, res) => {
+    res.jsonOk({
+      'bankCards': [{
+        'id': '599794a4f87ca703c05df02c',
+        'bankCard': '62200000000000',
+        'bankName': '中国工商银行',
+        'isDefault': true,
+        'canDelete': false
+      }]
+    })
+  })
+
+  // 单个银行卡信息
+  router.get('/bank_cards/:id', (req, res) => {
+    res.jsonOk({
+      'id': '599794a4f87ca703c05df02c',
+      'bankCard': '62200000000000',
+      'bankName': 'bankName',
+      'isDefault': true,
+      'canDelete': false
+    })
+  })
+
+  // 修改默认银行卡
+  router.post('/bank_cards/default', (req, res) => {
+    res.jsonOk({
+      updateResult: 1
+    })
+  })
+}
