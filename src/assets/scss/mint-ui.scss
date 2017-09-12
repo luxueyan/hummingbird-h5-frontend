@@ -6,58 +6,73 @@ body {
   .mint-field-state {
     margin-left: 5px;
     .mintui {
-      font-size: 25px;
-      vertical-align: 5px;
+      font-size: 17px;
+      vertical-align: 2px;
     }
   }
-  .mint-tab-item-menu {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    transform: translateY(-100%);
-    a {
-      font-size: 14px;
-      display: block;
-      text-align: left;
-      line-height: 55px;
-      padding: 0 10px;
-      background: $small-gray-color;
-      background-image: linear-gradient(180deg, #d9d9d9, #d9d9d9 50%, transparent 50%);
-      background-size: 100% 1px;
-      background-repeat: no-repeat;
-      background-position: top left;
-      color: #353535;
-      &.is-selected {
-        color: inherit;
-        background: #eaeaea;
-      }
-    }
-  }
-  .mint-tabbar > .mint-tab-item {
+  .mintui {
+    -webkit-text-stroke-width: 0;
+  } // .mint-tab-item-menu {
+  //   position: absolute;
+  //   top: 0;
+  //   left: 0;
+  //   right: 0;
+  //   transform: translateY(-100%);
+  //   a {
+  //     font-size: 14px;
+  //     display: block;
+  //     text-align: left;
+  //     line-height: 55px;
+  //     padding: 0 10px;
+  //     background: $small-gray-color;
+  //     background-image: linear-gradient(180deg, #d9d9d9, #d9d9d9 50%, transparent 50%);
+  //     background-size: 100% 1px;
+  //     background-repeat: no-repeat;
+  //     background-position: top left;
+  //     color: #353535;
+  //     &.is-selected {
+  //       color: inherit;
+  //       background: #eaeaea;
+  //     }
+  //   }
+  // }
+  .mint-tabbar>.mint-tab-item {
     color: inherit;
     position: relative;
+    .iconfont {
+      font-size: 20px;
+    }
+    .active-onselect {
+      display: none;
+    }
     &.is-selected {
-      color: $primary-color;
-      svg {
-        path {
-          fill: $primary-color;
-        }
+      .active-default {
+        display: none;
       }
-    }
-    &.is-disabled {
-      color: $mid-gray-color;
-      svg {
-        path {
-          fill: $mid-gray-color;
-        }
+      .active-onselect {
+        display: inline-block;
       }
-    }
-    .icon-arrow-bottom-right {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-    }
+    } // &.is-selected {
+    //   color: $primary-color;
+    //   svg {
+    //     path {
+    //       fill: $primary-color;
+    //     }
+    //   }
+    // }
+    // &.is-disabled {
+    //   color: $mid-gray-color;
+    //   svg {
+    //     path {
+    //       fill: $mid-gray-color;
+    //     }
+    //   }
+    // }
+    // .icon-arrow-bottom-right {
+    //   position: absolute;
+    //   right: 0;
+    //   bottom: 0;
+    // }
   }
   .mint-msgbox-message {
     line-height: 1.5em;
@@ -68,7 +83,7 @@ body {
       font-weight: normal;
       text-align: right;
     }
-    ol > li {
+    ol>li {
       text-align: left;
       list-style: decimal;
       list-style-position: inside;
@@ -100,6 +115,9 @@ body {
     flex-shrink: 0;
     white-space: nowrap;
     overflow: hidden;
+    .iconfont {
+      vertical-align: middle;
+    }
   }
   .mint-cell-label {
     overflow: hidden;
@@ -116,13 +134,13 @@ body {
   .mintui-field-error {
     font-family: 'iconfont'!important;
     &:before {
-      content: "\e608";
+      content: "\e610";
     }
   }
   .mintui-field-success {
     font-family: 'iconfont'!important;
     &:before {
-      content: "\e607";
+      content: "\e60e";
     }
   }
   .mint-field-clear {
@@ -164,7 +182,8 @@ body {
   &.mintui-field-error {
     color: $error-color;
   }
-  &.ui-icon-warn-block {
+  &.icon-warning,
+  &.icon-ku {
     color: $error-color;
   }
 }

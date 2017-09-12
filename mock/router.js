@@ -1,8 +1,15 @@
 const commonApi = require('./api/common.js')
+const creditApi = require('./api/credit.js')
+const bankApi = require('./api/bank.js')
+const analyticApi = require('./api/analytic.js')
+const contractApi = require('./api/contract.js')
+const messageApi = require('./api/message.js')
+const privilegeApi = require('./api/privilege.js')
 const router = require('express').Router()
 const jwt = require('express-jwt')
 const SECRET = require('./const.js').SECRET
 
+// 使用jwt 授权
 router.use(jwt({
   secret: SECRET,
   credentialsRequired: true, // 是否需要token
@@ -30,9 +37,17 @@ router.use(jwt({
 
   next()
 })
-commonApi(router)
 
-// handle jwt err
+// 装载接口
+commonApi(router)
+creditApi(router)
+bankApi(router)
+analyticApi(router)
+contractApi(router)
+messageApi(router)
+privilegeApi(router)
+
+// handle token expired err
 router.use((err, req, res, next) => {
   if (err.name === 'UnauthorizedError') {
     res.json({

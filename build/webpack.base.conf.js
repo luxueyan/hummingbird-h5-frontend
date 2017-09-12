@@ -17,14 +17,14 @@ module.exports = {
     publicPath: process.env.NODE_ENV === 'production' ? config.build.assetsPublicPath : config.dev.assetsPublicPath
   },
   resolve: {
-    extensions: ['.js', '.vue', '.json'],
+    extensions: ['.js', '.vue', '.json', '.jpg', '.png', '.jpeg', '.scss'],
     modules: [
       resolve('src'),
       resolve('node_modules')
     ],
     alias: {
       'vue$': 'vue/dist/vue.common.js',
-      'src': resolve('src'),
+      '@': resolve('src'),
       'assets': resolve('src/assets'),
       'components': resolve('src/components')
     }

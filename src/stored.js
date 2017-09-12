@@ -1,5 +1,5 @@
-import { read } from './storage'
-import { STORE_KEY_USER, STORE_KEY_ACCESS_TOKEN } from './constants'
+import { read } from '@/storage'
+import { STORE_KEY_USER, STORE_KEY_ACCESS_TOKEN } from '@/constants'
 
 export const user = read(STORE_KEY_USER) || ''
 export const token = read(STORE_KEY_ACCESS_TOKEN) || ''

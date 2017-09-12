@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from './routes'
 import store from '../store'
-import { includes, find, map, flattenDeep } from 'lodash'
+import { includes, find, map, isString, flattenDeep } from 'lodash'
 import { RET_CODE_MAP, CUST_STATE_CODE_MAP } from '../constants.js'
 import { Toast } from 'mint-ui'
 Vue.use(VueRouter)
@@ -22,7 +22,7 @@ const router = new VueRouter({
 
 // 业务状态对应页面映射表
 const custStateRedirectMap = {
-  [CUST_STATE_CODE_MAP.NOT_LOGIN]: { name: 'login' }, // 未登录
+  // [CUST_STATE_CODE_MAP.NOT_LOGIN]: { name: 'login' }, // 未登录
   [CUST_STATE_CODE_MAP.DEBT_SETTELED]: { name: 'borrowerInfo' }, // 借款结清
   [CUST_STATE_CODE_MAP.CONTRACT_INFO_FILLED]: { name: 'signature' }, // 合同信息已完成
   [CUST_STATE_CODE_MAP.NOT_INVITED]: { name: 'unauthorizedTip' }, // 未邀请
@@ -31,7 +31,7 @@ const custStateRedirectMap = {
   [CUST_STATE_CODE_MAP.DEBT_NOT_SETTLED]: { name: 'repayInfo' }, // 借款未结清
   [CUST_STATE_CODE_MAP.REPAYING]: { name: 'repaying' }, // 还款中
   [CUST_STATE_CODE_MAP.REPAY_FAILED]: { name: 'repayFailed' }, // 还款失败
-  [CUST_STATE_CODE_MAP.BLACKLIST]: { name: 'blacklistTip' }, // 黑名单客户
+  // [CUST_STATE_CODE_MAP.BLACKLIST]: { name: 'blacklistTip' }, // 黑名单客户
   [CUST_STATE_CODE_MAP.FIRST_BORROWER]: { name: 'authorizedTip' }, // 首次借款
   [CUST_STATE_CODE_MAP.UNKNOWN]: { name: 'login' } // 未知状态
 }
@@ -50,17 +50,17 @@ router.beforeEach((to, from, next) => {
         if (stateCode) {
           resolve(stateCode)
         } else {
-          store.dispatch('getCustStateCode').then(res => {
-            if (res.ret === RET_CODE_MAP.OK) {
-              resolve(res.data.StateCode)
-              if (res.data.StateCode === CUST_STATE_CODE_MAP.CONTRACT_INFO_FILLED) {
+          store.dispatch('getUser').then(res => {
+            if (res.code === RET_CODE_MAP.OK) {
+              const newStateCode = store.getters.stateCode
+              resolve(newStateCode)
+              if (newStateCode === CUST_STATE_CODE_MAP.CONTRACT_INFO_FILLED) {
                 Toast({
                   message: '您有一笔合同已提交但没有签署'
-                    // position: 'top'
                 })
               }
               // 状态异常账户
-              if (res.data.StateCode === CUST_STATE_CODE_MAP.UNKNOWN) {
+              if (newStateCode === CUST_STATE_CODE_MAP.UNKNOWN) {
                 Toast({
                   message: '账户状态异常！'
                 })
@@ -99,7 +99,7 @@ router.afterEach((to) => {
     // hack ios title not update bug
     const iframe = document.createElement('iframe')
     iframe.classList.add('dn')
-    iframe.src = require('../assets/images/clear.png')
+    iframe.src = require('assets/images/clear.png')
     document.body.appendChild(iframe)
     iframe.onload = () => {
       setTimeout(() => {
@@ -123,8 +123,14 @@ function flattenRoutes(routes) {
 const flatRoutes = flattenDeep(flattenRoutes(routes))
 
 Vue.getPermits = Vue.prototype.getPermits = function(routeName) {
-  const router = find(flatRoutes, r => r.name === routeName)
-  return router ? router.meta.permits : []
+  if (isString(routeName)) routeName = [routeName]
+  const permits = map(routeName, rn => {
+    const router = find(flatRoutes, r => r.name === rn)
+    return router ? router.meta.permits : []
+  })
+  return flattenDeep(permits)
+  // const router = find(flatRoutes, r => r.name === routeName)
+  // return router ? router.meta.permits : []
 }
 
 Vue.isPermit = Vue.prototype.isPermit = function(routeName) {

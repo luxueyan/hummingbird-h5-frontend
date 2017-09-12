@@ -44,4 +44,20 @@ module.exports = router => {
       updateResult: 1
     })
   })
+
+  // 查看银行卡开户行
+  router.get('/bank_cards/info', (req, res) => {
+    if (Math.random() > 0.5) {
+      res.jsonOk({
+        'bankCard': '62200000000000',
+        'bankName': '中国牛鼻银行',
+        'bankCode': '92229'
+      })
+    } else {
+      res.json({
+        code: 200009,
+        message: '银行卡暂不支持'
+      })
+    }
+  })
 }

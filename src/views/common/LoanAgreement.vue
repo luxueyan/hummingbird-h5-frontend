@@ -136,10 +136,10 @@
 <script>
 import {
   QueryContract
-} from '../common/resources.js'
+} from '@/common/resources.js'
 import {
   contractInfo
-} from '../common/adaptors.js'
+} from '@/common/adaptors.js'
 import {
   mapGetters
 } from 'vuex'

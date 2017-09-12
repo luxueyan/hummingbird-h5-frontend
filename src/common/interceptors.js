@@ -85,21 +85,21 @@ export default [
         if (request.params.skipAuth) {
           store.dispatch('logout', true)
         } else {
-          MessageBox('提示', res.body.msg || '无访问权限！')
+          MessageBox('提示', res.body.message || '无访问权限！')
           store.dispatch('logout')
         }
       } else if (res.status === 400) {
-        MessageBox('提示', res.body.msg || '请求失败！')
+        MessageBox('提示', res.body.message || '请求失败！')
       } else if (res.status === 403) {
-        MessageBox('提示', res.body.msg || '您无此权限！')
+        MessageBox('提示', res.body.message || '您无此权限！')
       } else if (res.status === 404) {
-        MessageBox('提示', res.body.msg || '访问错误！')
+        MessageBox('提示', res.body.message || '访问错误！')
       } else if (res.status === 500 || res.status === 502) {
-        MessageBox('提示', res.body.msg || '抱歉！服务器忙。')
+        MessageBox('提示', res.body.message || '抱歉！服务器忙。')
       } else if (res.status === 200) {
-        if (!request.notApi && !request.params.skipAuth && (!res.body || res.body.ret !== RET_CODE_MAP.OK)) {
-          MessageBox('提示', res.body ? res.body.msg : '登录失败或者访问无权限')
-          if (!res.body || res.body.ret === RET_CODE_MAP.FAILED) {
+        if (!request.notApi && !request.params.skipAuth && (!res.body || res.body.code !== RET_CODE_MAP.OK)) {
+          MessageBox('提示', res.body ? res.body.message : '登录失败或者访问无权限')
+          if (!res.body || res.body.code === RET_CODE_MAP.AUTH_FAILED || res.body.code === RET_CODE_MAP.USER_FORBIDDENED) {
             store.dispatch('logout')
           }
         } else {

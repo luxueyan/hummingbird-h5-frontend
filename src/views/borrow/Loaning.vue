@@ -1,7 +1,7 @@
 <template lang="pug">
 section.change-bank-card-step3.single-page-tip
   .logo
-    i.iconfont.ui-icon-success
+    i.iconfont.icon-xiao
     //- h3 您的提款请求已发送成功，请耐心等待。
   article
     //- p 您的提款请求已发送成功，请耐心等待。
@@ -31,10 +31,10 @@ import {
 } from 'vuex'
 import {
   QueryContract
-} from '../../common/resources.js'
+} from '@/common/resources.js'
 import {
   contractInfo
-} from '../../common/adaptors.js'
+} from '@/common/adaptors.js'
 
 export default {
   computed: {

@@ -1,7 +1,7 @@
 <template lang="pug">
 section.change-bank-card-step3.single-page-tip
   .logo
-    i.iconfont.ui-icon-success
+    i.iconfont.icon-xiao
     //- h3 提款失败！
   article
     p 您的还款请求已经提交成功，

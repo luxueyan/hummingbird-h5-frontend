@@ -6,7 +6,7 @@ section
     .fields
       fb-field(v-mt-field-blur="{blur:getBank}", label='银行卡号', :placeholder='placeholders.bankCard', v-model="bankCardForShow", :state="getFieldState('model.bankCard')", @click.native="showFieldError($event, 'model.bankCard')")
         span(slot="label") 银行卡号
-          i.iconfont.ui-icon-info(@click="showSupportBanks()")
+          i.iconfont.icon-info(@click="showSupportBanks()")
       input(type="hidden", v-model='model.bankCard')
       mt-field(label='银行预留手机号', :placeholder='placeholders.bankPhone', v-model="model.bankPhone", :state="getFieldState('model.bankPhone')", @click.native="showFieldError($event, 'model.bankPhone')")
       mt-cell(title="开户行", :value="model.bankName | fbFalse")
@@ -15,23 +15,23 @@ section
 </template>
 
 <script>
-import ValidatorMixin from '../validator_mixin.js'
-import CommonMixin from '../common_mixin.js'
-import FbField from '../../components/FbField.vue'
+import ValidatorMixin from '@/views/validator_mixin.js'
+import CommonMixin from '@/views/common_mixin.js'
+import FbField from '@/components/FbField.vue'
 import {
   isDetectionBankCard,
   updateBankInfo,
   QueryContract
-} from '../../common/resources.js'
+} from '@/common/resources.js'
 import {
   RET_CODE_MAP
-} from '../../constants.js'
+} from '@/constants.js'
 import {
   isBankCard
-} from '../../common/utils.js'
+} from '@/common/utils.js'
 import {
   contractInfo
-} from '../../common/adaptors.js'
+} from '@/common/adaptors.js'
 import {
   mapGetters,
   mapMutations
@@ -52,9 +52,9 @@ export default {
             vm.placeholders.bankCard = contract.bankCard.replace(/\d{4}(?=(\d{1,4}))/g, '$& ')
             vm.placeholders.bankPhone = contract.bankPhone
             vm.model.bankName = contract.bank
-              // Object.assign(vm.model, contractInfo(data.data.content))
-              // vm.model.bankName = vm.model.bank
-              // vm.bankCardForShow = vm.model.bankCard.replace(/\d{4}(?=(\d{1,4}))/g, '$& ')
+            // Object.assign(vm.model, contractInfo(data.data.content))
+            // vm.model.bankName = vm.model.bank
+            // vm.bankCardForShow = vm.model.bankCard.replace(/\d{4}(?=(\d{1,4}))/g, '$& ')
           }
         })
       })
@@ -93,7 +93,7 @@ export default {
           bankCard: this.model.bankCard
         }).then(res => res.json()).then(data => {
           this.model.bankName = data.data.bank
-          this.bankCardNotSupported = data.ret === RET_CODE_MAP.BANK_CARD_NOT_SUPPORTED
+          this.bankCardNotSupported = data.code === RET_CODE_MAP.BANK_CARD_NOT_SUPPORTED
         })
       }
     },
@@ -115,14 +115,17 @@ export default {
       this.$validate().then(success => {
         if (success) {
           updateBankInfo.save(this.model).then(res => res.json()).then(data => {
-            if (data.ret === RET_CODE_MAP.OK) {
+            if (data.code === RET_CODE_MAP.OK) {
               // 添加更新银行卡state信息
               this.updateUser(Object.assign({}, this.user, this.model, {
                 bank: this.model.bankName
               }))
 
               this.$router.push({
-                name: 'changeBankCardStep3'
+                name: 'changeBankCardStep3',
+                params: {
+                  transitionName: 'slideRightFade'
+                }
               })
             }
           })

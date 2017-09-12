@@ -47,7 +47,7 @@ module.exports = {
     // Before setting to `true`, make sure to:
     // npm install --save-dev compression-webpack-plugin
     productionGzip: false,
-    productionGzipExtensions: ['js', 'css'],
+    productionGzipExtensions: ['js', 'css']
   },
   dev: {
     env: require('./dev.env'),
@@ -56,11 +56,18 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/api.aspx': {
-        target: 'http://fn.91zhengxin.com:8080',
+      // '/api.aspx': {
+      //   target: 'http://fn.91zhengxin.com:8080',
+      //   changeOrigin: true,
+      //   pathRewrite: function(path, req) {
+      //     return path.replace('/api.aspx/', '/api.aspx')
+      //   }
+      // }
+      '/api': {
+        target: 'http://localhost:3000',
         changeOrigin: true,
         pathRewrite: function(path, req) {
-          return path.replace('/api.aspx/', '/api.aspx')
+          return path
         }
       }
     },

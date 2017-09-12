@@ -11,22 +11,20 @@ module.exports = router => {
         'gainPoints': 100
       }],
       'optionalWarrants': [{
-          'warrantType': {
-            'key': 4,
-            'value': '通讯录'
-          },
-          'isWarranted': true,
-          'gainPoints': 100
+        'warrantType': {
+          'key': 4,
+          'value': '通讯录'
         },
-        {
-          'warrantType': {
-            'key': 5,
-            'value': '运营商'
-          },
-          'isWarranted': false,
-          'gainPoints': 60
+        'isWarranted': true,
+        'gainPoints': 100
+      }, {
+        'warrantType': {
+          'key': 5,
+          'value': '运营商'
         },
-      ]
+        'isWarranted': false,
+        'gainPoints': 60
+      }]
     })
   })
 

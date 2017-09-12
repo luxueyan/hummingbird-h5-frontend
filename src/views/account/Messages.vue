@@ -17,7 +17,7 @@
 <script>
 import {
   headerRightButton
-} from '../../common/crossers.js'
+} from '@/common/crossers.js'
 // import {
 //   Messages
 // } from '../../common/resources.js'
@@ -55,7 +55,7 @@ export default {
   mounted() {
     headerRightButton.$on('messages-mark-read', () => {
       const _self = this
-      this.$messagebox({
+      this.$msgBox({
         title: '提示',
         message: '确定将全部消息标记为已读吗？',
         confirmButtonText: '确定',
@@ -116,7 +116,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../assets/scss/_variables.scss';
+@import '~assets/scss/_variables.scss';
 .messages {
   margin-top: 10px;
   .mint-cell-title {

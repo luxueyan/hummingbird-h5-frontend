@@ -1,7 +1,7 @@
 <template lang="pug">
 section.unauthorized-tip.single-page-tip
   div.logo
-    img(src='../assets/images/logo.jpg')
+    img(src='~assets/images/logo.jpg')
     small 免审核借款1000元
   article
     p 感谢您的来访。

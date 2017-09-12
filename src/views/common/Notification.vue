@@ -7,7 +7,7 @@ section.notification
     div.text-center.qrcode-con
       p 欢迎大家关注<em>【极速蜂鸟】</em>
       p 长按二维码并关注↓
-      img.qrcode(src="../assets/images/new_public_qrcode.jpeg")
+      img.qrcode(src="~assets/images/new_public_qrcode.jpeg")
 </template>
 
 

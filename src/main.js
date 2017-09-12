@@ -1,16 +1,16 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import App from './App'
-import store from './store'
+import App from '@/App'
+import store from '@/store'
 import { sync } from 'vuex-router-sync'
-import router from './router'
-import './common/resources.js'
-import interceptors from './common/interceptors.js'
-import FbFilters from './common/filters.js'
-import FbDirectives from './common/directives.js'
+import router from '@/router'
+import '@/common/resources.js'
+import interceptors from '@/common/interceptors.js'
+import FbFilters from '@/common/filters.js'
+import FbDirectives from '@/common/directives.js'
 import SimpleVueValidation from 'simple-vue-validator'
-import { getReadTime } from './common/utils.js'
+import { getReadTime } from '@/common/utils.js'
 
 import {
   Cell,
@@ -27,6 +27,7 @@ import {
   Spinner,
   InfiniteScroll
 } from 'mint-ui'
+
 Vue.component(Cell.name, Cell)
 Vue.component(CellSwipe.name, CellSwipe)
 Vue.component(Field.name, Field)
@@ -40,20 +41,10 @@ Vue.use(InfiniteScroll)
 
 // 提示框icon样式
 const ToastClasses = {
-  'success': 'iconfont ui-icon-success',
-  'error': 'iconfont ui-icon-warn',
-  'warn': 'iconfont ui-icon-warn-block'
+  'success': 'iconfont icon-chenggong',
+  'error': 'iconfont icon-warning',
+  'warn': 'iconfont icon-warn'
 }
-
-Vue.$toast = Vue.prototype.$toast = function(msg = '', type = '') {
-  Toast({
-    message: msg,
-    duration: getReadTime(msg),
-    iconClass: type ? ToastClasses[type] : ''
-  })
-}
-Vue.$messagebox = Vue.prototype.$messagebox = MessageBox
-Vue.$indicator = Vue.prototype.$indicator = Indicator
 
 sync(store, router)
 
@@ -96,15 +87,8 @@ Vue.use(SimpleVueValidation, {
   }
 })
 
-// http初始化
-const envApiPaths = {
-  'development': '/api.aspx',
-  'production': '/api.aspx',
-  'app-development': 'http://fn.91zhengxin.com:9111/api.aspx',
-  'app-production': 'http://fn.91zhengxin.com:9111/api.aspx'
-}
-Vue.http.options.root = envApiPaths[process.env.NODE_ENV] || '/api.aspx'
-  // Vue.http.headers.common['Authorization'] = window.localStorage.token || ''
+Vue.http.options.root = process.env.API_HOST || '/api'
+// Vue.http.headers.common['Authorization'] = window.localStorage.token || ''
 
 // 拦截器统一注入
 interceptors.forEach((v) => {
@@ -132,11 +116,28 @@ function main() {
   })
 }
 
+Vue.$msgBox = Vue.prototype.$msgBox = MessageBox
+Vue.$toast = Vue.prototype.$toast = function toast(msg = '', type = '') {
+  Toast({
+    message: msg,
+    duration: getReadTime(msg),
+    iconClass: type ? ToastClasses[type] : ''
+  })
+}
+Vue.$indicator = Vue.prototype.$indicator = Indicator
+Vue.prototype.isWeixin = () => { // 判断是否是微信
+  const ua = navigator.userAgent.toLowerCase()
+  if (ua.match(/.*MicroMessenger/i)) {
+    return true
+  }
+  return false
+}
+
 // 启动应用
 if (process.env.NODE_ENV.indexOf('app') > -1) {
   document.addEventListener('deviceready', e => {
     main()
-    const AppUpdater = require('./app.updater.js').default
+    const AppUpdater = require('@/app.updater.js').default
     new AppUpdater({
       root: process.env.APP_MANIFEST_HOST
     })

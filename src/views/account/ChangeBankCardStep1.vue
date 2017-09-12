@@ -14,8 +14,8 @@ section
 </template>
 
 <script>
-import FbCountdown from '../../components/FbCountdown.vue'
-import ValidatorMixin from '../validator_mixin.js'
+import FbCountdown from '@/components/FbCountdown.vue'
+import ValidatorMixin from '@/views/validator_mixin.js'
 import {
   updateInfoSendMsgFromPhone,
   validateUpdateInfoMsgFromPhone
@@ -43,7 +43,7 @@ export default {
     // 获取验证码
     toGetMsgCode() {
       updateInfoSendMsgFromPhone.get().then(res => res.json()).then(data => {
-        if (data.ret === RET_CODE_MAP.OK) {
+        if (data.code === RET_CODE_MAP.OK) {
           this.countdownVisible = true
           this.$refs.fnCountdown.start()
         }
@@ -57,9 +57,12 @@ export default {
       this.$validate().then(success => {
         if (success) {
           validateUpdateInfoMsgFromPhone.get(this.model).then(res => res.json()).then(data => {
-            if (data.ret === RET_CODE_MAP.OK) {
+            if (data.code === RET_CODE_MAP.OK) {
               this.$router.push({
-                name: 'changeBankCardStep2'
+                name: 'changeBankCardStep2',
+                params: {
+                  transitionName: 'slideRightFade'
+                }
               })
             }
           })

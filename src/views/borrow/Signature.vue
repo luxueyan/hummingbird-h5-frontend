@@ -3,11 +3,11 @@
 </template>
 
 <script>
-import EPaper from '../../common/epaper.js'
+import EPaper from '@/common/epaper.js'
 import {
   SetAgreementSign,
   GiveUpContract
-} from '../../common/resources.js'
+} from '@/common/resources.js'
 import {
   mapGetters,
   mapMutations
@@ -15,8 +15,8 @@ import {
 import {
   RET_CODE_MAP,
   CUST_STATE_CODE_MAP
-} from '../../constants.js'
-import borrowMixins from './borrow_mixins.js'
+} from '@/constants.js'
+import borrowMixins from '@/views/borrow/borrow_mixins.js'
 
 export default {
   mixins: [borrowMixins],
@@ -38,7 +38,7 @@ export default {
           })
           .then(res => res.json())
           .then(data => {
-            if (data.ret === RET_CODE_MAP.OK) {
+            if (data.code === RET_CODE_MAP.OK) {
               this.drawMoney()
             }
           })
@@ -73,7 +73,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../../assets/scss/epaper.scss';
+@import '~assets/scss/epaper.scss';
 #panel {
   top: 0;
   left: 0;

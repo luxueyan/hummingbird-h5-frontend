@@ -1,7 +1,7 @@
 <template lang="pug">
 section.unauthorized-tip.single-page-tip
   div.logo
-    i.iconfont.ui-icon-warn
+    i.iconfont.icon-ku
     h3 尊敬的用户，您好
   article
     p 我们的服务尚未对外开放，感谢您关注蜂鸟速贷！

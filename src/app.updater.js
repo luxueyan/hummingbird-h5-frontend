@@ -1,15 +1,15 @@
 /**
  * @description 用于cordova打包的app的自动更新服务，
- * 本项目依赖于Vue,mint-ui, cordova-plugin-file,cordova-plugin-file-transfer,cordova-plugin-whitelist等
+ * @depend Vue,mint-ui, cordova-plugin-file,cordova-plugin-file-transfer,cordova-plugin-whitelist等
  * @author luxueyan
  */
-import { read, save, clear } from './storage'
+import { read, save, clear } from '@/storage'
 import { merge, each, map } from 'lodash'
 import Vue from 'vue'
 import { MessageBox, Toast } from 'mint-ui'
 // import File from './file.js'
-import Logger from './logger.js'
-import store from './store'
+import Logger from '@/logger.js'
+import store from '@/store'
 
 // 项目目录
 let appRoot = location.href.replace(location.hash, '')
@@ -135,7 +135,7 @@ export default class AppUpdater {
       let updatePromises = []
       this.toBeUpdated.forEach((s, i) => {
         updatePromises.push(this._updateFiles(s).then(() => {
-          progressValue += step
+          progressValue = parseInt(progressValue + step, 10)
           if (i === total) progressValue = 100
           store.commit('updateUpdaterProgressValue', progressValue)
         }))
@@ -211,7 +211,7 @@ export default class AppUpdater {
       let downloadPromises = []
       this.toBeUpdated.forEach((s, i) => {
         downloadPromises.push(this._downloadFile(s).then(() => {
-          progressValue += step
+          progressValue = parseInt(progressValue + step, 10)
           if (i === total) progressValue = 50
           store.commit('updateUpdaterProgressValue', progressValue)
         }))

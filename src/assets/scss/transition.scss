@@ -4,7 +4,50 @@
 }
 
 .slideUpFade-enter,
-.slideUpFade-leave-active {
+.slideUpFade-leave-to {
   opacity: 0;
   transform: translateY(-100%);
+}
+
+.slideLeftFade-enter-active,
+.slideLeftFade-leave-active {
+  transition: transform .3s ease-out, opacity .3s ease-in;
+}
+
+.slideLeftFade-enter {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+.slideLeftFade-leave-to {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.slideRightFade-enter-active,
+.slideRightFade-leave-active {
+  transition: transform .3s ease-out, opacity .3s ease-in;
+}
+
+.slideRightFade-enter {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+.slideRightFade-leave-to {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity .5s
+}
+
+.fade-enter,
+.fade-leave-to
+/* .fade-leave-active in below version 2.1.8 */
+
+{
+  opacity: 0
 }

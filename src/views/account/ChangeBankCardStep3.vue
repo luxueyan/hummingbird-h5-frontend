@@ -1,7 +1,7 @@
 <template lang="pug">
 section.change-bank-card-step3.single-page-tip
   .logo
-    i.iconfont.ui-icon-success
+    i.iconfont.icon-xiao
     h3 信息变更成功！
   article
     table
@@ -24,7 +24,7 @@ import {
 } from 'vuex'
 import {
   CUST_STATE_CODE_MAP
-} from '../../constants.js'
+} from '@/constants.js'
 import {
   includes
 } from 'lodash'

@@ -68,7 +68,9 @@ module.exports = router => {
         'nextLevelPoints': 100, //下一级所需积分
         'nextLevel': 2 //下一积分等级
       },
-      'couponCount': 2, //优惠券张数
+      'couponCount': 2, // 优惠券张数
+      'systemMsgUnread': 10, //未读系统消息数
+      'personalMsgUnread': 20, //未读个人消息数
       'currentOngoingContract': { //optional 当前正在进行的合同
         'id': '599794a4f87ca703c05df02e',
         'currentContractStatus': {

@@ -1,7 +1,7 @@
 <template lang="pug">
 section.change-bank-card-step3.single-page-tip
   .logo
-    i.iconfont.ui-icon-warn
+    i.iconfont.icon-ku
     //- h3 提款失败！
   article
     p 由于支付系统升级，您的款项未能及时到账。
@@ -21,7 +21,7 @@ section.change-bank-card-step3.single-page-tip
 import {
   mapGetters
 } from 'vuex'
-import borrowMixins from './borrow_mixins.js'
+import borrowMixins from '@/views/borrow/borrow_mixins.js'
 
 export default {
   mixins: [borrowMixins],

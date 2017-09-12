@@ -4,26 +4,24 @@ module.exports = router => {
   router.get('/self/messages', (req, res) => {
     res.jsonOk({
       'messages': [{
-          'id': '599794a4f87ca703c05df02c',
-          'messageType': {
-            'key': 1,
-            'value': '放款成功'
-          },
-          'createDate': '2017-08-28 23:00:00',
-          'content': '描述',
-          'isRead': false //是否已读： false 未读；true 已读
+        'id': '599794a4f87ca703c05df02c',
+        'messageType': {
+          'key': 1,
+          'value': '放款成功'
         },
-        {
-          'id': '599794a4f87ca703c05df02d',
-          'messageType': {
-            'key': 2,
-            'value': '自动还款成功'
-          },
-          'createDate': '2017-08-28 22:00:00',
-          'content': '描述',
-          'isRead': true //是否已读： false 未读；true 已读
-        }
-      ]
+        'createDate': '2017-08-28 23:00:00',
+        'content': '描述',
+        'isRead': false //是否已读： false 未读；true 已读
+      }, {
+        'id': '599794a4f87ca703c05df02d',
+        'messageType': {
+          'key': 2,
+          'value': '自动还款成功'
+        },
+        'createDate': '2017-08-28 22:00:00',
+        'content': '描述',
+        'isRead': true //是否已读： false 未读；true 已读
+      }]
     })
   })
 
@@ -36,7 +34,7 @@ module.exports = router => {
         'value': '免息券'
       },
       'createDate': '2017-08-28 23:00:00',
-      'content': ',
+      'content': '',
       'isRead': false
     })
   })
@@ -53,7 +51,7 @@ module.exports = router => {
         'createDate': '2017-08-28 23:00:00',
         'content': '描述',
         'isRead': false //是否已读： false 未读；true 已读
-      }, ]
+      }]
     })
   })
 
@@ -66,7 +64,7 @@ module.exports = router => {
         'value': '免息券'
       },
       'createDate': '2017-08-28 23:00:00',
-      'content': ',
+      'content': '',
       'isRead': false
     })
   })

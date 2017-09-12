@@ -1,7 +1,7 @@
 <template lang="pug">
 section.authorized-tip.single-page-tip
   .logo
-    i.iconfont.ui-icon-success
+    i.iconfont.icon-xiao
     h3 欢迎您，特权用户
       em {{user.userCall}}
   article
@@ -20,7 +20,7 @@ import {
 } from 'vuex'
 import {
   CUST_STATE_CODE_MAP
-} from '../constants.js'
+} from '@/constants.js'
 
 export default {
   computed: {

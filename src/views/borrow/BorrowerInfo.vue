@@ -11,12 +11,12 @@
         mt-cell(title="借款天数", :value="user.product.Length | fbAppend('天')")
         mt-cell(:value="serviceCharge | fbCurrency('', '元')")
           span(slot="title") 服务费
-            i.iconfont.ui-icon-info(@click="showServiceChargeTip")
+            i.iconfont.icon-info(@click="showServiceChargeTip")
         mt-cell(title="实际到账", :value="virtualMoney | fbCurrency('', '元')")
       .fields-header
         | 账户信息
         small(v-if="!contractInfoHasHistory")
-          i.iconfont.ui-icon-warn
+          i.iconfont.icon-warning
           | 请填写您的真实信息，否则会影响借款。
       .fields
         mt-cell(title="姓名", :value="user.UserinfoValLogin.Name | fbFalse")
@@ -25,7 +25,7 @@
           mt-field(label='身份证号', placeholder='请输入身份证号', v-model="model.idCard", :state="getFieldState('model.idCard')", @click.native="showFieldError($event, 'model.idCard')")
           fb-field(v-mt-field-blur="{blur:getBank}", label='银行卡号', placeholder='请输入银行卡号', v-model="bankCardForShow", :state="getFieldState('model.bankCard')", @click.native="showFieldError($event, 'model.bankCard')")
             span(slot="label") 银行卡号
-              i.iconfont.ui-icon-info(@click="showSupportBanks()")
+              i.iconfont.icon-info(@click="showSupportBanks()")
           input(type="hidden", v-model='model.bankCard')
           mt-cell(title="开户行", :value="model.bank | fbFalse")
           mt-field(label='银行预留手机号', placeholder='请输入银行预留手机号', v-model="model.bankPhone", :state="getFieldState('model.bankPhone')", @click.native="showFieldError($event, 'model.bankPhone')")
@@ -48,29 +48,29 @@
 </template>
 
 <script>
-import ValidatorMixin from '../validator_mixin.js'
-import CommonMixin from '../common_mixin.js'
+import ValidatorMixin from '@/views/validator_mixin.js'
+import CommonMixin from '@/views/common_mixin.js'
 import {
   isDetectionBankCard,
   SetAgreementMsg,
   QueryContract
-} from '../../common/resources.js'
+} from '@/common/resources.js'
 import {
   RET_CODE_MAP,
   CUST_STATE_CODE_MAP
-} from '../../constants.js'
+} from '@/constants.js'
 import {
   isIdcard,
   isBankCard
-} from '../../common/utils.js'
+} from '@/common/utils.js'
 import {
   contractInfo
-} from '../../common/adaptors.js'
+} from '@/common/adaptors.js'
 import {
   mapMutations,
   mapGetters
 } from 'vuex'
-import FbField from '../../components/FbField.vue'
+import FbField from '@/components/FbField.vue'
 import moment from 'moment'
 
 export default {
@@ -132,7 +132,7 @@ export default {
         Creditmoney,
         Managemoney
       } = this.user.integraluserlevel
-      this.$messagebox('服务费包含', `
+      this.$msgBox('服务费包含', `
         <table>
           <tr><th>审核费用：</th><td>${Creditmoney}元</td></tr>
           <tr><th>账户管理费：</th><td>${Managemoney}元</td></tr>
@@ -145,7 +145,7 @@ export default {
           bankCard: this.model.bankCard
         }).then(res => res.json()).then(data => {
           this.model.bank = data.data.bank
-          this.bankCardNotSupported = data.ret === RET_CODE_MAP.BANK_CARD_NOT_SUPPORTED
+          this.bankCardNotSupported = data.code === RET_CODE_MAP.BANK_CARD_NOT_SUPPORTED
         })
       }
     },
@@ -161,7 +161,7 @@ export default {
           SetAgreementMsg.get(this.model)
             .then(res => res.json())
             .then(data => {
-              if (data.ret === RET_CODE_MAP.OK) {
+              if (data.code === RET_CODE_MAP.OK) {
                 this.updateStateCode(CUST_STATE_CODE_MAP.CONTRACT_INFO_FILLED)
                 this.$router.push({
                   name: 'signature'

@@ -20,7 +20,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '../assets/scss/_variables.scss';
+@import '~assets/scss/_variables.scss';
 .progress-mask {
   position: fixed;
   z-index: 99999;

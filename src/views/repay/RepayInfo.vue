@@ -13,7 +13,7 @@
       .fields-header
         | 账户信息
         //- small
-          i.iconfont.ui-icon-warn
+          i.iconfont.icon-ku
           | 请填写您的真实信息，否则会影响借款。
       .fields
         mt-cell(title="姓名", :value="user.UserinfoValLogin.Name | fbFalse")
@@ -26,20 +26,21 @@
         mt-cell(@click.native="goChangeBankCard()")
           a.small 变更银行卡
       .form-buttons.fixed
-          mt-button.mint-button-block(type='primary', size='large', @click="repay()") 立即还款
+          mt-button.mint-button-block(type='primary', size='large', @click="repayConfirm()") 立即还款
 </template>
 
 <script>
 import {
   QueryContract
-} from '../../common/resources.js'
-import repayMixins from './repay_mixins.js'
+} from '@/common/resources.js'
+import repayMixins from '@/views/repay/repay_mixins.js'
 import {
   mapGetters
 } from 'vuex'
 import {
   contractInfo
-} from '../../common/adaptors.js'
+} from '@/common/adaptors.js'
+import moment from 'moment'
 
 export default {
   mixins: [repayMixins],
@@ -61,6 +62,18 @@ export default {
       this.$router.push({
         name: 'changeBankCardStep1'
       })
+    },
+
+    repayConfirm() {
+      if (new Date() - moment(this.model.startDateTs).toDate() <= 86400000) { // 如果小于一天就还款，给出提示
+        this.$msgBox.confirm('确认提交还款?').then(action => {
+          if (action === 'confirm') {
+            this.repay()
+          }
+        }).catch(() => {})
+      } else {
+        this.repay()
+      }
     }
   },
   computed: {
