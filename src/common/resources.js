@@ -16,12 +16,12 @@ const commonOpts = {
 }
 
 const resource = Vue.resource
-export const login = resource('/auth/credentials', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 登录
-export const captcha = resource('/captcha', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 验证码
+export const login = resource('auth/credentials', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 登录
+export const captcha = resource('captcha', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 验证码
 export const updateInfoSendMsgFromPhone = resource('?method=updateInfoSendMsgFromPhone', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 账户修改发送验证码
 export const validateUpdateInfoMsgFromPhone = resource('?method=validateUpdateInfoMsgFromPhone', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 账户修改验证验证码
 export const updateBankInfo = resource('?method=updateBankInfo', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 更新银行卡信息
-export const userSelf = resource('/users/self', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 用户信息
+export const userSelf = resource('users/self', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 用户信息
 export const getCustState = resource('?method=getCustState', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 用户业务状态
 export const isDetectionBankCard = resource('?method=isDetectionBankCard', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 获取开户银行
 export const SetAgreementMsg = resource('?method=SetAgreementMsg', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 完成合同信息填写
