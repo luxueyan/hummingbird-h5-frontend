@@ -10,6 +10,7 @@ const state = {
   user: JSON.parse(user || '{}') || {}, // 很奇怪，JSON.parse(user || '{}')结果竟然是null
   stateCode: null,
   stateMsg: '',
+  now: new Date(),
   token: token
 }
 

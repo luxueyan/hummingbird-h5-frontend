@@ -12,6 +12,7 @@
         mt-cell(:value="serviceCharge | fbCurrency('', '元')")
           span(slot="title") 服务费
             i.iconfont.ui-icon-info(@click="showServiceChargeTip")
+            span.icon-sale7(v-show="borrowOption === 'vocation'")
         mt-cell(title="实际到账", :value="virtualMoney | fbCurrency('', '元')")
       .fields-header
         | 账户信息
@@ -45,6 +46,16 @@
       //- small.note *由于清明假期三方支付休假，今日放款预计4月5日下午到账，还款日期会根据实际到账时间顺延。
       .form-buttons.fixed
           mt-button.mint-button-block(type='primary', size='large') 立即提款
+    fb-msgbox(ref="vocationMsgbox", title="十一期间放款安排", msgbox-class="shiyi-option-msgbox")
+      div(style="text-align:left")
+        p 您的借款的应还款日是{{repayDate}}。
+        p 由于三方支付十一休息，我们在10月1日～8日无法按时放款。
+        h4(style="margin: 10px 0 -10px;") 您可以：
+      div(slot="cancelButtonContent")
+        h3 延长期限，在{{vocationRepayDate}}还款
+        small|（享费率7折优惠）
+      div(slot="confirmButtonContent")
+        h3 仍然在{{repayDate}}还款
 </template>
 
 <script>
@@ -72,11 +83,15 @@ import {
 } from 'vuex'
 import FbField from '../../components/FbField.vue'
 import moment from 'moment'
+import { inRange } from 'lodash'
+import Vue from 'vue'
+import FbMsgbox from '../../components/FbMsgbox.vue'
 
 export default {
   mixins: [ValidatorMixin, CommonMixin],
   components: {
-    FbField
+    FbField,
+    FbMsgbox
   },
   beforeRouteEnter(to, from, next) {
     QueryContract.get().then(res => res.json())
@@ -89,6 +104,18 @@ export default {
           }
         })
       })
+  },
+
+  mounted() {
+    if (this._vocationJudge([+moment('2017-09-17 00:00:00').toDate(), +moment('2017-09-24 23:59:59')])) {
+      this.repayDate = moment(this.now).add(this.user.product.Length, 'days').format('MM月DD日')
+      this.vocationRepayDate = this._vocationRepayDateGet()
+      this.$refs.vocationMsgbox.open(action => {
+        if (action === 'cancel') {
+          this.borrowOption = 'vocation'
+        }
+      })
+    }
   },
 
   watch: {
@@ -128,16 +155,13 @@ export default {
     ...mapMutations(['updateStateCode']),
     // 显示服务费详情
     showServiceChargeTip() {
-      const {
-        Creditmoney,
-        Managemoney
-      } = this.user.integraluserlevel
       this.$msgBox('服务费包含', `
         <table>
-          <tr><th>审核费用：</th><td>${Creditmoney}元</td></tr>
-          <tr><th>账户管理费：</th><td>${Managemoney}元</td></tr>
+          <tr><th>审核费用：</th><td>${Vue.filter('fbCurrency')(this.creditMoney, '', '元')}</td></tr>
+          <tr><th>账户管理费：</th><td>${Vue.filter('fbCurrency')(this.manageMoney, '', '元')}</td></tr>
         </table>`)
     },
+
     // 获取银行卡开户行
     getBank() {
       if (this.validation.isPassed('model.bankCard')) {
@@ -149,6 +173,42 @@ export default {
         })
       }
     },
+
+    // 9-17至9-22日借款提示判断
+    _vocationJudge(dateScope) {
+      return inRange(+this.now, ...dateScope)
+    },
+
+    // 获取延长期限的日期
+    _vocationRepayDateGet() {
+      const mapDate = {
+        '0917': '10月10日',
+        '0918': '10月11日',
+        '0919': '10月12日',
+        '0920': '10月13日',
+        '0921': '10月17日',
+        '0922': '10月18日',
+        '0923': '10月19日',
+        '0924': '10月20日'
+      }
+      return mapDate[moment(this.now).format('MMDD')] || ''
+    },
+
+    // 获取延长的天数
+    _vocationRepayDaysGet() {
+      const mapDate = {
+        '10月10日': 23,
+        '10月11日': 23,
+        '10月12日': 23,
+        '10月13日': 23,
+        '10月17日': 26,
+        '10月18日': 26,
+        '10月19日': 26,
+        '10月20日': 26
+      }
+      return mapDate[this.vocationRepayDate] || 0
+    },
+
     // 立刻提款
     submit() {
       if (this.bankCardNotSupported) {
@@ -158,7 +218,10 @@ export default {
 
       this.$validate().then(success => {
         if (success) {
-          SetAgreementMsg.get(this.model)
+          if (this.borrowOption === 'vocation') {
+            this.model.agreementDays = this._vocationRepayDaysGet()
+          }
+          SetAgreementMsg.save(this.model)
             .then(res => res.json())
             .then(data => {
               if (data.ret === RET_CODE_MAP.OK) {
@@ -173,6 +236,7 @@ export default {
         }
       })
     },
+
     // 去修改银行卡
     goChangeBankCard() {
       this.$router.push({
@@ -180,32 +244,52 @@ export default {
       })
     }
   },
+
   computed: {
-    ...mapGetters(['stateCode']),
-    serviceCharge() {
+    ...mapGetters(['stateCode', 'now']),
+    creditMoney() {
       const {
-        Creditmoney,
+        Creditmoney
+      } = this.user.integraluserlevel
+      return Creditmoney * (this.borrowOption === 'vocation' ? 0.7 : 1) // 延长借款7折
+    },
+
+    manageMoney() {
+      const {
         Managemoney
       } = this.user.integraluserlevel
-      return Creditmoney + Managemoney
+      return Managemoney * (this.borrowOption === 'vocation' ? 0.7 : 1) // 延长借款7折
     },
+
+    serviceCharge() {
+      return this.creditMoney + this.manageMoney
+    },
+    // serviceCharge() {
+    //   const {
+    //     Creditmoney,
+    //     Managemoney
+    //   } = this.user.integraluserlevel
+    //   return (Creditmoney + Managemoney) * (this.borrowOption === 'normal' ? 0.7 : 1)
+    // },
     virtualMoney() {
       const {
-        Limit,
-        Creditmoney,
-        Managemoney
+        Limit
       } = this.user.integraluserlevel
-      return Limit - Creditmoney - Managemoney
+      return Limit - this.creditMoney - this.manageMoney
     }
   },
+
   data() {
     const stateUser = JSON.parse(JSON.stringify(this.$store.getters.user))
     return {
-      qmNoteVisible: +moment().toDate() <= +new Date('2017-04-05 12:00:00'), // 4月5日下午以后不显示
+      // qmNoteVisible: +moment().toDate() <= +new Date('2017-04-05 12:00:00'), // 4月5日下午以后不显示
       contractInfoHasHistory: false,
       bankCardNotSupported: false, // 银行卡不支持标记
       countdownVisible: false,
       bankCardForShow: '',
+      borrowOption: 'normal', //normal, vacation 十一假期延长
+      repayDate: '', // 正常还款日
+      vocationRepayDate: '', // 延期还款日
       model: {
         name: stateUser.UserinfoValLogin.Name,
         idCard: null,
@@ -219,17 +303,65 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.loan-agreement {
-  margin-top: 5px;
+<style lang="scss">
+@import '~assets/scss/_variables.scss';
+.shiyi-option-msgbox {
+  h3,
+  h4 {
+    font-weight: 400;
+    font-size: 16px;
+  }
+  .mint-msgbox-btns {
+    height: auto;
+    flex-direction: column;
+  }
+  .mint-msgbox-btn {
+    line-height: 1em;
+    padding: 12px 0; // min-height: 35px;
+  }
+  .mint-msgbox-cancel,
+  .mint-msgbox-confirm {
+    border-right: 0;
+    width: 100%;
+    color: $primary-color;
+    small {
+      color: $primary-color;
+    }
+  }
+  .mint-msgbox-cancel {
+    border-bottom: 1px solid $border-color;
+  }
 }
 
-small {
-  &.note {
-    display: block;
-    padding: 10px;
-    color: #888;
-    line-height: 1.8em;
+
+.borrow-info {
+  .icon-sale7 {
+    color: $error-color;
+    font-size: 12px;
+    display: inline-block;
+    padding: 1px 5px;
+    border: 1px solid $error-color;
+    border-radius: 4px;
+    &:before {
+      border: 1px solid $error-color;
+    }
+    &:after {
+      font-size: 12px;
+
+      content: '7折';
+    }
+  }
+  .loan-agreement {
+    margin-top: 5px;
+  }
+
+  small {
+    &.note {
+      display: block;
+      padding: 10px;
+      color: #888;
+      line-height: 1.8em;
+    }
   }
 }
 </style>

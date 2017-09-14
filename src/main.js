@@ -12,11 +12,12 @@ import FbDirectives from './common/directives.js'
 import SimpleVueValidation from 'simple-vue-validator'
 import { getReadTime } from './common/utils.js'
 
-import { Cell, Field, Header, Button, Toast, MessageBox, Indicator } from 'mint-ui'
+import { Cell, Field, Header, Button, Popup, Toast, MessageBox, Indicator } from 'mint-ui'
 Vue.component(Cell.name, Cell)
 Vue.component(Field.name, Field)
 Vue.component(Header.name, Header)
 Vue.component(Button.name, Button)
+Vue.component(Popup.name, Popup)
 
 sync(store, router)
 

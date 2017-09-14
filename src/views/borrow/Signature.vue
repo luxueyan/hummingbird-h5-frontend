@@ -43,12 +43,16 @@ export default {
             }
           })
       } else {
-        GiveUpContract.get().then(() => {
-          this.updateStateCode(CUST_STATE_CODE_MAP.DEBT_SETTELED)
-          this.$router.push({
-            name: 'borrowerInfo'
+        GiveUpContract.get()
+          .then(res => res.json())
+          .then(data => {
+            if (data.ret === RET_CODE_MAP.OK) {
+              this.updateStateCode(CUST_STATE_CODE_MAP.DEBT_SETTELED)
+              this.$router.push({
+                name: 'borrowerInfo'
+              })
+            }
           })
-        })
         // this.$toast('请签署合同', 'error')
       }
     })

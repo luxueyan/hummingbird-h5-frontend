@@ -4,6 +4,7 @@ import { MessageBox, Indicator } from 'mint-ui'
 import store from '../store'
 import { read, save } from '../storage'
 import { RET_CODE_MAP } from '../constants.js'
+import moment from 'moment'
 
 const CACHE_URLS = [] // 需要缓存的接口
 const requestMap = {} // 请求地址
@@ -30,10 +31,10 @@ export default [
   // 控制重复请求
   function(request, next) {
     let key
-      // abort the same post request
+    // abort the same post request
     if (/POST|PUT|DELETE/.test(request.method)) {
       key = `${request.method}${request.url}${JSON.stringify(request.body)}`
-        // abort the existed request
+      // abort the existed request
       if (key && requestMap[key]) {
         key = null
         setTimeout(() => {
@@ -77,6 +78,7 @@ export default [
   // 状态码
   function(request, next) {
     next((res) => {
+      store.commit('updateNow', moment(res.headers.get('Date')).toDate())
       if (res.status === 419 || res.status === 401) {
         if (request.params.skipAuth) {
           store.dispatch('logout', true)

@@ -17,5 +17,9 @@ export default {
 
   stateMsg(state) {
     return state.stateMsg
+  },
+
+  now(state) {
+    return state.now
   }
 }

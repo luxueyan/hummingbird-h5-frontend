@@ -13,5 +13,9 @@ export default {
 
   updateStateMsg(state, stateMsg) {
     state.stateMsg = stateMsg
+  },
+
+  updateNow(state, date) {
+    state.now = date
   }
 }
