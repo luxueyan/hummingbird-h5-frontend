@@ -23,6 +23,8 @@
 </template>
 
 <script>
+const modelId = Math.random().toString(32).slice(2)
+
 export default {
   props: {
     msgboxClass: '',
@@ -37,7 +39,7 @@ export default {
         e.preventDefault()
         return false
       })
-      popupModal.classList.add('v-modal', 'fb-model')
+      popupModal.classList.add('v-modal', 'fb-model-' + modelId)
       popupModal.style.zIndex = 2000
       this.style.zIndex = 2001
       document.body.appendChild(popupModal)
@@ -49,7 +51,7 @@ export default {
     close(action) {
       this.transitionVisible = false
       this.$nextTick(() => {
-        let popupModal = document.querySelector('.fb-model')
+        let popupModal = document.querySelector('.fb-model-' + modelId)
         if (popupModal) document.body.removeChild(popupModal)
         this.$emit('msgbox-close', action)
         setTimeout(() => {

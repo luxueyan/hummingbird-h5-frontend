@@ -37,7 +37,7 @@
         </tr>
         <tr>
           <td>借款本金</td>
-          <td colspan="3">{{contractInfo.totalAmount | fbCurrency('￥', '元')}}</td>
+          <td colspan="3">{{contractInfo.principal | fbCurrency('￥', '元')}}</td>
         </tr>
         <tr>
           <td>借款年利率</td>

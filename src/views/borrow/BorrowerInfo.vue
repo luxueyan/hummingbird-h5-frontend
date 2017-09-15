@@ -8,7 +8,7 @@
             |《借款服务协议》
       .fields
         mt-cell(title="借款金额", :value="user.integraluserlevel.Limit | fbCurrency('', '元')")
-        mt-cell(title="借款天数", :value="user.product.Length | fbAppend('天')")
+        mt-cell(title="借款天数", :value="vocationRepayDays | fbAppend('天')")
         mt-cell(:value="serviceCharge | fbCurrency('', '元')")
           span(slot="title") 服务费
             i.iconfont.ui-icon-info(@click="showServiceChargeTip")
@@ -83,7 +83,7 @@ import {
 } from 'vuex'
 import FbField from '../../components/FbField.vue'
 import moment from 'moment'
-import { inRange } from 'lodash'
+import { inRange, pick } from 'lodash'
 import Vue from 'vue'
 import FbMsgbox from '../../components/FbMsgbox.vue'
 
@@ -99,7 +99,7 @@ export default {
         next(vm => {
           if (data.data.content) {
             vm.contractInfoHasHistory = true
-            Object.assign(vm.model, contractInfo(data.data.content))
+            Object.assign(vm.model, pick(contractInfo(data.data.content), ['name', 'idCard', 'bankCard', 'bank', 'bankPhone']))
             vm.bankCardForShow = vm.model.bankCard.replace(/\d{4}(?=(\d{1,4}))/g, '$& ')
           }
         })
@@ -113,6 +113,7 @@ export default {
       this.$refs.vocationMsgbox.open(action => {
         if (action === 'cancel') {
           this.borrowOption = 'vocation'
+          this.vocationRepayDays = this._vocationRepayDaysGet()
         }
       })
     }
@@ -157,8 +158,8 @@ export default {
     showServiceChargeTip() {
       this.$msgBox('服务费包含', `
         <table>
-          <tr><th>审核费用：</th><td>${Vue.filter('fbCurrency')(this.creditMoney, '', '元')}</td></tr>
-          <tr><th>账户管理费：</th><td>${Vue.filter('fbCurrency')(this.manageMoney, '', '元')}</td></tr>
+          <tr><th>审核费用：</th><td style="text-align:left;">${Vue.filter('fbCurrency')(this.creditMoney, '', '元')}</td></tr>
+          <tr><th>账户管理费：</th><td style="text-align:left;">${Vue.filter('fbCurrency')(this.manageMoney, '', '元')}</td></tr>
         </table>`)
     },
 
@@ -219,7 +220,7 @@ export default {
       this.$validate().then(success => {
         if (success) {
           if (this.borrowOption === 'vocation') {
-            this.model.agreementDays = this._vocationRepayDaysGet()
+            this.model.agreementDays = this.vocationRepayDays
           }
           SetAgreementMsg.save(this.model)
             .then(res => res.json())
@@ -251,14 +252,22 @@ export default {
       const {
         Creditmoney
       } = this.user.integraluserlevel
-      return Creditmoney * (this.borrowOption === 'vocation' ? 0.7 : 1) // 延长借款7折
+
+      if (this.borrowOption === 'vocation') {
+        return (Creditmoney / this.user.product.Length) * this.vocationRepayDays * 0.7 // 14是默认的产品的期限
+      }
+      return Creditmoney
     },
 
     manageMoney() {
       const {
         Managemoney
       } = this.user.integraluserlevel
-      return Managemoney * (this.borrowOption === 'vocation' ? 0.7 : 1) // 延长借款7折
+
+      if (this.borrowOption === 'vocation') {
+        return (Managemoney / this.user.product.Length) * this.vocationRepayDays * 0.7 // 14是默认的产品的期限
+      }
+      return Managemoney
     },
 
     serviceCharge() {
@@ -290,6 +299,7 @@ export default {
       borrowOption: 'normal', //normal, vacation 十一假期延长
       repayDate: '', // 正常还款日
       vocationRepayDate: '', // 延期还款日
+      vocationRepayDays: stateUser.product.Length,
       model: {
         name: stateUser.UserinfoValLogin.Name,
         idCard: null,

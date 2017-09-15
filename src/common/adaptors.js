@@ -5,11 +5,13 @@ export function contractInfo(data) {
   return {
     idCard: data.Idcard,
     cardName: data.Cardname,
+    name: data.Cardname,
     // bankName: data.Bankname, // bankName === bank 为了兼容不同的接口
     bankCard: data.Bankcard,
     bankPhone: data.Bankphone,
     bank: data.Bankname,
     loanAmount: data.Loanamount,
+    principal: data.Limit,
     totalAmount: data.Totalamount,
     creditMoney: data.Creditmoney,
     manageMoney: data.Managemoney,
