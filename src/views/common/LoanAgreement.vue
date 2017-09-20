@@ -37,7 +37,7 @@
         </tr>
         <tr>
           <td>借款本金</td>
-          <td colspan="3">{{user.integraluserlevel.Limit | fbCurrency('￥', '元')}}</td>
+          <td colspan="3">{{contractInfo.principal | fbCurrency('￥', '元')}}</td>
         </tr>
         <tr>
           <td>借款年利率</td>
@@ -64,7 +64,7 @@
           <td>还款日</td>
           <td>{{contractInfo.endDate}}</td>
           <td>还款金额</td>
-          <td>应还款{{user.integraluserlevel.Limit | fbCurrency('￥', '元')}}</td>
+          <td>应还款{{contractInfo.totalAmount | fbCurrency('￥', '元')}}</td>
         </tr>
       </tbody>
     </table>
@@ -143,6 +143,8 @@ import {
 import {
   mapGetters
 } from 'vuex'
+// import moment from 'moment'
+// import { inRange } from 'lodash'
 
 export default {
   beforeRouteEnter: function(to, from, next) {
@@ -157,21 +159,26 @@ export default {
   },
   computed: {
     ...mapGetters(['user']),
+    // saleRate() {
+    //   if (inRange(+this.$store.getters.now, +moment('2017-09-17 00:00:00').toDate(), +moment('2017-09-24 23:59:59').toDate()) &&
+    //     moment(this.Enddate).diff(moment(this.Startdate), 'days') > 14) {
+    //     return 0.7
+    //   }
+    //   return 1
+    // },
     serviceCharge() {
       const {
-        Creditmoney,
-        Managemoney
-      } = this.user.integraluserlevel
-      return Creditmoney + Managemoney
+        creditMoney,
+        manageMoney
+      } = this.contractInfo
+      return creditMoney + manageMoney
     },
-    virtualMoney() {
-      const {
-        Limit,
-        Creditmoney,
-        Managemoney
-      } = this.user.integraluserlevel
-      return Limit - Creditmoney - Managemoney
-    },
+    // virtualMoney() {
+    //   const {
+    //     Limit
+    //   } = this.contractInfo
+    //   return Limit - this.serviceCharge
+    // },
     bankCardShort() {
       return this.contractInfo.bankCard ? this.contractInfo.bankCard.slice(-4) : ''
     }
@@ -198,8 +205,7 @@ table {
 }
 
 td {
-  text-align: left !important;
-  // width: 35%;
+  text-align: left !important; // width: 35%;
   padding: 5px;
   &.title-td {
     width: 4em;

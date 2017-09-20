@@ -8,6 +8,7 @@ import router from '@/router'
 import '@/common/resources.js'
 import interceptors from '@/common/interceptors.js'
 import FbFilters from '@/common/filters.js'
+import FbMixins from '@/common/mixins.js'
 import FbDirectives from '@/common/directives.js'
 import SimpleVueValidation from 'simple-vue-validator'
 import { getReadTime } from '@/common/utils.js'
@@ -49,6 +50,7 @@ const ToastClasses = {
 sync(store, router)
 
 Vue.use(FbFilters)
+Vue.use(FbMixins)
 Vue.use(FbDirectives)
 
 // 表单验证

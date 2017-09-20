@@ -191,6 +191,7 @@ body {
   min-height: 100%;
   color: #353535;
   font-size: 16px; // font-weight: 300;
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
 }
 

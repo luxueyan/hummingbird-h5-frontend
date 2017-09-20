@@ -21,5 +21,9 @@ export default {
 
   updateUpdaterProgressVisible(state, value) {
     state.updaterProgressVisible = value
+  },
+
+  updateNow(state, date) {
+    state.now = date
   }
 }
