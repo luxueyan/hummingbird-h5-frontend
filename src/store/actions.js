@@ -1,7 +1,7 @@
 import router from '../router'
 import { login, captcha, userSelf } from '../common/resources.js'
 import * as Storage from '../storage'
-import { STORE_KEY_USER, STORE_KEY_ACCESS_TOKEN, RET_CODE_MAP, STORE_KEY_LAST_LOGINED_PHONE } from '../constants'
+import { STORE_KEY_USER, STORE_KEY_ACCESS_TOKEN, RET_CODE_MAP, CUST_STATE_CODE_MAP, STORE_KEY_LAST_LOGINED_PHONE } from '@/constants'
 
 export default {
   updateUser: function({ commit }, user = {}) {
@@ -32,11 +32,13 @@ export default {
       const user = data.data
       await dispatch('updateUser', user)
       if (!user.isInvited) {
-        commit('updateStateCode', RET_CODE_MAP.NOT_INVITED)
+        commit('updateStateCode', CUST_STATE_CODE_MAP.NOT_INVITED)
       } else if (user.isNew) {
-        commit('updateStateCode', RET_CODE_MAP.FIRST_BORROWER)
+        commit('updateStateCode', CUST_STATE_CODE_MAP.FIRST_BORROWER)
       } else if (user.currentOngoingContract) {
         commit('updateStateCode', user.currentOngoingContract.currentContractStatus.key)
+      } else {
+        commit('updateStateCode', CUST_STATE_CODE_MAP.DEBT_SETTELED)
       }
     }
     return data
@@ -56,13 +58,12 @@ export default {
       await dispatch('updateToken', data.data.token)
       await dispatch('getUser')
     }
-
     return data
   },
 
   logout({ commit, state }, silent) {
     Storage.clearMulti([STORE_KEY_USER, STORE_KEY_ACCESS_TOKEN])
-    Storage.save(STORE_KEY_LAST_LOGINED_PHONE, state.user.phone)
+    Storage.save(STORE_KEY_LAST_LOGINED_PHONE, state.user.phone || '')
     commit('updateUser', { phone: state.user.phone })
     commit('updateToken')
 

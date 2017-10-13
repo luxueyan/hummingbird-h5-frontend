@@ -4,6 +4,7 @@ small {{second}} 秒后重发
 
 <script>
 export default {
+  name: 'fb-countdown',
   methods: {
     start() {
       const _self = this

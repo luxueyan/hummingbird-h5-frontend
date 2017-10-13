@@ -25,7 +25,12 @@ router.use(jwt({
     const isExpired = Date.now() / 1000 - payload.iat > 86400
     return done(null, isExpired)
   }
-}).unless({ path: ['/api/captcha', '/api/auth/credentials'] }), (req, res, next) => {
+}).unless({
+  path: [
+    '/api/captcha',
+    '/api/auth/credentials'
+  ]
+}), (req, res, next) => {
   req.session.captcha = 123456
   res.jsonOk = function(data) {
     res.json({

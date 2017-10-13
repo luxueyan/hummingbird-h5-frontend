@@ -12,7 +12,14 @@ body {
   }
   .mintui {
     -webkit-text-stroke-width: 0;
-  } // .mint-tab-item-menu {
+  }
+  .mint-cell-title {
+    .mint-radiolist-label {
+      padding: 0;
+    }
+  }
+
+  // .mint-tab-item-menu {
   //   position: absolute;
   //   top: 0;
   //   left: 0;
@@ -116,7 +123,8 @@ body {
     white-space: nowrap;
     overflow: hidden;
     .iconfont {
-      vertical-align: middle;
+      vertical-align: -1px;
+      margin-left: 3px;
     }
   }
   .mint-cell-label {

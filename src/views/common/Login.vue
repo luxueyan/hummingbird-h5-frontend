@@ -15,8 +15,8 @@ section
 </template>
 
 <script>
-import FbCountdown from '@/components/FbCountdown.vue'
 import ValidatorMixin from '@/views/validator_mixin.js'
+import CommonMixin from '@/views/common_mixin.js'
 import {
   RET_CODE_MAP,
   STORE_KEY_LAST_LOGINED_PHONE
@@ -28,10 +28,7 @@ import { read } from '@/storage'
 import store from '@/store'
 
 export default {
-  components: {
-    FbCountdown
-  },
-  mixins: [ValidatorMixin],
+  mixins: [CommonMixin, ValidatorMixin],
   validators: {
     'user.phone' (value) {
       return this.validate(value).required('请输入手机号').digit('请正确输入手机号').regex('^1[3-9]\\d{9}$', '请正确输入手机号')
@@ -56,20 +53,24 @@ export default {
   },
 
   mounted() {
-    this.redirect = decodeURIComponent(this.$route.query.redirect)
+    this.redirect = decodeURIComponent(this.$route.query.redirect || '')
     this.$route.query.openid && (this.user.openid = this.$route.query.openid) // eslint-disable-line
-    this.user.phone = this.$store.getters.user.phone || read(STORE_KEY_LAST_LOGINED_PHONE)
+    this.$route.query.loginType && (this.user.loginType = this.$route.query.loginType) // eslint-disable-line
+    this.user.phone = this.$store.getters.user.phone || read(STORE_KEY_LAST_LOGINED_PHONE) || ''
   },
 
   methods: {
-    ...mapActions(['login', 'getMsgCode', 'getUser', 'updateToken']),
+    ...mapActions(['login', 'getUser', 'updateToken']),
     submit() {
       this.$validate().then(success => {
         if (success) {
           this.login(this.user).then(data => {
             if (data.code === RET_CODE_MAP.OK) {
               this.$router.push({
-                path: this.redirect || '/'
+                path: this.redirect || '/',
+                params: {
+                  transitionName: 'slideRightFade'
+                }
               })
             }
           })
@@ -77,26 +78,6 @@ export default {
           this.$toast(this.validation.firstError(), 'error')
         }
       })
-    },
-
-    // 获取验证码
-    toGetMsgCode() {
-      this.$validate('user.phone').then(success => {
-        if (success) {
-          this.getMsgCode(this.user.phone).then(data => {
-            if (data.code === RET_CODE_MAP.OK) {
-              this.countdownVisible = true
-              this.$refs.fnCountdown.start()
-            }
-          })
-        } else {
-          this.$toast(this.validation.firstError('user.phone'), 'error')
-        }
-      })
-    },
-
-    onCountdownOver() {
-      this.countdownVisible = false
     }
   },
 
@@ -104,7 +85,7 @@ export default {
     const NODE_ENV = process.env.NODE_ENV
     return {
       redirect: null, //登录后跳转页面
-      countdownVisible: false,
+      // countdownVisible: false,
       user: {
         // UserinfoValLogin: {},
         // integraluserlevel: {},

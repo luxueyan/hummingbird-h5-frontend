@@ -1,28 +1,29 @@
 <template lang="pug">
-  .borrow-info
+  .repay-info
     .form
       .fields-header
-        | 借款方案
+        | 还款计划
         small.fr.loan-agreement 查看
-          router-link(:to="{name:'loanAgreement'}")
+          router-link(:to="{name:'loanAgreement', params:{ transitionName: 'slideRightFade'}}")
             |《借款服务协议》
       .fields
-        mt-cell(title="借款金额", :value="model.loanAmount | fbCurrency('', '元')")
-        mt-cell(title="应还日期", :value="model.endDate | fbFalse")
-        mt-cell(title="应还金额", :value="model.totalAmount | fbCurrency('', '元')")
-      .fields-header
+        mt-cell(title="借款金额", :value="model.paymentAmount | fbCurrency('', '元')")
+        mt-cell(title="应还日期", :value="model.repaymentDate | fbFalse")
+        mt-cell(title="应还金额", :value="model.repaymentAmount | fbCurrency('', '元')")
+      fb-bank-cards
+      //- .fields-header
         | 账户信息
         //- small
           i.iconfont.icon-ku
           | 请填写您的真实信息，否则会影响借款。
-      .fields
-        mt-cell(title="姓名", :value="user.UserinfoValLogin.Name | fbFalse")
+      //- .fields
+        mt-cell(title="姓名", :value="model.name | fbFalse")
         //- mt-cell(title="登录手机号", :value="user.UserinfoValLogin.Userphone")
         mt-cell(title='身份证号', :value="model.idCard")
         mt-cell(title='银行卡号')
           span {{bankCardForShow}}
-        mt-cell(title="开户行", :value="model.bank | fbFalse")
-        mt-cell(title='银行预留手机号',  :value="model.bankPhone")
+        mt-cell(title="开户行", :value="model.bankName| fbFalse")
+        mt-cell(title='银行预留手机号',  :value="model.bankReservePhone")
         mt-cell(@click.native="goChangeBankCard()")
           a.small 变更银行卡
       .form-buttons.fixed
@@ -31,25 +32,29 @@
 
 <script>
 import {
-  QueryContract
+  selfContracts
 } from '@/common/resources.js'
 import repayMixins from '@/views/repay/repay_mixins.js'
 import {
   mapGetters
 } from 'vuex'
-import {
-  contractInfo
-} from '@/common/adaptors.js'
+import FbBankCards from '@/components/FbBankCards.vue'
+import { RET_CODE_MAP } from '@/constants.js'
+import store from '@/store'
 import moment from 'moment'
 
 export default {
   mixins: [repayMixins],
+  components: {
+    FbBankCards
+  },
   beforeRouteEnter(to, from, next) {
-    QueryContract.get().then(res => res.json())
+    const user = store.getters.user
+    selfContracts.get({ id: user.currentOngoingContract.id }).then(res => res.json())
       .then(data => {
         next(vm => {
-          if (data.data.content) {
-            Object.assign(vm.model, contractInfo(data.data.content))
+          if (data.code === RET_CODE_MAP.OK) {
+            Object.assign(vm.model, data.data)
             vm.bankCardForShow = vm.model.bankCard.replace(/\d{4}(?=(\d{1,4}))/g, '$& ')
           }
         })
@@ -60,7 +65,10 @@ export default {
     // 去修改银行卡
     goChangeBankCard() {
       this.$router.push({
-        name: 'changeBankCardStep1'
+        name: 'bankList',
+        params: {
+          transitionName: 'slideRightFade'
+        }
       })
     },
 
@@ -84,7 +92,7 @@ export default {
     return {
       bankCardForShow: '',
       model: {
-        name: stateUser.UserinfoValLogin.Name,
+        name: stateUser.name,
         idCard: null,
         bankCard: null,
         bank: '',

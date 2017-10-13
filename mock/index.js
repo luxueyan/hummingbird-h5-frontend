@@ -21,4 +21,5 @@ app.use(session({
 
 app.use('/api', router)
 
-app.listen(3000)
+app.listen(process.env.PORT || 3000)
+console.log('[Info] mock api server start at ' + (process.env.PORT || 3000))

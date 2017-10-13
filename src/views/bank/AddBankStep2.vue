@@ -1,9 +1,9 @@
 <template lang="pug">
-section
-  form.change-bank-card-form(@submit.prevent='submit()')
+section.add-bank-step2
+  form(@submit.prevent='submit()')
     .fields-header
       | 账户信息
-      small 您即将变更银行卡信息，为保证您的安全，我们将向您的手机：{{user.phone}}发送短信验证码，确认身份。
+      small 为保证您的安全，我们将向您的手机：{{model.bankReservePhone}}发送短信验证码，确认身份。
     .fields
       mt-field(label='', placeholder='请输入验证码', v-model='model.captcha', :state="getFieldState('model.captcha')", @click.native="showFieldError($event, 'model.captcha')")
         mt-button(type='default', @click.stop.prevent='toGetMsgCode()', :disabled='countdownVisible')
@@ -14,59 +14,48 @@ section
 </template>
 
 <script>
-import FbCountdown from '@/components/FbCountdown.vue'
 import ValidatorMixin from '@/views/validator_mixin.js'
+import CommonMixin from '@/views/common_mixin.js'
 import {
-  validateOldPhone
+  bankCards
 } from '@/common/resources.js'
 import {
   RET_CODE_MAP
 } from '@/constants.js'
 import {
-  mapGetters,
-  mapActions
+  mapGetters
 } from 'vuex'
 
 export default {
-  mixins: [ValidatorMixin],
-  components: {
-    FbCountdown
-  },
-
+  mixins: [CommonMixin, ValidatorMixin],
   validators: {
+    'model.bankReservePhone' (value) {
+      return this.validate(value).required('请输入手机号').digit('请正确输入手机号').regex('^1[3-9]\\d{9}$', '请正确输入手机号')
+    },
     'model.captcha' (value) {
       return this.validate(value).required('请输入验证码').digit('请正确输入验证码').length(6, '请正确输入验证码')
     }
   },
 
   methods: {
-    ...mapActions(['getMsgCode']),
-    // 获取验证码
-    toGetMsgCode() {
-      this.getMsgCode(this.user.phone).then(data => {
-        if (data.code === RET_CODE_MAP.OK) {
-          this.countdownVisible = true
-          this.$refs.fnCountdown.start()
-        }
-      })
-    },
-    onCountdownOver() {
-      this.countdownVisible = false
-    },
-
     submit() {
       this.$validate().then(success => {
         if (success) {
-          validateOldPhone.save(this.model).then(res => res.json()).then(data => {
-            if (data.code === RET_CODE_MAP.OK) {
-              this.$router.push({
-                name: 'changeBankCardStep2',
-                params: {
-                  transitionName: 'slideRightFade'
-                }
-              })
-            }
-          })
+          bankCards
+            .save(this.model)
+            .then(res => res.json())
+            .then(data => {
+              if (data.code === RET_CODE_MAP.OK) {
+                this.model.bankCardId = data.data.id
+                this.$router.push({
+                  name: 'addBankStep3',
+                  params: {
+                    model: this.model,
+                    transitionName: 'slideRightFade'
+                  }
+                })
+              }
+            })
         } else {
           this.$toast(this.validation.firstError(), 'error')
         }
@@ -74,20 +63,22 @@ export default {
     }
   },
 
+  mounted() {
+    this.model = this.$route.params.model || this.model
+  },
+
   computed: {
     ...mapGetters(['user'])
   },
 
   data() {
-    const user = this.$store.getters.user
     return {
       model: {
-        id: user.id,
-        phone: user.phone,
-        verifyType: 0,
+        bankReservePhone: '13333333333',
         captcha: ''
       },
-      countdownVisible: false
+      validatePhoneModel: 'model.bankReservePhone'
+      // countdownVisible: false
     }
   }
 }

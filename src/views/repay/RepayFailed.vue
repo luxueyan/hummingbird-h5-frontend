@@ -9,7 +9,7 @@ section.change-bank-card-step3.single-page-tip
   article.text-left
     p
       | 您的
-      em {{err.cardName}}({{err.cardNo | fbCardNo}})
+      em {{err.bankName}}({{err.bankCard | fbCardNo}})
       | 因
       em {{err.lastErrMsg | errMsgPrune}}
       | 还款失败。
@@ -41,7 +41,7 @@ section.change-bank-card-step3.single-page-tip
 import {
   mapGetters
 } from 'vuex'
-import { RepaymentError } from '@/common/resources.js'
+import { repaymentError } from '@/common/resources.js'
 import repayMixins from '@/views/repay/repay_mixins.js'
 
 export default {
@@ -51,7 +51,7 @@ export default {
   },
 
   beforeRouteEnter(to, from, next) {
-    RepaymentError.get().then(res => res.json())
+    repaymentError.get().then(res => res.json())
       .then(data => {
         next(vm => {
           vm.err = data.data

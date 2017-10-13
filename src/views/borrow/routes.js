@@ -25,7 +25,7 @@ export default {
     meta: {
       title: '立即提款',
       tabBarVisible: true,
-      headerHidden: true,
+      // headerHidden: true,
       hasFixedButtons: true,
       permits: [CUST_STATE_CODE_MAP.DEBT_SETTELED]
     }

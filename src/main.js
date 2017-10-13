@@ -17,6 +17,7 @@ import {
   Cell,
   CellSwipe,
   Field,
+  Radio,
   Header,
   Button,
   Toast,
@@ -29,9 +30,13 @@ import {
   InfiniteScroll
 } from 'mint-ui'
 
+import FbField from '@/components/FbField.vue'
+import FbCountdown from '@/components/FbCountdown.vue'
+
 Vue.component(Cell.name, Cell)
 Vue.component(CellSwipe.name, CellSwipe)
 Vue.component(Field.name, Field)
+Vue.component(Radio.name, Radio)
 Vue.component(Header.name, Header)
 Vue.component(Button.name, Button)
 Vue.component(Progress.name, Progress)
@@ -40,12 +45,8 @@ Vue.component(TabItem.name, TabItem)
 Vue.component(Spinner.name, Spinner)
 Vue.use(InfiniteScroll)
 
-// 提示框icon样式
-const ToastClasses = {
-  'success': 'iconfont icon-chenggong',
-  'error': 'iconfont icon-warning',
-  'warn': 'iconfont icon-warn'
-}
+Vue.component(FbField.name, FbField)
+Vue.component(FbCountdown.name, FbCountdown)
 
 sync(store, router)
 
@@ -118,6 +119,13 @@ function main() {
   })
 }
 
+// 提示框icon样式
+const ToastClasses = {
+  'success': 'iconfont icon-chenggong',
+  'error': 'iconfont icon-warning',
+  'warn': 'iconfont icon-warn'
+}
+
 Vue.$msgBox = Vue.prototype.$msgBox = MessageBox
 Vue.$toast = Vue.prototype.$toast = function toast(msg = '', type = '') {
   Toast({
@@ -127,13 +135,6 @@ Vue.$toast = Vue.prototype.$toast = function toast(msg = '', type = '') {
   })
 }
 Vue.$indicator = Vue.prototype.$indicator = Indicator
-Vue.prototype.isWeixin = () => { // 判断是否是微信
-  const ua = navigator.userAgent.toLowerCase()
-  if (ua.match(/.*MicroMessenger/i)) {
-    return true
-  }
-  return false
-}
 
 // 启动应用
 if (process.env.NODE_ENV.indexOf('app') > -1) {

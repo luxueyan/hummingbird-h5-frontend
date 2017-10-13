@@ -77,13 +77,6 @@ export default {
     }
   },
 
-  watch: {
-    'bankCardForShow' () {
-      this.model.bankCard = this.bankCardForShow = this.bankCardForShow.replace(/\s/g, '')
-      this.bankCardForShow = this.bankCardForShow.replace(/\d{4}(?=(\d{1,4}))/g, '$& ') //展示空格分隔的银行卡号
-    }
-  },
-
   methods: {
     ...mapMutations(['updateUser']),
     // 获取银行卡开户行

@@ -5,8 +5,8 @@
 <script>
 import EPaper from '@/common/epaper.js'
 import {
-  SetAgreementSign,
-  GiveUpContract
+  contractSign,
+  contractReset
 } from '@/common/resources.js'
 import {
   mapGetters,
@@ -22,17 +22,17 @@ export default {
   mixins: [borrowMixins],
   mounted() {
     const myepaper = EPaper.init('panel', {
-      name: this.user.UserinfoValLogin.Name
+      name: this.user.name
     })
 
     myepaper.setCallback((pngData, pointsData, isCancel) => {
       if (!isCancel) {
         if (!pngData) {
-          this.$toast(`请手写您的姓名：${this.user.UserinfoValLogin.Name}`, 'error')
+          this.$toast(`请手写您的姓名：${this.user.name}`, 'error')
           return
         }
 
-        SetAgreementSign
+        contractSign
           .save({
             sign: pngData
           })
@@ -43,10 +43,10 @@ export default {
             }
           })
       } else {
-        GiveUpContract.get()
+        contractReset.get()
           .then(res => res.json())
           .then(data => {
-            if (data.ret === RET_CODE_MAP.OK) {
+            if (data.code === RET_CODE_MAP.OK) {
               this.updateStateCode(CUST_STATE_CODE_MAP.DEBT_SETTELED)
               this.$router.push({
                 name: 'borrowerInfo'

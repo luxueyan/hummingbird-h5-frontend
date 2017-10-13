@@ -22,19 +22,14 @@ module.exports = router => {
         'bankCard': '62200000000000',
         'bankName': '中国工商银行',
         'isDefault': true,
-        'canDelete': false
+        'canDelete': true
+      }, {
+        'id': '599794a4f87ca703c05df021',
+        'bankCard': '62200000000000',
+        'bankName': '中国农业银行',
+        'isDefault': false,
+        'canDelete': true
       }]
-    })
-  })
-
-  // 单个银行卡信息
-  router.get('/bank_cards/:id', (req, res) => {
-    res.jsonOk({
-      'id': '599794a4f87ca703c05df02c',
-      'bankCard': '62200000000000',
-      'bankName': 'bankName',
-      'isDefault': true,
-      'canDelete': false
     })
   })
 
@@ -60,4 +55,27 @@ module.exports = router => {
       })
     }
   })
+
+  // 删除银行卡信息
+  router.post('/bank_cards/delete', (req, res) => {
+    res.jsonOk({
+      'id': '599794a4f87ca703c05df02c',
+      'bankCard': '62200000000000',
+      'bankName': '招商银行',
+      'isDefault': true,
+      'canDelete': false
+    })
+  })
+
+  // 单个银行卡信息
+  router.get('/bank_cards/:id', (req, res) => {
+    res.jsonOk({
+      'id': '599794a4f87ca703c05df02c',
+      'bankCard': '62200000000000',
+      'bankName': '招商银行',
+      'isDefault': true,
+      'canDelete': false
+    })
+  })
+
 }

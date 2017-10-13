@@ -1,23 +1,23 @@
 <template lang="pug">
 section.change-bank-card-step3.single-page-tip
   .logo
-    i.iconfont.icon-xiao
+    i.iconfont.icon-dengdai
     //- h3 您的提款请求已发送成功，请耐心等待。
   article
     //- p 您的提款请求已发送成功，请耐心等待。
     table
       tr
         th 提款金额：
-        td {{contractInfo.loanAmount | fbCurrency('', '元')}}
+        td {{contract.paymentAmount | fbCurrency('', '元')}}
       tr
-        th {{contractInfo.bank}}：
+        th {{contract.bankName}}：
         td {{bankCardForShow | fbFalse}}
       tr
         th 还款日期：
-        td {{contractInfo.endDate | fbFalse}}
+        td {{contract.repaymentDate | fbFalse}}
       tr
         th 还款金额：
-        td {{contractInfo.totalAmount | fbCurrency('', '元')}}
+        td {{contract.repaymentAmount | fbCurrency('', '元')}}
     small 您的提款请求已发送成功，请耐心等待。
   .footer.no-padding-top
     .simple-btns
@@ -30,11 +30,9 @@ import {
   mapGetters
 } from 'vuex'
 import {
-  QueryContract
+  selfContracts
 } from '@/common/resources.js'
-import {
-  contractInfo
-} from '@/common/adaptors.js'
+import store from '@/store'
 
 export default {
   computed: {
@@ -42,12 +40,13 @@ export default {
   },
 
   beforeRouteEnter(to, from, next) {
-    QueryContract.get().then(res => res.json())
+    const user = store.getters.user
+    selfContracts.get({ id: user.currentOngoingContract.id }).then(res => res.json())
       .then(data => {
         next(vm => {
-          if (data.data.content) {
-            Object.assign(vm.contractInfo, contractInfo(data.data.content))
-            vm.bankCardForShow = vm.contractInfo.bankCard.replace(/(\d{4})\d+(\d{4})/g, '$1****$2')
+          if (data.data) {
+            vm.contract = Object.assign({}, data.data)
+            vm.bankCardForShow = vm.contract.bankCard.replace(/(\d{4})\d+(\d{4})/g, '$1****$2')
           }
         })
       })
@@ -64,7 +63,7 @@ export default {
   data() {
     return {
       bankCardForShow: '',
-      contractInfo: {}
+      contract: {}
     }
   }
 }

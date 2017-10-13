@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import { includes, isObject } from 'lodash'
 import { MessageBox, Indicator } from 'mint-ui'
-import store from '../store'
-import { read, save } from '../storage'
-import { RET_CODE_MAP } from '../constants.js'
+import store from '@/store'
+import { read, save } from '@/storage'
+import { RET_CODE_MAP } from '@/constants.js'
 import moment from 'moment'
 
 const CACHE_URLS = [] // 需要缓存的接口
@@ -49,7 +49,7 @@ export default [
       }
     }
 
-    request.headers.set('token', store.getters.token)
+    request.headers.set('x-auth-token', store.getters.token)
 
     next((response) => {
       // delete current request in the map
@@ -101,7 +101,7 @@ export default [
       } else if (res.status === 200) {
         if (!request.notApi && !request.params.skipAuth && (!res.body || res.body.code !== RET_CODE_MAP.OK)) {
           MessageBox('提示', res.body ? res.body.message : '登录失败或者访问无权限')
-          if (!res.body || res.body.code === RET_CODE_MAP.AUTH_FAILED || res.body.code === RET_CODE_MAP.USER_FORBIDDENED) {
+          if (!res.body || res.body.code === RET_CODE_MAP.AUTH_FAILED || res.body.code === RET_CODE_MAP.USER_FORBIDDENED || res.body.code === RET_CODE_MAP.USER_FORBIDDENED) {
             store.dispatch('logout')
           }
         } else {

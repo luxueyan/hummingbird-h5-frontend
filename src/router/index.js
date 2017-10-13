@@ -76,7 +76,11 @@ router.beforeEach((to, from, next) => {
         if (includes(to.meta.permits, code)) {
           next()
         } else {
-          next(getRedirectRoute(code))
+          next({ ...getRedirectRoute(code),
+            params: {
+              transitionName: to.params.transitionName || 'slideRightFade' // 保证redirect时候仍然有动效
+            }
+          })
         }
       }).catch(() => {
         next({ name: 'login', query: { redirect: to.fullPath } })
@@ -90,11 +94,11 @@ router.beforeEach((to, from, next) => {
 router.afterEach((to) => {
   if (to.name !== undefined) {
     document.body.setAttribute('class', to.name)
+    document.body.setAttribute('page', to.name)
   }
 
   if (to.meta.title) {
     document.title = to.meta.title
-    document.body.setAttribute('page', to.name)
 
     // hack ios title not update bug
     const iframe = document.createElement('iframe')

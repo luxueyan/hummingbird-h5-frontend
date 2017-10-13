@@ -17,9 +17,9 @@
         </tr>
         <tr>
           <td>姓名</td>
-          <td>{{user.UserinfoValLogin.Name}}</td>
+          <td>{{user.name}}</td>
           <td>身份证号</td>
-          <td>{{user.UserinfoValLogin.Idcard}}</td>
+          <td>{{contract.idCard}}</td>
         </tr>
         <tr>
           <td colspan="4">服务方及收取费用明细</td>
@@ -30,14 +30,14 @@
         </tr>
         <tr>
           <td>综合服务费</td>
-          <td colspan="3">{{serviceCharge | fbCurrency('￥', '元')}}</td>
+          <td colspan="3">{{contract.serviceFee | fbCurrency('￥', '元')}}</td>
         </tr>
         <tr>
           <td colspan="4">借款明细</td>
         </tr>
         <tr>
           <td>借款本金</td>
-          <td colspan="3">{{contractInfo.principal | fbCurrency('￥', '元')}}</td>
+          <td colspan="3">{{contract.paymentAmount | fbCurrency('￥', '元')}}</td>
         </tr>
         <tr>
           <td>借款年利率</td>
@@ -47,24 +47,24 @@
         </tr>
         <tr>
           <td>借款出借日</td>
-          <td>{{contractInfo.startDate}}</td>
+          <td>{{contract.paymentDate}}</td>
           <td>借款到期日</td>
-          <td>{{contractInfo.endDate}}</td>
+          <td>{{contract.repaymentDate}}</td>
         </tr>
         <tr>
           <td>起息日</td>
-          <td>{{contractInfo.startDate}}</td>
+          <td>{{contract.paymentDate}}</td>
           <td>还款方式</td>
-          <td>从{{contractInfo.bank}}（{{bankCardShort}}）自动扣款</td>
+          <td>从{{contract.bankName}}（{{bankCardShort}}）自动扣款</td>
         </tr>
         <tr>
           <td colspan="4">还款计划</td>
         </tr>
         <tr>
           <td>还款日</td>
-          <td>{{contractInfo.endDate}}</td>
+          <td>{{contract.repaymentDate}}</td>
           <td>还款金额</td>
-          <td>应还款{{contractInfo.totalAmount | fbCurrency('￥', '元')}}</td>
+          <td>应还款{{contract.repaymentAmount | fbCurrency('￥', '元')}}</td>
         </tr>
       </tbody>
     </table>
@@ -135,11 +135,12 @@
 
 <script>
 import {
-  QueryContract
+  selfContracts
 } from '@/common/resources.js'
-import {
-  contractInfo
-} from '@/common/adaptors.js'
+import store from '@/store'
+// import {
+//   contract
+// } from '@/common/adaptors.js'
 import {
   mapGetters
 } from 'vuex'
@@ -148,11 +149,12 @@ import {
 
 export default {
   beforeRouteEnter: function(to, from, next) {
-    QueryContract.get().then(res => res.json())
+    const user = store.getters.user
+    selfContracts.get({ id: user.currentOngoingContract.id }).then(res => res.json())
       .then(data => {
         next(vm => {
-          if (data.data.content) {
-            vm.contractInfo = Object.assign({}, contractInfo(data.data.content))
+          if (data.data) {
+            vm.contract = Object.assign({}, data.data)
           }
         })
       })
@@ -166,26 +168,26 @@ export default {
     //   }
     //   return 1
     // },
-    serviceCharge() {
-      const {
-        creditMoney,
-        manageMoney
-      } = this.contractInfo
-      return creditMoney + manageMoney
-    },
+    // serviceCharge() {
+    //   const {
+    //     creditMoney,
+    //     manageMoney
+    //   } = this.contract
+    //   return creditMoney + manageMoney
+    // },
     // virtualMoney() {
     //   const {
     //     Limit
-    //   } = this.contractInfo
+    //   } = this.contract
     //   return Limit - this.serviceCharge
     // },
     bankCardShort() {
-      return this.contractInfo.bankCard ? this.contractInfo.bankCard.slice(-4) : ''
+      return this.contract.bankCard ? this.contract.bankCard.slice(-4) : ''
     }
   },
   data() {
     return {
-      contractInfo: {}
+      contract: {}
     }
   }
 }

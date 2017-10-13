@@ -3,10 +3,10 @@ section.authorized-tip.single-page-tip
   .logo
     i.iconfont.icon-xiao
     h3 欢迎您，特权用户
-      em {{user.userCall}}
+      em {{user.name}}
   article
     p 您已获得
-      em {{user.integraluserlevel.Limit | fbCurrency('', '元')}}
+      em {{user.productInfo[0].amount | fbCurrency('', '元')}}
       | 速贷特权
     p 点击下一步，立刻领取
   .footer
