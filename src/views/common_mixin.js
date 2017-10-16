@@ -10,41 +10,35 @@ export default {
     },
 
     // 获取银行卡开户行
-    getBank() {
+    async getBank() {
       if (this.validation.isPassed('model.bankCard')) {
-        bankCardInfo
-          .get({
-            bankCard: this.model.bankCard
-          })
-          .then(res => res.json())
-          .then(data => {
-            if (data.code === RET_CODE_MAP.OK) {
-              this.model.bankName = data.data.bankName
-              this.model.bankCode = data.data.bankCode
-            } else {
-              this.model.bankName = '自动生成'
-              this.model.bankCode = ''
-            }
-            this.bankCardNotSupported = data.code === RET_CODE_MAP.BANK_CARD_NOT_SUPPORTED
-            this.$validate('model.bankCard')
-          })
+        const data = await bankCardInfo.get({
+          bankCard: this.model.bankCard
+        }).then(res => res.json())
+        if (data.code === RET_CODE_MAP.OK) {
+          this.model.bankName = data.data.bankName
+          this.model.bankCode = data.data.bankCode
+        } else {
+          this.model.bankName = '自动生成'
+          this.model.bankCode = ''
+        }
+        this.bankCardNotSupported = data.code === RET_CODE_MAP.BANK_CARD_NOT_SUPPORTED
+        this.$validate('model.bankCard')
       }
     },
 
     // 获取验证码
-    toGetMsgCode(phone) {
-      this.$validate(this.validatePhoneModel).then(success => {
-        if (success) {
-          this.getMsgCode(phone).then(data => {
-            if (data.code === RET_CODE_MAP.OK) {
-              this.countdownVisible = true
-              this.$refs.fnCountdown.start()
-            }
-          })
-        } else {
-          this.$toast(this.validation.firstError(this.validatePhoneModel), 'error')
+    async toGetMsgCode(phone) {
+      const success = await this.$validate(this.validatePhoneModel)
+      if (success) {
+        const data = await this.getMsgCode(phone)
+        if (data.code === RET_CODE_MAP.OK) {
+          this.countdownVisible = true
+          this.$refs.fnCountdown.start()
         }
-      })
+      } else {
+        this.$toast(this.validation.firstError(this.validatePhoneModel), 'error')
+      }
     },
 
     // 定时器结束 隐藏定时器

@@ -23,7 +23,7 @@ section.change-bank-card-step3.single-page-tip
     ul
       li
         | 一、通过点击
-        em 我要更换信息
+        em 我要更换银行卡
         | 更换一张余额充足的银行卡，更改成功后点击
         em 重试
         |；
@@ -33,7 +33,7 @@ section.change-bank-card-step3.single-page-tip
       a.large(@click="showCommonFailedReasons()") 常见失败原因
       //- a.large(@click="repay()") 重试
     .btns-group
-      mt-button.mint-button-block(type='default', size='large', @click="$router.push({name: 'changeBankCardStep1'})") 我要更换信息
+      mt-button.mint-button-block(type='default', size='large', @click="$router.push({name: 'bankList', params:{transitionName: 'slideRightFade'}})") 我要更换银行卡
       mt-button.mint-button-block(type='primary', size='large', @click="repay()") 重试
 </template>
 
@@ -50,13 +50,11 @@ export default {
     ...mapGetters(['stateMsg'])
   },
 
-  beforeRouteEnter(to, from, next) {
-    repaymentError.get().then(res => res.json())
-      .then(data => {
-        next(vm => {
-          vm.err = data.data
-        })
-      })
+  async beforeRouteEnter(to, from, next) {
+    const data = await repaymentError.get().then(res => res.json())
+    next(vm => {
+      vm.err = data.data
+    })
   },
 
   filters: {

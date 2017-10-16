@@ -20,7 +20,7 @@ import {
 } from '@/common/crossers.js'
 // import {
 //   Messages
-// } from '../../common/resources.js'
+// } from '@/common/resources.js'
 
 export default {
   // beforeRouteEnter(to, from, next) {

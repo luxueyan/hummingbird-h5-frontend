@@ -55,7 +55,7 @@ import {
   Field,
   Cell
 } from 'mint-ui'
-import Clickoutside from '../common/clickoutside.js'
+import Clickoutside from '@/common/clickoutside.js'
 
 export default {
   name: 'fb-field',

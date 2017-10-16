@@ -2,9 +2,10 @@ module.exports = router => {
   // 添加银行卡
   router.post('/bank_cards', (req, res) => {
     const data = req.body
+    console.log(req.session.captcha, parseInt(data.captcha, 10))
     if (req.session.captcha !== parseInt(data.captcha, 10)) {
       res.json({
-        code: 200003,
+        code: 200002,
         message: '验证码错误'
       })
     } else {

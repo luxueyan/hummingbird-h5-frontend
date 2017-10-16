@@ -38,28 +38,22 @@ export default {
   },
 
   methods: {
-    submit() {
-      this.$validate().then(success => {
-        if (success) {
-          bankCards
-            .save(this.model)
-            .then(res => res.json())
-            .then(data => {
-              if (data.code === RET_CODE_MAP.OK) {
-                this.model.bankCardId = data.data.id
-                this.$router.push({
-                  name: 'addBankStep3',
-                  params: {
-                    model: this.model,
-                    transitionName: 'slideRightFade'
-                  }
-                })
-              }
-            })
-        } else {
-          this.$toast(this.validation.firstError(), 'error')
+    async submit() {
+      const success = await this.$validate()
+      if (success) {
+        const data = await bankCards.save(this.model).then(res => res.json())
+        if (data.code === RET_CODE_MAP.OK) {
+          this.model.bankCardId = data.data.id
+          this.$router.push({
+            name: 'addBankStep3',
+            params: {
+              model: this.model
+            }
+          })
         }
-      })
+      } else {
+        this.$toast(this.validation.firstError(), 'error')
+      }
     }
   },
 

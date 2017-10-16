@@ -19,19 +19,15 @@ import { bankCards, bankCardDefault } from '@/common/resources.js'
 import { find } from 'lodash'
 
 export default {
-  beforeRouteEnter(to, from, next) {
-    bankCards
-      .get()
-      .then(res => res.json())
-      .then(data => {
-        next(vm => {
-          if (data.data) {
-            vm.bankCards = data.data.bankCards || []
-            const defaultBankCard = find(vm.bankCards, bd => bd.isDefault)
-            vm.defaultBankCardId = defaultBankCard.id
-          }
-        })
-      })
+  async beforeRouteEnter(to, from, next) {
+    const data = await bankCards.get().then(res => res.json())
+    next(vm => {
+      if (data.data) {
+        vm.bankCards = data.data.bankCards || []
+        const defaultBankCard = find(vm.bankCards, bd => bd.isDefault)
+        vm.defaultBankCardId = defaultBankCard.id
+      }
+    })
   },
 
   methods: {
@@ -39,7 +35,6 @@ export default {
       this.$router.push({
         name: 'bankDetail',
         params: {
-          transitionName: 'slideRightFade',
           id: bankCardId
         }
       })
@@ -48,8 +43,7 @@ export default {
 
   watch: {
     defaultBankCardId() {
-      bankCardDefault
-        .save({ id: this.defaultBankCardId })
+      bankCardDefault.save({ id: this.defaultBankCardId })
     }
   },
 

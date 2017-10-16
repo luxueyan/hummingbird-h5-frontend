@@ -38,14 +38,13 @@ export default {
     }
   },
 
-  beforeRouteEnter(to, from, next) {
+  async beforeRouteEnter(to, from, next) {
     if (to.query.accesstoken) {
       (to.query.accesstoken)
       store.dispatch('updateToken', to.query.accesstoken)
-      store.dispatch('getUser').then(data => {
-        next({
-          name: to.query.to || 'authorizedTip'
-        })
+      await store.dispatch('getUser')
+      next({
+        name: to.query.to || 'authorizedTip'
       })
     } else {
       next()
@@ -61,23 +60,18 @@ export default {
 
   methods: {
     ...mapActions(['login', 'getUser', 'updateToken']),
-    submit() {
-      this.$validate().then(success => {
-        if (success) {
-          this.login(this.user).then(data => {
-            if (data.code === RET_CODE_MAP.OK) {
-              this.$router.push({
-                path: this.redirect || '/',
-                params: {
-                  transitionName: 'slideRightFade'
-                }
-              })
-            }
+    async submit() {
+      const success = await this.$validate()
+      if (success) {
+        const data = await this.login(this.user)
+        if (data.code === RET_CODE_MAP.OK) {
+          this.$router.push({
+            path: this.redirect || '/'
           })
-        } else {
-          this.$toast(this.validation.firstError(), 'error')
         }
-      })
+      } else {
+        this.$toast(this.validation.firstError(), 'error')
+      }
     }
   },
 
@@ -87,8 +81,6 @@ export default {
       redirect: null, //登录后跳转页面
       // countdownVisible: false,
       user: {
-        // UserinfoValLogin: {},
-        // integraluserlevel: {},
         phone: '',
         captcha: '',
         loginType: this.isWeixin() ? 2 : (~NODE_ENV.indexOf('app') ? 1 : 0)
@@ -101,9 +93,5 @@ export default {
 <style lang="scss" scoped>
 .logo {
   background: white;
-}
-
-.login-form {
-  // padding: 10px 0;
 }
 </style>

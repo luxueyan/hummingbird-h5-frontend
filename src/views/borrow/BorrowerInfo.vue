@@ -1,28 +1,31 @@
 <template lang="pug">
   .borrow-info
     form.borrow-form(@submit.prevent='submit()')
-      .fields-header
-        | 借款方案
-        //- small.fr.loan-agreement 查看
-          router-link(:to="{name:'loanAgreement'}")
-            |《借款服务协议》
-      .fields
-        mt-cell(title="借款金额", :value="product.amount | fbCurrency('', '元')")
-        mt-cell(title="借款天数", :value="product.loanDays | fbAppend('天')")
-        mt-cell(:value="(product.serviceFee - product.discountAmount) | fbCurrency('', '元')")
-          span(slot="title") 服务费
-            i.iconfont.icon-info(@click="showServiceChargeTip")
-            span.icon-sale7(v-show="borrowOption === 'vocation'")
-        mt-cell(title="实际到账", :value="virtualMoney | fbCurrency('', '元')")
-      .fields-header
-        | 账户信息
-        small(v-if="!contractInfoHasHistory")
-          i.iconfont.icon-warning
-          | 请填写您的真实信息，否则会影响借款。
-      .fields
-        mt-cell(title="姓名", :value="model.name | fbFalse")
-        //- mt-cell(title="登录手机号", :value="user.UserinfoValLogin.Userphone")
-        template(v-if='!contractInfoHasHistory')
+      section
+        .fields-header
+          | 借款方案
+          //- small.fr.loan-agreement 查看
+            router-link(:to="{name:'loanAgreement'}")
+              |《借款服务协议》
+        .fields
+          mt-cell(title="借款金额", :value="product.amount | fbCurrency('', '元')")
+          mt-cell(title="借款天数", :value="product.loanDays | fbAppend('天')")
+          mt-cell(:value="(product.serviceFee - product.discountAmount) | fbCurrency('', '元')")
+            span(slot="title") 服务费
+              i.iconfont.icon-info(@click="showServiceChargeTip")
+              span.icon-sale7(v-show="borrowOption === 'vocation'")
+          mt-cell(title="实际到账", :value="virtualMoney | fbCurrency('', '元')")
+      fb-bank-cards(v-if="contractInfoHasHistory")
+      section(v-if="!contractInfoHasHistory")
+        .fields-header
+          | 账户信息
+          small
+            i.iconfont.icon-warning
+            | 请填写您的真实信息，否则会影响借款。
+        .fields
+          mt-cell(title="姓名", :value="model.name | fbFalse")
+          //- mt-cell(title="登录手机号", :value="user.UserinfoValLogin.Userphone")
+          //- template(v-if='!contractInfoHasHistory')
           mt-field(label='身份证号', placeholder='请输入身份证号', v-model="model.idCard", :state="getFieldState('model.idCard')", @click.native="showFieldError($event, 'model.idCard')")
           fb-field(v-mt-field-blur="{blur:getBank}", label='银行卡号', placeholder='请输入银行卡号', v-model="bankCardForShow", :state="getFieldState('model.bankCard')", @click.native="showFieldError($event, 'model.bankCard')")
             span(slot="label") 银行卡号
@@ -34,16 +37,16 @@
             mt-button(type='default', @click.stop.prevent='toGetMsgCode()', :disabled='countdownVisible')
               span(v-show='!countdownVisible') 发送验证码
               fb-countdown(ref='fnCountdown', v-show='countdownVisible' @countdown-over='onCountdownOver()')
-        template(v-if='contractInfoHasHistory')
-          mt-cell(title='身份证号', :value="model.idCard")
-          mt-cell(title='银行卡号')
-            span {{bankCardForShow}}
+          //- template(v-if='contractInfoHasHistory')
+          //-   mt-cell(title='身份证号', :value="model.idCard")
+          //-   mt-cell(title='银行卡号')
+          //-     span {{bankCardForShow}}
 
-          mt-cell(title="开户行", :value="model.bankName | fbFalse")
-          mt-cell(title='银行预留手机号',  :value="model.bankReservePhone")
-          mt-cell(@click.native="goChangeBankCard()")
-            a.small 变更银行卡
-      //- small.note *由于清明假期三方支付休假，今日放款预计4月5日下午到账，还款日期会根据实际到账时间顺延。
+          //-   mt-cell(title="开户行", :value="model.bankName | fbFalse")
+          //-   mt-cell(title='银行预留手机号',  :value="model.bankReservePhone")
+          //-   mt-cell(@click.native="goChangeBankCard()")
+          //-     a.small 变更银行卡
+        //- small.note *由于清明假期三方支付休假，今日放款预计4月5日下午到账，还款日期会根据实际到账时间顺延。
       .form-buttons.fixed
           mt-button.mint-button-block(type='primary', size='large') 立即提款
     //- fb-msgbox(ref="vocationMsgbox", title="十一期间放款安排", msgbox-class="shiyi-option-msgbox")
@@ -85,31 +88,31 @@ import store from '@/store'
 import moment from 'moment'
 import { inRange, pick } from 'lodash'
 import Vue from 'vue'
-import FbMsgbox from '../../components/FbMsgbox.vue'
+import FbMsgbox from '@/components/FbMsgbox.vue'
+import FbBankCards from '@/components/FbBankCards.vue'
 
 export default {
   mixins: [ValidatorMixin, CommonMixin],
   components: {
-    FbMsgbox
+    FbMsgbox,
+    FbBankCards
   },
-  beforeRouteEnter(to, from, next) {
+  async beforeRouteEnter(to, from, next) {
     const user = store.getters.user
-    if (user.isNew) {
+    if (!user.currentOngoingContract.id) {
       next()
       return
     }
 
-    selfContracts.get({ id: user.currentOngoingContract.id }).then(res => res.json())
-      .then(data => {
-        next(vm => {
-          if (data.data) {
-            vm.contractInfoHasHistory = true
-            // Object.assign(vm.model, pick(contractInfo(data.data.content), ['name', 'idCard', 'bankCard', 'bank', 'bankPhone']))
-            Object.assign(vm.model, pick(data.data, ['idCard', 'bankCard', 'bankName', 'bankReservePhone']))
-            vm.bankCardForShow = vm.model.bankCard.replace(/\d{4}(?=(\d{1,4}))/g, '$& ')
-          }
-        })
-      })
+    const data = await selfContracts.get({ id: user.currentOngoingContract.id }).then(res => res.json())
+    next(vm => {
+      if (data.data) {
+        vm.contractInfoHasHistory = true
+        // Object.assign(vm.model, pick(contractInfo(data.data.content), ['name', 'idCard', 'bankCard', 'bank', 'bankPhone']))
+        Object.assign(vm.model, pick(data.data, ['idCard', 'bankCard', 'bankName', 'bankReservePhone']))
+        vm.bankCardForShow = vm.model.bankCard.replace(/\d{4}(?=(\d{1,4}))/g, '$& ')
+      }
+    })
   },
 
   mounted() {
@@ -207,34 +210,37 @@ export default {
     },
 
     // 立刻提款
-    submit() {
-      this.$validate().then(success => {
+    async submit() {
+      let data = null
+      if (!this.contractInfoHasHistory) {
+        const success = await this.$validate()
         if (success) {
           if (this.borrowOption === 'vocation') {
             this.model.agreementDays = this.vocationRepayDays
           }
-          (this.user.isNew ? contractInitial.save(this.model) : contractReturn.save(this.user.id))
-          .then(res => res.json())
-            .then(data => {
-              if (data.code === RET_CODE_MAP.OK) {
-                this.updateStateCode(CUST_STATE_CODE_MAP.CONTRACT_INFO_FILLED)
-                this.$router.push({
-                  name: 'signature'
-                })
-              }
-            })
+          data = await contractInitial.save(this.model).then(res => res.json())
         } else {
           this.$toast(this.validation.firstError(), 'error')
+          return
         }
-      })
-    },
+      } else {
+        data = await contractReturn.save().then(res => res.json())
+      }
+
+      if (data.code === RET_CODE_MAP.OK) {
+        this.updateStateCode(CUST_STATE_CODE_MAP.CONTRACT_INFO_FILLED)
+        this.$router.push({
+          name: 'signature'
+        })
+      }
+    }
 
     // 去修改银行卡
-    goChangeBankCard() {
-      this.$router.push({
-        name: 'changeBankCardStep1'
-      })
-    }
+    // goChangeBankCard() {
+    //   this.$router.push({
+    //     name: 'changeBankCardStep1'
+    //   })
+    // }
   },
 
   computed: {
@@ -283,6 +289,7 @@ export default {
     return {
       // qmNoteVisible: +moment().toDate() <= +new Date('2017-04-05 12:00:00'), // 4月5日下午以后不显示
       contractInfoHasHistory: false,
+      validatePhoneModel: 'model.bankReservePhone',
       // bankCardNotSupported: false, // 银行卡不支持标记
       // countdownVisible: false,
       // bankCardForShow: '',

@@ -38,28 +38,22 @@ export default {
   },
 
   methods: {
-    submit() {
-      this.$validate().then(success => {
-        if (success) {
-          validateOldPhone
-            .save(this.model)
-            .then(res => res.json())
-            .then(data => {
-              if (data.code === RET_CODE_MAP.OK) {
-                this.$router.push({
-                  name: this.model.verifyType ? 'changeBankPhoneStep2' : 'changePhoneStep2',
-                  params: {
-                    bankCardId: this.model.bankCardId || null,
-                    from: this.from,
-                    transitionName: 'slideRightFade'
-                  }
-                })
-              }
-            })
-        } else {
-          this.$toast(this.validation.firstError(), 'error')
+    async submit() {
+      const success = await this.$validate()
+      if (success) {
+        const data = await validateOldPhone.save(this.model).then(res => res.json())
+        if (data.code === RET_CODE_MAP.OK) {
+          this.$router.push({
+            name: this.model.verifyType ? 'changeBankPhoneStep2' : 'changePhoneStep2',
+            params: {
+              bankCardId: this.model.bankCardId || null,
+              from: this.from
+            }
+          })
         }
-      })
+      } else {
+        this.$toast(this.validation.firstError(), 'error')
+      }
     }
   },
 
@@ -78,7 +72,7 @@ export default {
     return {
       from: this.$route.params.from || '',
       model: {
-        id: user.id,
+        // id: user.id,
         phone: user.phone,
         verifyType: this.$route.meta.verifyType || 0, //0 验证注册手机号； 1 验证银行预留手机号
         captcha: ''

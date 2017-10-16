@@ -39,34 +39,28 @@ export default {
   },
 
   methods: {
-    submit() {
-      this.$validate().then(success => {
-        if (success) {
-          changePhone
-            .save(this.model)
-            .then(res => res.json())
-            .then(data => {
-              if (data.code === RET_CODE_MAP.OK) {
-                const _self = this
-                this.$msgBox({
-                  title: '手机号变更成功',
-                  message: this.model.verifyType ? `您的尾号${this.model.bankCardId.slice(-4)}的银行卡预留手机号已修改为${this.model.phone}` : `您的注册手机号已修改为${this.model.phone}`,
-                  confirmButtonText: '知道了',
-                  callback(action) {
-                    _self.$router.push({
-                      name: _self.from || 'borrowInfo',
-                      params: {
-                        transitionName: 'slideRightFade'
-                      }
-                    })
-                  }
-                })
-              }
-            })
-        } else {
-          this.$toast(this.validation.firstError(), 'error')
+    async submit() {
+      const success = await this.$validate()
+
+      if (success) {
+        const data = await changePhone.save(this.model).then(res => res.json())
+
+        if (data.code === RET_CODE_MAP.OK) {
+          const _self = this
+          this.$msgBox({
+            title: '手机号变更成功',
+            message: this.model.verifyType ? `您的尾号${this.model.bankCardId.slice(-4)}的银行卡预留手机号已修改为${this.model.phone}` : `您的注册手机号已修改为${this.model.phone}`,
+            confirmButtonText: '知道了',
+            callback(action) {
+              _self.$router.push({
+                name: _self.from || 'borrowInfo'
+              })
+            }
+          })
         }
-      })
+      } else {
+        this.$toast(this.validation.firstError(), 'error')
+      }
     }
   },
 
@@ -81,11 +75,11 @@ export default {
   },
 
   data() {
-    const user = this.$store.getters.user
+    // const user = this.$store.getters.user
     return {
       from: this.$route.params.from || '',
       model: {
-        id: user.id,
+        // id: user.id,
         phone: '',
         verifyType: this.$route.meta.verifyType || 0, //0 验证注册手机号； 1 验证银行预留手机号
         captcha: ''

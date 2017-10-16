@@ -148,16 +148,14 @@ import {
 // import { inRange } from 'lodash'
 
 export default {
-  beforeRouteEnter: function(to, from, next) {
+  beforeRouteEnter: async function(to, from, next) {
     const user = store.getters.user
-    selfContracts.get({ id: user.currentOngoingContract.id }).then(res => res.json())
-      .then(data => {
-        next(vm => {
-          if (data.data) {
-            vm.contract = Object.assign({}, data.data)
-          }
-        })
-      })
+    const data = await selfContracts.get({ id: user.currentOngoingContract.id }).then(res => res.json())
+    next(vm => {
+      if (data.data) {
+        vm.contract = Object.assign({}, data.data)
+      }
+    })
   },
   computed: {
     ...mapGetters(['user']),

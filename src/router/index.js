@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import routes from './routes'
-import store from '../store'
+import routes from '@/router/routes.js'
+import store from '@/store'
 import { includes, find, map, isString, flattenDeep } from 'lodash'
-import { RET_CODE_MAP, CUST_STATE_CODE_MAP } from '../constants.js'
+import { RET_CODE_MAP, CUST_STATE_CODE_MAP } from '@/constants.js'
 import { Toast } from 'mint-ui'
 Vue.use(VueRouter)
 
@@ -139,6 +139,13 @@ Vue.getPermits = Vue.prototype.getPermits = function(routeName) {
 
 Vue.isPermit = Vue.prototype.isPermit = function(routeName) {
   return includes(Vue.getPermits(routeName), store.getters.stateCode)
+}
+
+const oldPush = router.push
+router.push = function(location = {}) {
+  location.params = location.params || {}
+  if (!location.params.transitionName) location.params.transitionName = 'slideRightFade'
+  oldPush.call(router, location)
 }
 
 export default router

@@ -28,17 +28,13 @@ export default {
   methods: {
     goOn() {
       this.$router.push({
-        name: 'borrowInfo',
-        params: {
-          transitionName: 'slideRightFade'
-        }
+        name: 'borrowInfo'
       })
     },
     changeBankPhone() {
       this.$router.push({
         name: 'changeBankPhoneStep1',
         params: {
-          transitionName: 'slideRightFade',
           bankCardId: this.model.bankCardId,
           from: this.$route.name
         }

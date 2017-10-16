@@ -23,20 +23,18 @@ import { isBankCard } from '@/common/utils.js'
 export default {
   mixins: [CommonMixin, ValidatorMixin],
   methods: {
-    submit() {
-      this.$validate().then(success => {
-        if (success) {
-          this.$router.push({
-            name: 'addBankStep2',
-            params: {
-              model: this.model,
-              transitionName: 'slideRightFade'
-            }
-          })
-        } else {
-          this.$toast(this.validation.firstError(), 'error')
-        }
-      })
+    async submit() {
+      const success = await this.$validate()
+      if (success) {
+        this.$router.push({
+          name: 'addBankStep2',
+          params: {
+            model: this.model
+          }
+        })
+      } else {
+        this.$toast(this.validation.firstError(), 'error')
+      }
     }
   },
 

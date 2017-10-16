@@ -3,13 +3,13 @@
   fb-updater-process
   n-progress(parent=".app")
   mt-header(ref="header", fixed="", :title="headerTitle", v-show="headerShow")
-    mt-button(v-if="headerBackShow", icon="back", slot="left", @click="back()")
-    mt-button.of-v(v-if="btnVisible(['mine'])", slot="left", @click="$router.push({name: 'messageList', params:{transitionName: 'slideRightFade'}})")
+    mt-button(v-if="headerBackShow", icon="back", slot="left", @click="routerBack()")
+    mt-button.of-v(v-if="btnVisible(['mine'])", slot="left", @click="$router.push({name: 'messageList'})")
       i.iconfont.icon-xiaoxi-solid.ft18.pos-r
         span.badge-red.badge-top 10
     mt-button(slot="right", v-if="btnVisible(['signature'])")
       small
-        router-link(:to="{name:'loanAgreement'}") 查看
+        router-link(:to="{name:'loanAgreement', params:{'transitionName': 'slideRightFade'}}") 查看
     mt-button(slot="right", v-if="btnVisible(['messageList'])")
       small
         a(@click="emitEvent('messages-mark-read')") 全部已读
@@ -41,7 +41,7 @@ import FbUpdaterProcess from '@/components/FbUpdaterProgress.vue'
 import {
   headerRightButton,
   titleUpdater
-} from './common/crossers.js'
+} from '@/common/crossers.js'
 import {
   mapGetters,
   mapActions
@@ -71,17 +71,6 @@ export default {
 
   methods: {
     ...mapActions(['getUser']),
-    back() {
-      if (this.preRoute) {
-        this.$router.push({
-          name: this.preRoute.name,
-          query: this.preRoute.query,
-          params: { ...this.preRoute.params, transitionName: 'slideLeftFade' }
-        })
-      } else {
-        this.$router.back()
-      }
-    },
 
     // 按钮在哪一页可见
     btnVisible(routes = []) {
@@ -132,7 +121,10 @@ export default {
     $route(to, from) {
       this.transitionName = to.params.transitionName || 'fade'
       this.updateContainerHeight(to, from)
-      this.preRoute = from
+      if (from.fullPath !== '/' && !to.params.notSaveCrumbed) {
+        this.routerCrumbs.push(from)
+      }
+      // console.log(to.params, from, this.routerCrumbs)
       // this.mineMenuVisible = false
     }
   },
@@ -149,7 +141,7 @@ export default {
       return this.$route.meta.hasFixedButtons
     },
     headerBackShow() {
-      return this.$route.meta.headerBackShow && this.preRoute
+      return this.$route.meta.headerBackShow && this.routerCrumbs.length
     },
     headerTitle() {
       return this.title || this.$route.meta.title
@@ -159,7 +151,7 @@ export default {
 
   data() {
     return {
-      preRoute: null,
+      // preRoute: null,
       title: '',
       tabSelected: '',
       transitionName: 'slideRightFade'

@@ -39,17 +39,15 @@ export default {
     ...mapGetters(['user'])
   },
 
-  beforeRouteEnter(to, from, next) {
+  async beforeRouteEnter(to, from, next) {
     const user = store.getters.user
-    selfContracts.get({ id: user.currentOngoingContract.id }).then(res => res.json())
-      .then(data => {
-        next(vm => {
-          if (data.data) {
-            vm.contract = Object.assign({}, data.data)
-            vm.bankCardForShow = vm.contract.bankCard.replace(/(\d{4})\d+(\d{4})/g, '$1****$2')
-          }
-        })
-      })
+    const data = await selfContracts.get({ id: user.currentOngoingContract.id }).then(res => res.json())
+    next(vm => {
+      if (data.data) {
+        vm.contract = Object.assign({}, data.data)
+        vm.bankCardForShow = vm.contract.bankCard.replace(/(\d{4})\d+(\d{4})/g, '$1****$2')
+      }
+    })
   },
 
   methods: {

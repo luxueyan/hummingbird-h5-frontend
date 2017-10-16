@@ -1,15 +1,16 @@
 <template lang="pug">
   .repay-info
     .form
-      .fields-header
-        | 还款计划
-        small.fr.loan-agreement 查看
-          router-link(:to="{name:'loanAgreement', params:{ transitionName: 'slideRightFade'}}")
-            |《借款服务协议》
-      .fields
-        mt-cell(title="借款金额", :value="model.paymentAmount | fbCurrency('', '元')")
-        mt-cell(title="应还日期", :value="model.repaymentDate | fbFalse")
-        mt-cell(title="应还金额", :value="model.repaymentAmount | fbCurrency('', '元')")
+      section
+        .fields-header
+          | 还款计划
+          small.fr.loan-agreement 查看
+            router-link(:to="{name:'loanAgreement', params:{ transitionName: 'slideRightFade'}}")
+              |《借款服务协议》
+        .fields
+          mt-cell(title="借款金额", :value="model.paymentAmount | fbCurrency('', '元')")
+          mt-cell(title="应还日期", :value="model.repaymentDate | fbFalse")
+          mt-cell(title="应还金额", :value="model.repaymentAmount | fbCurrency('', '元')")
       fb-bank-cards
       //- .fields-header
         | 账户信息
@@ -48,27 +49,22 @@ export default {
   components: {
     FbBankCards
   },
-  beforeRouteEnter(to, from, next) {
+  async beforeRouteEnter(to, from, next) {
     const user = store.getters.user
-    selfContracts.get({ id: user.currentOngoingContract.id }).then(res => res.json())
-      .then(data => {
-        next(vm => {
-          if (data.code === RET_CODE_MAP.OK) {
-            Object.assign(vm.model, data.data)
-            vm.bankCardForShow = vm.model.bankCard.replace(/\d{4}(?=(\d{1,4}))/g, '$& ')
-          }
-        })
-      })
+    const data = await selfContracts.get({ id: user.currentOngoingContract.id }).then(res => res.json())
+    next(vm => {
+      if (data.code === RET_CODE_MAP.OK) {
+        Object.assign(vm.model, data.data)
+        vm.bankCardForShow = vm.model.bankCard.replace(/\d{4}(?=(\d{1,4}))/g, '$& ')
+      }
+    })
   },
   methods: {
     // ...mapMutations(['updateStateCode']),
     // 去修改银行卡
     goChangeBankCard() {
       this.$router.push({
-        name: 'bankList',
-        params: {
-          transitionName: 'slideRightFade'
-        }
+        name: 'bankList'
       })
     },
 

@@ -44,16 +44,6 @@ export default [{
       permits: allStates
     }
   }, {
-    path: 'add_bank/step1',
-    name: 'addBankStep1',
-    component: resolve => require(['@/views/bank/AddBankStep1.vue'], resolve),
-    meta: {
-      title: '添加银行卡',
-      tabBarVisible: true,
-      headerBackShow: true,
-      permits: allStates
-    }
-  }, {
     path: 'add_bank/step2',
     name: 'addBankStep2',
     component: resolve => require(['@/views/bank/AddBankStep2.vue'], resolve),

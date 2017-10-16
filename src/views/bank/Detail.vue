@@ -17,17 +17,13 @@ import { merge } from 'lodash'
 import { bankCards, bankCardDelete } from '@/common/resources.js'
 
 export default {
-  beforeRouteEnter(to, from, next) {
-    bankCards
-      .get({ id: to.params.id })
-      .then(res => res.json())
-      .then(data => {
-        next(vm => {
-          if (data.code === RET_CODE_MAP.OK) {
-            merge(vm.model, data.data)
-          }
-        })
-      })
+  async beforeRouteEnter(to, from, next) {
+    const data = await bankCards.get({ id: to.params.id }).then(res => res.json())
+    next(vm => {
+      if (data.code === RET_CODE_MAP.OK) {
+        merge(vm.model, data.data)
+      }
+    })
   },
 
   methods: {
@@ -35,27 +31,21 @@ export default {
       this.$router.push({
         name: 'changeBankPhoneStep1',
         params: {
-          transitionName: 'slideRightFade',
           bankCardId: this.model.id,
           from: this.$route.name
         }
       })
     },
 
-    deleteBankCard() {
-      this.$msgBox.confirm('确认解除绑定银行卡吗?').then(action => {
-        if (action === 'confirm') {
-          bankCardDelete
-            .save({ id: this.model.id })
-            .then(res => res.json())
-            .then(data => {
-              if (data.code === RET_CODE_MAP.OK) {
-                this.$toast('成功解除绑定！', 'success')
-                this.$router.back()
-              }
-            })
+    async deleteBankCard() {
+      const action = await this.$msgBox.confirm('确认解除绑定银行卡吗?')
+      if (action === 'confirm') {
+        const data = await bankCardDelete.save({ id: this.model.id }).then(res => res.json())
+        if (data.code === RET_CODE_MAP.OK) {
+          this.$toast('成功解除绑定！', 'success')
+          this.routerBack()
         }
-      })
+      }
     }
   },
 
