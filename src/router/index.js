@@ -141,6 +141,7 @@ Vue.isPermit = Vue.prototype.isPermit = function(routeName) {
   return includes(Vue.getPermits(routeName), store.getters.stateCode)
 }
 
+// 添加push默认过渡效果
 const oldPush = router.push
 router.push = function(location = {}) {
   location.params = location.params || {}

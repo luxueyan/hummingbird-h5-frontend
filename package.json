@@ -8,6 +8,7 @@
     "hooks": "cp pre-commit .git/hooks/ && chmod +x .git/hooks/pre-commit",
     "dev": "node build/dev-server.js",
     "mock": "nodemon",
+    "ngrok": "sunny clientid eb648fe4426fa456",
     "build": "node build/build.js",
     "build:app:dev": "node build/build-app-dev.js",
     "build:app:prod": "node build/build-app-prod.js",

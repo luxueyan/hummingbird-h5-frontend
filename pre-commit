@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-var exec = require('child_process').exec;
-var readlineSync = require('../../node_modules/readline-sync/lib/readline-sync.js');
+var exec = require('child_process').exec
+var readlineSync = require('../../node_modules/readline-sync/lib/readline-sync.js')
 var path = require('path')
 
 exec('git diff --name-only --cached', {
@@ -9,7 +9,7 @@ exec('git diff --name-only --cached', {
 }, function(err1, stdout1) {
     if (err1) {
       console.log(err1)
-      process.exit(-1);
+      process.exit(-1)
     }
 
     var names = stdout1.split('\n')
@@ -26,13 +26,13 @@ exec('git diff --name-only --cached', {
         var answer = readlineSync.question('本项目发布版本，依赖本地构建(npm run build)后提交到git，发现本次提交不包含构建后的内容，确定提交吗?(Y/N)')
         if (answer.toUpperCase() === 'N') {
             console.log('您取消了本次提交。')
-            process.exit(-1);
+            process.exit(-1)
         } else {
-            process.exit(0);
+            process.exit(0)
         }
     } else {
         console.log('no errors')
-        process.exit(0);
+        process.exit(0)
     }
 
 }).stdout.on('data', function(chunk) {

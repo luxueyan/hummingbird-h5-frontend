@@ -7,7 +7,7 @@ section.change-phone-step1
     .fields
       mt-field(label='', placeholder='请输入新手机号', v-model='model.phone', :state="getFieldState('model.phone')", @click.native="showFieldError($event, 'model.phone')")
       mt-field(label='', placeholder='请输入验证码', v-model='model.captcha', :state="getFieldState('model.captcha')", @click.native="showFieldError($event, 'model.captcha')")
-        mt-button(type='default', @click.stop.prevent='toGetMsgCode()', :disabled='countdownVisible')
+        mt-button(type='default', @click.stop.prevent='toGetMsgCode(model.phone)', :disabled='countdownVisible')
           span(v-show='!countdownVisible') 发送验证码
           fb-countdown(ref='fnCountdown', v-show='countdownVisible', @countdown-over='onCountdownOver()')
     .form-buttons
