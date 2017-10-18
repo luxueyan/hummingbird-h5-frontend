@@ -98,6 +98,23 @@ interceptors.forEach((v) => {
   Vue.http.interceptors.push(v)
 })
 
+// 提示框icon样式
+const ToastClasses = {
+  'success': 'iconfont icon-chenggong',
+  'error': 'iconfont icon-warning',
+  'warn': 'iconfont icon-warn'
+}
+
+Vue.$msgBox = Vue.prototype.$msgBox = MessageBox
+Vue.$toast = Vue.prototype.$toast = function toast(msg = '', type = '') {
+  Toast({
+    message: msg,
+    duration: getReadTime(msg),
+    iconClass: type ? ToastClasses[type] : ''
+  })
+}
+Vue.$indicator = Vue.prototype.$indicator = Indicator
+
 // 激活ios设备上面css的active效果
 document.body.addEventListener('touchstart', () => {})
 
@@ -118,23 +135,6 @@ function main() {
     components: { App }
   })
 }
-
-// 提示框icon样式
-const ToastClasses = {
-  'success': 'iconfont icon-chenggong',
-  'error': 'iconfont icon-warning',
-  'warn': 'iconfont icon-warn'
-}
-
-Vue.$msgBox = Vue.prototype.$msgBox = MessageBox
-Vue.$toast = Vue.prototype.$toast = function toast(msg = '', type = '') {
-  Toast({
-    message: msg,
-    duration: getReadTime(msg),
-    iconClass: type ? ToastClasses[type] : ''
-  })
-}
-Vue.$indicator = Vue.prototype.$indicator = Indicator
 
 // 启动应用
 if (process.env.NODE_ENV.indexOf('app') > -1) {

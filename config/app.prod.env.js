@@ -3,6 +3,6 @@ var prodEnv = require('./prod.env')
 
 module.exports = merge(prodEnv, {
   NODE_ENV: '"app-production"',
-  API_HOST: '"/api"',
+  API_HOST: '"http://fn.91zhengxin.com:9111/api"',
   APP_MANIFEST_HOST: '"http://fn.91zhengxin.com:9111/"'
 })

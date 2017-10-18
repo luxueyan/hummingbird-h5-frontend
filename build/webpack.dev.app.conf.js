@@ -46,7 +46,6 @@ var webpackConfig = merge(baseWebpackConfig, {
   },
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
-    new webpack.HashedModuleIdsPlugin(),
     new webpack.DefinePlugin({
       'process.env': env
     }),
@@ -71,8 +70,8 @@ var webpackConfig = merge(baseWebpackConfig, {
         removeComments: true,
         collapseWhitespace: true,
         removeAttributeQuotes: true
-          // more options:
-          // https://github.com/kangax/html-minifier#options-quick-reference
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
       },
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
       chunksSortMode: 'dependency'
@@ -97,6 +96,7 @@ var webpackConfig = merge(baseWebpackConfig, {
       name: 'manifest',
       chunks: ['vendor']
     }),
+    new webpack.HashedModuleIdsPlugin(),
     new CordovaLoaderManifest({})
     // limit chunks count & the count contain the app.js manifest.js vendor.js
     // new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 18 })

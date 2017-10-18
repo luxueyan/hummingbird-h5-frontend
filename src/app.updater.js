@@ -30,7 +30,7 @@ try {
 
 export default class AppUpdater {
   manifest = defaultManifest
-  toBeUpdated = []
+  toBeUpdated = [] // 需要更新的文件列表
   cacheRoot = cordova.file.dataDirectory + 'cache/' // 缓存更新版本
   dataRoot = cordova.file.dataDirectory + 'www/' // 替代原包内资源路径
   _isUploading = false // 正在更新中
@@ -53,7 +53,7 @@ export default class AppUpdater {
           const list = map(manifest.files, 'filename')
 
           this.move(list).then(res => {
-            manifest.root = this.dataRoot
+            manifest.root = this.dataRoot // 变更用户目录
             this.manifest = manifest
             save('manifest', JSON.stringify(manifest))
           }).catch(err => {

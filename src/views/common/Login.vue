@@ -53,7 +53,7 @@ export default {
 
   mounted() {
     this.redirect = decodeURIComponent(this.$route.query.redirect || '')
-    this.$route.query.openid && (this.user.openid = this.$route.query.openid) // eslint-disable-line
+    // this.$route.query.openid && (this.user.openid = this.$route.query.openid) // eslint-disable-line
     this.$route.query.loginType && (this.user.loginType = this.$route.query.loginType) // eslint-disable-line
     this.user.phone = this.$store.getters.user.phone || read(STORE_KEY_LAST_LOGINED_PHONE) || ''
   },
@@ -65,9 +65,17 @@ export default {
       if (success) {
         const data = await this.login(this.user)
         if (data.code === RET_CODE_MAP.OK) {
-          this.$router.push({
-            path: this.redirect || '/'
-          })
+          if (this.user.loginType === 2 && !data.data.user.openId) {
+            // 取得当前地址用于回跳，目前直接使用字符串拼接的方式，是因为web下router用的是history模式，所以如果以后换成hash这里要注意兼容问题
+            const selfLocation = location.href.replace(/(https?:\/\/[^/]+)\/?.*/, '$1') + this.redirect
+
+            // 跳转微信授权获取code
+            location.href = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${process.env.WX_APPID}&redirect_uri=${encodeURIComponent(selfLocation)}&response_type=code&scope=snsapi_base&#wechat_redirect`
+          } else {
+            this.$router.push({
+              path: this.redirect || '/'
+            })
+          }
         }
       } else {
         this.$toast(this.validation.firstError(), 'error')

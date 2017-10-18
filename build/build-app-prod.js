@@ -32,7 +32,7 @@ webpack(webpackConfig, function (err, stats) {
     chunkModules: false
   }) + '\n\n')
 
-  // 拷贝生成的app资源文件到www目录，供自动更新用
+  // 拷贝当前生成的app资源文件到app所在项目的www目录，供自动更新用
   shell.exec('npm run manifest')
   var appAssetsPath = path.posix.join(config.appProd.assetsRoot, '../..', 'hummingbird-h5-app/www')
   shell.rm('-rf', appAssetsPath)

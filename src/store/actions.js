@@ -1,5 +1,5 @@
 import router from '@/router'
-import { login, captcha, userSelf } from '@/common/resources.js'
+import { login, captcha, userSelf, wxOpenID } from '@/common/resources.js'
 import * as Storage from '@/storage'
 import { STORE_KEY_USER, STORE_KEY_ACCESS_TOKEN, RET_CODE_MAP, CUST_STATE_CODE_MAP, STORE_KEY_LAST_LOGINED_PHONE } from '@/constants'
 
@@ -12,6 +12,10 @@ export default {
   updateToken({ commit }, token = '') {
     Storage.save(STORE_KEY_ACCESS_TOKEN, token)
     commit('updateToken', token)
+  },
+
+  submitCode(store, code) {
+    return wxOpenID.save({ code })
   },
 
   // // 获取用户业务状态码
