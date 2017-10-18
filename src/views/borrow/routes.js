@@ -1,20 +1,13 @@
-import { CUST_STATE_CODE_MAP } from '@/constants.js'
+import { CUST_STATE_CODE_MAP, CAPTCHA_SEND_TYPE } from '@/constants.js'
 // import { values } from 'lodash'
 // const allStates = values(CUST_STATE_CODE_MAP)
 
-export default {
+export default [{
   path: '/h5/borrow',
   name: 'borrow',
   redirect: { name: 'borrowerInfo' },
   component: {
     render(h) {
-      // return h('transition', {
-      //   attrs: {
-      //     name: 'fade',
-      //     mode: 'out-in',
-      //     appear: true
-      //   }
-      // }, [h('router-view')])
       return h('router-view')
     }
   },
@@ -25,6 +18,7 @@ export default {
     meta: {
       title: '立即提款',
       tabBarVisible: true,
+      captchaSendType: CAPTCHA_SEND_TYPE.ADD_BANK_RESERVE_PHONE,
       // headerHidden: true,
       hasFixedButtons: true,
       permits: [CUST_STATE_CODE_MAP.DEBT_SETTELED]
@@ -57,4 +51,4 @@ export default {
       permits: [CUST_STATE_CODE_MAP.LOAN_FAILED]
     }
   }]
-}
+}]

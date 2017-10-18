@@ -2,7 +2,7 @@ import { CUST_STATE_CODE_MAP } from '@/constants.js'
 // import { values } from 'lodash'
 // const allStates = values(CUST_STATE_CODE_MAP)
 
-export default {
+export default [{
   path: '/h5/repay',
   name: 'repay',
   redirect: { name: 'repayInfo' },
@@ -41,4 +41,4 @@ export default {
       permits: [CUST_STATE_CODE_MAP.REPAY_FAILED]
     }
   }]
-}
+}]

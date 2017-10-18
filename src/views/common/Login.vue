@@ -7,7 +7,7 @@ section
     .fields
       mt-field(label='', placeholder='请输入手机号', v-model='user.phone', :state="getFieldState('user.phone')", @click.native="showFieldError($event, 'user.phone')")
       mt-field(label='', placeholder='请输入验证码', v-model='user.captcha', :state="getFieldState('user.captcha')", @click.native="showFieldError($event, 'user.captcha')")
-        mt-button(type='default', @click.stop.prevent='toGetMsgCode(user.phone)', :disabled='countdownVisible')
+        mt-button(type='default', @click.stop.prevent='toGetMsgCode()', :disabled='countdownVisible')
           span(v-show='!countdownVisible') 发送验证码
           fb-countdown(ref='fnCountdown', v-show='countdownVisible', @countdown-over='onCountdownOver()')
     .form-buttons

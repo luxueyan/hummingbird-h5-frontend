@@ -9,8 +9,8 @@ section.add-bank-step1
         span(slot="label") 银行卡号
           i.iconfont.icon-info(@click="showSupportBanks()")
       input(type="hidden", v-model='model.bankCard')
-      mt-field(label='银行预留手机号', placeholder="填写手机号", v-model="model.bankReservePhone", :state="getFieldState('model.bankReservePhone')", @click.native="showFieldError($event, 'model.bankReservePhone')")
       mt-cell(title="开户行", :value="model.bankName")
+      mt-field(label='银行预留手机号', placeholder="填写手机号", v-model="model.bankReservePhone", :state="getFieldState('model.bankReservePhone')", @click.native="showFieldError($event, 'model.bankReservePhone')")
     .form-buttons
       mt-button.mint-button-block(type='primary', size='large') 下一步
 </template>

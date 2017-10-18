@@ -6,7 +6,7 @@ section.change-phone-step1
       small 为保证您的安全，我们将向您的手机：{{model.phone}}发送短信验证码，确认身份。
     .fields
       mt-field(label='', placeholder='请输入验证码', v-model='model.captcha', :state="getFieldState('model.captcha')", @click.native="showFieldError($event, 'model.captcha')")
-        mt-button(type='default', @click.stop.prevent='toGetMsgCode(model.phone)', :disabled='countdownVisible')
+        mt-button(type='default', @click.stop.prevent='toGetMsgCode()', :disabled='countdownVisible')
           span(v-show='!countdownVisible') 发送验证码
           fb-countdown(ref='fnCountdown', v-show='countdownVisible', @countdown-over='onCountdownOver()')
     .form-buttons

@@ -45,8 +45,8 @@ export default {
   },
 
   // 获取手机验证码
-  async getMsgCode({ commit, dispatch }, phone) {
-    let data = await captcha.get({ phone }).then(res => res.json())
+  async getMsgCode({ commit, dispatch }, params = {}) {
+    let data = await captcha.get(params).then(res => res.json())
     // dispatch('updateToken', data.data)
     return data
   },

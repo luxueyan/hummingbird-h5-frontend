@@ -1,4 +1,4 @@
-import { CUST_STATE_CODE_MAP } from '@/constants.js'
+import { CUST_STATE_CODE_MAP, CAPTCHA_SEND_TYPE } from '@/constants.js'
 import { values } from 'lodash'
 const allStates = values(CUST_STATE_CODE_MAP)
 
@@ -49,6 +49,7 @@ export default [{
     component: resolve => require(['@/views/bank/AddBankStep2.vue'], resolve),
     meta: {
       title: '添加银行卡',
+      captchaSendType: CAPTCHA_SEND_TYPE.ADD_BANK_RESERVE_PHONE,
       tabBarVisible: true,
       headerBackShow: true,
       permits: allStates
@@ -70,6 +71,7 @@ export default [{
     meta: {
       title: '修改预留手机号',
       verifyType: 1,
+      captchaSendType: CAPTCHA_SEND_TYPE.CHANGE_BANK_RESERVE_PHONE,
       tabBarVisible: true,
       headerBackShow: true,
       permits: allStates
@@ -81,6 +83,7 @@ export default [{
     meta: {
       title: '修改预留手机号',
       verifyType: 1,
+      captchaSendType: CAPTCHA_SEND_TYPE.CHANGE_BANK_RESERVE_PHONE,
       tabBarVisible: true,
       headerBackShow: true,
       permits: allStates

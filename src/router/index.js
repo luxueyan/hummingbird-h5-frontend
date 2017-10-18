@@ -126,6 +126,7 @@ function flattenRoutes(routes) {
 
 const flatRoutes = flattenDeep(flattenRoutes(routes))
 
+// 获取当前路由权限
 Vue.getPermits = Vue.prototype.getPermits = function(routeName) {
   if (isString(routeName)) routeName = [routeName]
   const permits = map(routeName, rn => {
@@ -137,11 +138,12 @@ Vue.getPermits = Vue.prototype.getPermits = function(routeName) {
   // return router ? router.meta.permits : []
 }
 
+// 是否有权限
 Vue.isPermit = Vue.prototype.isPermit = function(routeName) {
   return includes(Vue.getPermits(routeName), store.getters.stateCode)
 }
 
-// 添加push默认过渡效果
+// 给push方法添加默认过渡效果
 const oldPush = router.push
 router.push = function(location = {}) {
   location.params = location.params || {}

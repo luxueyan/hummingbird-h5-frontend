@@ -1,4 +1,5 @@
 <template></template>
+
 <script>
 // import Vue from 'vue'
 import nprogress from 'nprogress'
@@ -7,16 +8,19 @@ export default {
   props: {
     parent: String
   },
+
   created() {
     if (this.parent) {
       nprogress.configure({
         parent: this.parent
       })
     }
+
     this.$router.beforeEach((to, from, next) => {
       nprogress.start()
       next()
     })
+
     this.$router.afterEach(() => {
       nprogress.done()
     })
@@ -31,6 +35,7 @@ export default {
   }
 }
 </script>
+
 <style lang="scss">
 .nprogress-custom-parent #nprogress .spinner,
 #nprogress .spinner {

@@ -1,4 +1,4 @@
-import { CUST_STATE_CODE_MAP } from '@/constants.js'
+import { CUST_STATE_CODE_MAP, CAPTCHA_SEND_TYPE } from '@/constants.js'
 import { values } from 'lodash'
 const allStates = values(CUST_STATE_CODE_MAP)
 
@@ -11,6 +11,7 @@ export default [{
   component: resolve => require(['@/views/common/Login.vue'], resolve),
   meta: {
     title: '蜂鸟速贷',
+    captchaSendType: CAPTCHA_SEND_TYPE.USER_LOGIN, // 验证码发送的类型
     tabBarVisible: false,
     skipAuth: true
   }

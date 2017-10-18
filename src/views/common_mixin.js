@@ -1,6 +1,7 @@
 import { RET_CODE_MAP } from '@/constants.js'
 import { mapActions } from 'vuex'
 import { bankCardInfo } from '@/common/resources.js'
+import { get } from 'lodash'
 
 export default {
   methods: {
@@ -28,10 +29,13 @@ export default {
     },
 
     // 获取验证码
-    async toGetMsgCode(phone) {
+    async toGetMsgCode() {
       const success = await this.$validate(this.validatePhoneModel)
       if (success) {
-        const data = await this.getMsgCode(phone)
+        const data = await this.getMsgCode({
+          phone: get(this, this.validatePhoneModel),
+          label: this.$route.meta.captchaSendType || ''
+        })
         if (data.code === RET_CODE_MAP.OK) {
           this.countdownVisible = true
           this.$refs.fnCountdown.start()
@@ -48,6 +52,7 @@ export default {
   },
 
   watch: {
+    // 空格分隔的银行卡号
     'bankCardForShow' () {
       this.model.bankCard = this.bankCardForShow = this.bankCardForShow.replace(/\s/g, '')
       this.bankCardForShow = this.bankCardForShow.replace(/\d{4}(?=(\d{1,4}))/g, '$& ') //展示空格分隔的银行卡号
@@ -61,7 +66,7 @@ export default {
     return {
       bankCardForShow: '',
       bankCardNotSupported: false,
-      validatePhoneModel: 'user.captcha',
+      validatePhoneModel: 'user.captcha', // 发送验证码前验证手机号
       countdownVisible: false
     }
   }

@@ -1,13 +1,5 @@
-import CommonRoutes from '@/views/common/routes.js'
-import BorrowRoutes from '@/views/borrow/routes.js'
-import RepayRoutes from '@/views/repay/routes.js'
-import AccountRoutes from '@/views/account/routes.js'
-import BankRoutes from '@/views/bank/routes.js'
+import { map, flatten } from 'lodash'
 
-export default [
-  ...CommonRoutes,
-  BorrowRoutes,
-  RepayRoutes,
-  ...BankRoutes,
-  ...AccountRoutes
-]
+const routes = require.context('../views', true, /routes\.js$/)
+
+export default flatten(map(routes.keys(), key => routes(key).default))
