@@ -46,7 +46,6 @@ router.beforeEach((to, from, next) => {
     if (!token || !user.phone) {
       next({ name: 'login', query: { redirect: to.fullPath } })
     } else {
-      // alert(location.href)
       if (to.query.code) store.dispatch('submitCode', to.query.code) // 上报用户获取openid的code
       const stateCodePromise = new Promise((resolve, reject) => {
         if (stateCode) {
