@@ -48,28 +48,26 @@ module.exports = {
       include: [resolve('src'), resolve('test')]
     }, {
       test: /.*\.(gif|png|jpe?g|svg)$/i,
-      loaders: [
-        {
-          loader: 'image-webpack-loader',
-          query: {
-            mozjpeg: {
-              progressive: true
-            },
-            optipng: {
-              optimizationLevel: 7
-            },
-            gifsicle: {
-              interlaced: false
-            },
-            pngquant: {
-              quality: '65-90',
-              speed: 4
-            }
+      loaders: [{
+        loader: 'image-webpack-loader',
+        query: {
+          mozjpeg: {
+            progressive: true
+          },
+          optipng: {
+            optimizationLevel: 7
+          },
+          gifsicle: {
+            interlaced: false
+          },
+          pngquant: {
+            quality: '65-90',
+            speed: 4
           }
         }
-      ]
+      }]
     }, {
-      test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+      test: /\.(png|jpe?g|gif)(\?.*)?$/,
       loader: 'url-loader',
       query: {
         limit: 1000,
@@ -81,6 +79,12 @@ module.exports = {
       query: {
         limit: 1000,
         name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
+      }
+    }, {
+      test: /\.svg$/,
+      loader: 'vue-svg-loader',
+      query: {
+        name: utils.assetsPath('img/[name].[hash:7].[ext]')
       }
     }]
   }

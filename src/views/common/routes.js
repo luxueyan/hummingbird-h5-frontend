@@ -61,4 +61,15 @@ export default [{
     headerBackShow: true,
     permits: allStates
   }
+}, {
+  path: '/h5/register_agreement',
+  name: 'registerAgreement',
+  component: resolve => require(['@/views/common/RegisterAgreement.vue'], resolve),
+  meta: {
+    title: '注册与服务合同',
+    tabBarVisible: false,
+    skipAuth: true,
+    headerBackShow: true,
+    permits: allStates
+  }
 }]

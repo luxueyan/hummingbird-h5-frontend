@@ -66,7 +66,7 @@ export default {
     return {
       bankCardForShow: '',
       bankCardNotSupported: false,
-      validatePhoneModel: 'user.captcha', // 发送验证码前验证手机号
+      validatePhoneModel: 'user.phone', // 发送验证码前验证手机号
       countdownVisible: false
     }
   }

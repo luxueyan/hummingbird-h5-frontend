@@ -32,7 +32,13 @@ import {
 
 import FbField from '@/components/FbField.vue'
 import FbCountdown from '@/components/FbCountdown.vue'
+import FbIcon from '@/components/FbIcon.vue'
+import FbCheckbox from '@/components/FbCheckbox.vue'
 
+// vuex化路由
+sync(store, router)
+
+// mint-ui 组件
 Vue.component(Cell.name, Cell)
 Vue.component(CellSwipe.name, CellSwipe)
 Vue.component(Field.name, Field)
@@ -45,10 +51,11 @@ Vue.component(TabItem.name, TabItem)
 Vue.component(Spinner.name, Spinner)
 Vue.use(InfiniteScroll)
 
+// 自定义组件
 Vue.component(FbField.name, FbField)
 Vue.component(FbCountdown.name, FbCountdown)
-
-sync(store, router)
+Vue.component(FbIcon.name, FbIcon)
+Vue.component(FbCheckbox.name, FbCheckbox)
 
 Vue.use(FbFilters)
 Vue.use(FbMixins)
@@ -90,15 +97,15 @@ Vue.use(SimpleVueValidation, {
   }
 })
 
+// vue-router 全局配置
 Vue.http.options.root = process.env.API_HOST || '/api'
-// Vue.http.headers.common['Authorization'] = window.localStorage.token || ''
 
-// 拦截器统一注入
+// vue-router拦截器统一注入
 interceptors.forEach((v) => {
   Vue.http.interceptors.push(v)
 })
 
-// 提示框icon样式
+// 自定义提示框icon样式
 const ToastClasses = {
   'success': 'iconfont icon-chenggong',
   'error': 'iconfont icon-warning',

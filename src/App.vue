@@ -19,18 +19,15 @@
   mt-tabbar(v-model="tabSelected", :fixed="true", v-show="tabBarVisible", ref="tabbar")
     mt-tab-item#borrowerInfo(:class="{'is-selected': tabIsSelected(['borrowerInfo', 'loaning', 'signature', 'loanFailed', 'repayFailed', 'repayInfo', 'repaying'])}")
       div(slot="icon")
-        i.iconfont.icon-jiekuanxiangguan.active-default
-        i.iconfont.icon-jiekuanxiangguan-select.active-onselect
+        i.iconfont.icon-borrow
       | 借款
     mt-tab-item#repayInfo(:class="{'is-selected': tabIsSelected(['repayInfo', 'repaying', 'repayFailed'])}")
       div(slot="icon")
-        i.iconfont.icon-renzheng.active-default
-        i.iconfont.icon-renzheng-select.active-onselect
+        i.iconfont.icon-credit
       | 认证
     mt-tab-item#mine(:class="{'is-selected': tabIsSelected(['mine', 'changeBankCardStep1', 'changeBankCardStep2', 'changeBankCardStep3', 'messageList', 'messageDetail'])}")
       div(slot="icon")
-        i.iconfont.icon-wode.active-default
-        i.iconfont.icon-wode-select.active-onselect
+        i.iconfont.icon-user
       | 我的
 </template>
 
@@ -135,7 +132,7 @@ export default {
       return this.$route.meta.tabBarVisible && (~process.env.NODE_ENV.indexOf('app') || ~process.env.NODE_ENV.indexOf('development'))
     },
     headerShow() {
-      return !this.$route.meta.headerHidden
+      return !this.$route.meta.headerHidden && (~process.env.NODE_ENV.indexOf('app') || ~process.env.NODE_ENV.indexOf('development'))
     },
     hasFixedButtons() {
       return this.$route.meta.hasFixedButtons
@@ -145,7 +142,6 @@ export default {
     },
     headerTitle() {
       return this.title || this.$route.meta.title
-      // return this.$store.state.route.meta.title
     }
   },
 
@@ -164,7 +160,7 @@ export default {
 <style lang="scss">
 @import '~assets/scss/_variables.scss';
 // @import '~assets/fonts/iconfont/iconfont.css';
-@import url('//at.alicdn.com/t/font_368105_ifbm6isz0r0h33di.css');
+@import url('//at.alicdn.com/t/font_432625_7jr2hr3e6k73nmi.css');
 @import '~assets/scss/base.scss';
 @import '~assets/scss/common.scss';
 @import '~assets/scss/transition.scss';
@@ -179,10 +175,10 @@ html {
 body {
   font-family: -apple-system;
   font-family: '-apple-system', "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
-  background-color: #f8f9fb;
+  background-color: white;
   min-height: 100%;
-  color: #353535;
-  font-size: 16px; // font-weight: 300;
+  color: $primary-font-color;
+  font-size: $font-size-xs;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
 }
@@ -193,29 +189,6 @@ body {
 
 small {
   color: $gray-color;
-}
-
-.icon-warning,
-.icon-ku {
-  color: #f76249;
-}
-
-// .icon-arrow-bottom-right {
-//   display: inline-block;
-//   border-width: 5px;
-//   border-color: transparent currentColor currentColor transparent;
-//   border-style: solid;
-// }
-.logo {
-  text-align: center; // background: white;
-  padding: 10px;
-  img {
-    max-width: 50%;
-    max-width: 30vh;
-  }
-  small {
-    display: block;
-  }
 }
 
 .container {
@@ -229,8 +202,5 @@ small {
   }
 }
 
-.dn,
-[v-cloak] {
-  display: none;
-}
+
 </style>

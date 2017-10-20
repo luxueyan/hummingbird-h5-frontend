@@ -1,17 +1,26 @@
 <template lang="pug">
-section
-  div.logo
+section.login
+  //- div.logo
     img(src='~assets/images/logo.jpg')
     small 免审核借款1000元
   form.login-form(@submit.prevent='submit()')
     .fields
-      mt-field(label='', placeholder='请输入手机号', v-model='user.phone', :state="getFieldState('user.phone')", @click.native="showFieldError($event, 'user.phone')")
-      mt-field(label='', placeholder='请输入验证码', v-model='user.captcha', :state="getFieldState('user.captcha')", @click.native="showFieldError($event, 'user.captcha')")
+      fb-field(label='手机号', placeholder='请输入手机号', v-model='user.phone', :state="getFieldState('user.phone')", @click.native="showFieldError($event, 'user.phone')")
+        span(slot="label")
+          i.iconfont.icon-user-solid2
+      fb-field(label='手机号', placeholder='请输入验证码', v-model='user.captcha', :state="getFieldState('user.captcha')", @click.native="showFieldError($event, 'user.captcha')")
+        span(slot="label")
+          i.iconfont.icon-verification
         mt-button(type='default', @click.stop.prevent='toGetMsgCode()', :disabled='countdownVisible')
           span(v-show='!countdownVisible') 发送验证码
           fb-countdown(ref='fnCountdown', v-show='countdownVisible', @countdown-over='onCountdownOver()')
     .form-buttons
-        mt-button.mint-button-block(type='primary', size='large') 登录
+      mt-button.mint-button-block(type='primary', size='large') 立即登录
+      .note-line
+        fb-checkbox(v-model="agreement", :value="false", :state="getFieldState('agreement')")
+          span.pl5 我已阅读并同意
+          router-link(:to="{name: 'registerAgreement', params:{transitionName: 'slideRightFade'}}")
+            |《注册与服务合同》
 </template>
 
 <script>
@@ -30,6 +39,13 @@ import store from '@/store'
 export default {
   mixins: [CommonMixin, ValidatorMixin],
   validators: {
+    'agreement' (value) {
+      return this.validate(value).custom(() => {
+        if (!this.agreement) {
+          return '请阅读并同意《注册与服务合同》'
+        }
+      })
+    },
     'user.phone' (value) {
       return this.validate(value).required('请输入手机号').digit('请正确输入手机号').regex('^1[3-9]\\d{9}$', '请正确输入手机号')
     },
@@ -87,7 +103,7 @@ export default {
     const NODE_ENV = process.env.NODE_ENV
     return {
       redirect: null, //登录后跳转页面
-      // countdownVisible: false,
+      agreement: false,
       user: {
         phone: '',
         captcha: '',
@@ -98,8 +114,59 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.logo {
-  background: white;
+<style lang="scss">
+@import '~assets/scss/_variables.scss';
+.login {
+  .mint-cell-title {
+    width: 30px!important;
+    .iconfont {
+      color: #c0cad8;
+    }
+  }
+  .mint-cell {
+    min-height: 60px;
+  }
+  .mint-button {
+    height: 50px;
+    font-size: $font-size-xl;
+  }
+  .mint-field-other {
+    .mint-button {
+      height: 35px;
+      width: 85px;
+      margin-left: 3px;
+      font-size: $font-size-xxs;
+    }
+  }
+  .form-buttons {
+    padding: 10px 0;
+  }
+  .login-form {
+    padding: 37px 25px 0;
+  }
+  .mint-cell-wrapper {
+    padding: 0;
+    font-size: $font-size-xl;
+  }
+  .form-buttons {
+    margin-top: 37px;
+  }
+  .note-line {
+    color: $minor-font-color;
+    font-size: $font-size-s;
+    padding: 20px 0;
+  }
+  .logo {
+    background: white;
+    text-align: center; // background: white;
+    padding: 10px;
+    img {
+      max-width: 50%;
+      max-width: 30vh;
+    }
+    small {
+      display: block;
+    }
+  }
 }
 </style>

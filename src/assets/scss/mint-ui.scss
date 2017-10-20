@@ -1,5 +1,17 @@
 // ----- 放到body空间下，避免加载顺序导致不生效------
 body {
+  .mint-cell-wrapper {
+    background-image: none;
+  }
+  .mint-cell {
+    background-image: linear-gradient(0deg, $border-color, $border-color 50%, transparent 50%);
+    background-size: 100% 1px;
+    background-repeat: no-repeat;
+    background-position: bottom;
+  }
+  &:last-child {
+    background-image: none;
+  }
   .mint-msgbox-confirm {
     color: $primary-color;
   }
@@ -18,31 +30,6 @@ body {
       padding: 0;
     }
   }
-
-  // .mint-tab-item-menu {
-  //   position: absolute;
-  //   top: 0;
-  //   left: 0;
-  //   right: 0;
-  //   transform: translateY(-100%);
-  //   a {
-  //     font-size: 14px;
-  //     display: block;
-  //     text-align: left;
-  //     line-height: 55px;
-  //     padding: 0 10px;
-  //     background: $small-gray-color;
-  //     background-image: linear-gradient(180deg, #d9d9d9, #d9d9d9 50%, transparent 50%);
-  //     background-size: 100% 1px;
-  //     background-repeat: no-repeat;
-  //     background-position: top left;
-  //     color: #353535;
-  //     &.is-selected {
-  //       color: inherit;
-  //       background: #eaeaea;
-  //     }
-  //   }
-  // }
   .mint-tabbar>.mint-tab-item {
     color: inherit;
     position: relative;
@@ -53,33 +40,8 @@ body {
       display: none;
     }
     &.is-selected {
-      .active-default {
-        display: none;
-      }
-      .active-onselect {
-        display: inline-block;
-      }
-    } // &.is-selected {
-    //   color: $primary-color;
-    //   svg {
-    //     path {
-    //       fill: $primary-color;
-    //     }
-    //   }
-    // }
-    // &.is-disabled {
-    //   color: $mid-gray-color;
-    //   svg {
-    //     path {
-    //       fill: $mid-gray-color;
-    //     }
-    //   }
-    // }
-    // .icon-arrow-bottom-right {
-    //   position: absolute;
-    //   right: 0;
-    //   bottom: 0;
-    // }
+      color: $primary-color;
+    }
   }
   .mint-msgbox-message {
     line-height: 1.5em;
@@ -114,6 +76,9 @@ body {
     line-height: 1.1em;
   }
   .mint-header-button {
+    .mint-button--default::before {
+      display: none;
+    }
     small {
       color: white;
     }
@@ -176,12 +141,33 @@ body {
 }
 
 .mint-button {
+  border-radius: 2px;
+  small {
+    color: currentColor;
+  }
+  &.is-disabled {
+    opacity: 0.3;
+  }
   &:not(.is-disabled):active::after {
     opacity: 0.05;
   }
   &.mint-button-block {
     display: block;
     width: 100%;
+  }
+  .mint-button-text {
+    white-space: nowrap;
+  }
+  &.mint-button--default::before {
+    content: " ";
+    border: 1px solid $font-color-em;
+    top: 0;
+    right: -100%;
+    bottom: -100%;
+    left: 0;
+    position: absolute;
+    transform-origin: left top;
+    transform: scale(.5);
   }
 }
 
@@ -197,10 +183,9 @@ body {
 }
 
 .mint-field-other {
-  position: static;
-  &:not(:empty) {
-    margin-right: -10px;
-  }
+  position: static; // &:not(:empty) {
+  //   margin-right: -10px;
+  // }
   .mint-button {
     font-size: 16px;
     border-radius: 0;
@@ -208,5 +193,8 @@ body {
     background: none;
     box-shadow: none;
     color: $font-color-em;
+    &.is-disabled {
+      opacity: 0.8;
+    }
   }
 }

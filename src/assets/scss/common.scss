@@ -26,6 +26,16 @@
   float: left;
 }
 
+.icon-warning,
+.icon-ku {
+  color: #f76249;
+}
+
+.dn,
+[v-cloak] {
+  display: none;
+}
+
 @each $pos in left,
 right,
 center {
@@ -164,7 +174,7 @@ a {
   }
   em {
     font-style: normal;
-    color: #18b4ed;
+    color: $font-color-em;
   }
   article {
     text-align: center;
