@@ -5,20 +5,20 @@ section.login
     small 免审核借款1000元
   form.login-form(@submit.prevent='submit()')
     .fields
-      fb-field(label='手机号', placeholder='请输入手机号', v-model='user.phone', :state="getFieldState('user.phone')", @click.native="showFieldError($event, 'user.phone')")
+      fb-field(label='手机号', placeholder='请输入您的手机号', v-model='user.phone', :state="getFieldState('user.phone')", @click.native="showFieldError($event, 'user.phone')")
         span(slot="label")
           i.iconfont.icon-user-solid2
       fb-field(label='手机号', placeholder='请输入验证码', v-model='user.captcha', :state="getFieldState('user.captcha')", @click.native="showFieldError($event, 'user.captcha')")
         span(slot="label")
           i.iconfont.icon-verification
         mt-button(type='default', @click.stop.prevent='toGetMsgCode()', :disabled='countdownVisible')
-          span(v-show='!countdownVisible') 发送验证码
+          span(v-show='!countdownVisible') 获取验证码
           fb-countdown(ref='fnCountdown', v-show='countdownVisible', @countdown-over='onCountdownOver()')
     .form-buttons
       mt-button.mint-button-block(type='primary', size='large') 立即登录
       .note-line
         fb-checkbox(v-model="agreement", :value="false", :state="getFieldState('agreement')")
-          span.pl5 我已阅读并同意
+          span.pl10 我已阅读并同意
           router-link(:to="{name: 'registerAgreement', params:{transitionName: 'slideRightFade'}}")
             |《注册与服务合同》
 </template>
@@ -121,6 +121,7 @@ export default {
     width: 30px!important;
     .iconfont {
       color: #c0cad8;
+      font-size: 20px;
     }
   }
   .mint-cell {

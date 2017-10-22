@@ -48,6 +48,7 @@ export default [{
   component: resolve => require(['@/views/common/AuthorizedTip.vue'], resolve),
   meta: {
     title: '蜂鸟速贷',
+    headerHidden: true,
     tabBarVisible: false,
     permits: [CUST_STATE_CODE_MAP.FIRST_BORROWER]
   }

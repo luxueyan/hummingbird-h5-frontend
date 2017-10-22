@@ -1,0 +1,56 @@
+@import '~assets/scss/_variables.scss';
+.fb-bank-cards {
+  .add-bankcard {
+    font-size: $font-size-m;
+    padding: 15px 10px;
+    text-align: center;
+    background: white;
+    display: block;
+    &:active {
+      background: rgba(0, 0, 0, .01);
+    }
+  }
+  .mint-cell {
+    &:active {
+      background-color: rgba(0, 0, 0, .01);
+    }
+  }
+  .mint-cell-mask {
+    display: none;
+  }
+  .mint-radiolist-label {
+    padding: 0 0 12px 2px;
+    font-size: 14px;
+    margin-top: -5px;
+    float: left;
+  }
+  .title {
+    display: flex;
+    align-items: center;
+  }
+  .content-icon {
+    padding-right: 19px;
+    .icon-svg {
+      width: 39px;
+      height: 39px;
+    }
+  }
+  .content {
+    display: flex;
+    align-items: center;
+    line-height: 1.8em;
+    h3 {
+      flex: 1;
+      font-size: $font-size-m;
+      font-weight: normal;
+    }
+    font-size: 14px;
+    overflow: hidden;
+    padding: 10px 0;
+    p {
+      overflow: hidden;
+      text-overflow: ellipsis; // padding-left: 11px;
+      color: $minor-font-color;
+    }
+  }
+}

@@ -8,7 +8,7 @@ section.change-bank-card-step3.single-page-tip
     table
       tr
         th 提款金额：
-        td {{contract.paymentAmount | fbCurrency('', '元')}}
+        td {{contract.paymentAmount | fbCurrency}}
       tr
         th {{contract.bankName}}：
         td {{bankCardForShow | fbFalse}}
@@ -17,7 +17,7 @@ section.change-bank-card-step3.single-page-tip
         td {{contract.repaymentDate | fbFalse}}
       tr
         th 还款金额：
-        td {{contract.repaymentAmount | fbCurrency('', '元')}}
+        td {{contract.repaymentAmount | fbCurrency}}
     small 您的提款请求已发送成功，请耐心等待。
   .footer.no-padding-top
     .simple-btns

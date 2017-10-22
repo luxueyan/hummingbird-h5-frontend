@@ -1,5 +1,5 @@
 <template lang="pug">
-small {{second}} 秒后重发
+small {{second}} s
 </template>
 
 <script>

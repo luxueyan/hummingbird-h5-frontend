@@ -8,9 +8,9 @@
             router-link(:to="{name:'loanAgreement', params:{ transitionName: 'slideRightFade'}}")
               |《借款服务协议》
         .fields
-          mt-cell(title="借款金额", :value="model.paymentAmount | fbCurrency('', '元')")
+          mt-cell(title="借款金额", :value="model.paymentAmount | fbCurrency")
           mt-cell(title="应还日期", :value="model.repaymentDate | fbFalse")
-          mt-cell(title="应还金额", :value="model.repaymentAmount | fbCurrency('', '元')")
+          mt-cell(title="应还金额", :value="model.repaymentAmount | fbCurrency")
       fb-bank-cards
       //- .fields-header
         | 账户信息

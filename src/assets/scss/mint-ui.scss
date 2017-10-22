@@ -2,12 +2,30 @@
 body {
   .mint-cell-wrapper {
     background-image: none;
+    padding: 0 15px;
+    font-size: $font-size-m;
+  }
+  .mint-field-core {
+    font-size: $font-size-m;
   }
   .mint-cell {
     background-image: linear-gradient(0deg, $border-color, $border-color 50%, transparent 50%);
     background-size: 100% 1px;
     background-repeat: no-repeat;
     background-position: bottom;
+    min-height: 45px;
+    &.field-cell {
+      .mint-cell-title {
+        flex-basis: 120px;
+        width: 120px;
+        flex: none;
+      }
+    }
+    &.empty {
+      .mint-cell-value {
+        color: $placeholder-color;
+      }
+    }
   }
   &:last-child {
     background-image: none;
@@ -22,25 +40,27 @@ body {
       vertical-align: -2px;
     }
   }
+  .mint-button--danger {
+    background: $el-red;
+  }
   .mintui {
     -webkit-text-stroke-width: 0;
   }
-  .mint-cell-title {
-    .mint-radiolist-label {
-      padding: 0;
-    }
-  }
-  .mint-tabbar>.mint-tab-item {
-    color: inherit;
-    position: relative;
-    .iconfont {
-      font-size: 20px;
-    }
-    .active-onselect {
-      display: none;
-    }
-    &.is-selected {
-      color: $primary-color;
+
+  .mint-tabbar {
+    background-color: white;
+    &>.mint-tab-item {
+      color: inherit;
+      position: relative;
+      .iconfont {
+        font-size: 20px;
+      }
+      .active-onselect {
+        display: none;
+      }
+      &.is-selected {
+        color: $primary-color;
+      }
     }
   }
   .mint-msgbox-message {
@@ -85,11 +105,16 @@ body {
   }
   .mint-cell-title {
     flex-shrink: 0;
-    white-space: nowrap;
-    overflow: hidden;
+    white-space: nowrap; // overflow: hidden;
     .iconfont {
-      vertical-align: -1px;
+      font-size: 12px;
+      vertical-align: 1px;
       margin-left: 3px;
+    }
+    .icon-wenhao {
+      display: inline-block;
+      color: $el-red;
+      transform: translateY(-50%); // vertical-align: super;
     }
   }
   .mint-cell-label {
@@ -98,6 +123,8 @@ body {
   }
   .mint-cell-value {
     min-width: 0;
+    color: $primary-font-color;
+    font-size: $font-size-s;
     span {
       white-space: nowrap;
       overflow: hidden;
@@ -129,7 +156,7 @@ body {
 
 .mint-header {
   height: $header-height;
-  font-size: 18px;
+  font-size: $font-size-m;
   background-color: $primary-color;
 }
 
@@ -142,6 +169,8 @@ body {
 
 .mint-button {
   border-radius: 2px;
+  height: 44px;
+  font-size: $font-size-m;
   small {
     color: currentColor;
   }
@@ -187,12 +216,14 @@ body {
   //   margin-right: -10px;
   // }
   .mint-button {
-    font-size: 16px;
+    min-width: 85px;
+    font-size: $font-size-xxs;
     border-radius: 0;
-    height: 48px;
+    height: 25px;
     background: none;
     box-shadow: none;
     color: $font-color-em;
+    padding: 0 7px;
     &.is-disabled {
       opacity: 0.8;
     }

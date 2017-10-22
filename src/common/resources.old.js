@@ -18,7 +18,7 @@ const commonOpts = {
 const resource = Vue.resource
 export const loginByPhone = resource('?method=loginByPhone', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 登录
 export const sendMsgFromPhone = resource('?method=sendMsgFromPhone', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 验证码
-export const updateInfoSendMsgFromPhone = resource('?method=updateInfoSendMsgFromPhone', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 账户修改发送验证码
+export const updateInfoSendMsgFromPhone = resource('?method=updateInfoSendMsgFromPhone', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 账户修改获取验证码
 export const validateUpdateInfoMsgFromPhone = resource('?method=validateUpdateInfoMsgFromPhone', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 账户修改验证验证码
 export const updateBankInfo = resource('?method=updateBankInfo', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 更新银行卡信息
 export const queryMyAccount = resource('?method=queryMyAccount', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 用户信息

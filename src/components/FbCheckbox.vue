@@ -57,6 +57,7 @@ export default {
     color: $primary-color;
     content: '\e625';
     font-family: 'iconfont';
+    font-size: $font-size-m;
   }
   a {
     color: $primary-color;

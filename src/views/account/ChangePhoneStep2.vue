@@ -1,14 +1,14 @@
 <template lang="pug">
-section.change-phone-step1
-  form(@submit.prevent='submit()')
+section.change-phone-step2
+  form.simple-form(@submit.prevent='submit()')
     .fields-header
-      | 新手机号注册
+      h3 新手机号注册
       //- small 为保证您的安全，我们将向您的手机：{{model.phone}}发送短信验证码，确认身份。
     .fields
       mt-field(label='', placeholder='请输入新手机号', v-model='model.phone', :state="getFieldState('model.phone')", @click.native="showFieldError($event, 'model.phone')")
       mt-field(label='', placeholder='请输入验证码', v-model='model.captcha', :state="getFieldState('model.captcha')", @click.native="showFieldError($event, 'model.captcha')")
         mt-button(type='default', @click.stop.prevent='toGetMsgCode()', :disabled='countdownVisible')
-          span(v-show='!countdownVisible') 发送验证码
+          span(v-show='!countdownVisible') 获取验证码
           fb-countdown(ref='fnCountdown', v-show='countdownVisible', @countdown-over='onCountdownOver()')
     .form-buttons
       mt-button.mint-button-block(type='primary', size='large') 下一步

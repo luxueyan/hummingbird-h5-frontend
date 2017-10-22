@@ -65,6 +65,10 @@ export default {
       return value ? value.replace(/(\d{4})\d+(\d{4})/g, '$1****$2') : '-'
     })
 
+    Vue.filter('fbBankCardSpace', (value) => {
+      return value ? value.replace(/\d{4}(?=(\d{1,4}))/g, '$& ') : '-'
+    })
+
     Vue.filter('moment', (date, format) => {
       return moment(date).format(format)
     })

@@ -125,7 +125,7 @@ center {
     padding-left: 5px * $i;
   }
   .pt#{$i * 5} {
-    padding-right: 5px * $i;
+    padding-top: 5px * $i;
   }
   .pb#{$i * 5} {
     padding-left: 5px * $i;
@@ -205,7 +205,7 @@ a {
     }
   }
   .footer {
-    padding: 10px;
+    padding: 20px 15px;
     &.no-padding-top {
       padding-top: 0;
     }

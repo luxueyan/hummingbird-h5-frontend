@@ -175,12 +175,24 @@ html {
 body {
   font-family: -apple-system;
   font-family: '-apple-system', "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
-  background-color: white;
+  background-color: $primary-bg-color;
   min-height: 100%;
   color: $primary-font-color;
   font-size: $font-size-xs;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  &.login {
+    background-color: white;
+  }
+  &.authorizedTip {
+    background-color: $minor-bg-color;
+  }
+  &.changeBankPhoneStep1,
+  &.changeBankPhoneStep2,
+  &.addBankStep2 {
+    background-color: white;
+  }
 }
 
 #nprogress .spinner {
@@ -201,6 +213,4 @@ small {
     padding-bottom: 80px;
   }
 }
-
-
 </style>

@@ -47,16 +47,19 @@ select::-ms-expand {
 }
 
 input::-moz-placeholder {
-  color: $placeholder-color;
+  color: $placeholder-color!important;
+  font-size: 14px!important;
   opacity: 1;
 }
 
 input:-ms-input-placeholder {
-  color: $placeholder-color;
+  color: $placeholder-color!important;
+  font-size: 14px!important;
 }
 
 input::-webkit-input-placeholder {
-  color: $placeholder-color;
+  color: $placeholder-color!important;
+  font-size: 14px!important;
 }
 
 input:-webkit-autofill,

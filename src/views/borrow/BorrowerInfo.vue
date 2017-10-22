@@ -3,24 +3,25 @@
     form.borrow-form(@submit.prevent='submit()')
       section
         .fields-header
+          i.iconfont.icon-fangan
           | 借款方案
           //- small.fr.loan-agreement 查看
             router-link(:to="{name:'loanAgreement'}")
               |《借款服务协议》
         .fields
-          mt-cell(title="借款金额", :value="product.amount | fbCurrency('', '元')")
+          mt-cell(title="借款金额", :value="product.amount | fbCurrency")
           mt-cell(title="借款天数", :value="product.loanDays | fbAppend('天')")
-          mt-cell(:value="(product.serviceFee - product.discountAmount) | fbCurrency('', '元')")
+          mt-cell(:value="(product.serviceFee - product.discountAmount) | fbCurrency")
             span(slot="title") 服务费
-              i.iconfont.icon-info(@click="showServiceChargeTip")
+              i.iconfont.icon-wenhao(@click="showServiceChargeTip")
               span.icon-sale7(v-show="borrowOption === 'vocation'")
-          mt-cell(title="实际到账", :value="virtualMoney | fbCurrency('', '元')")
+          mt-cell(title="实际到账", :value="virtualMoney | fbCurrency")
       fb-bank-cards(v-if="contractInfoHasHistory")
       section(v-if="!contractInfoHasHistory")
         .fields-header
+          i.iconfont.icon-user-solid
           | 账户信息
-          small
-            i.iconfont.icon-warning
+          small.pl5
             | 请填写您的真实信息，否则会影响借款。
         .fields
           mt-cell(title="姓名", :value="model.name | fbFalse")
@@ -29,26 +30,18 @@
           mt-field(label='身份证号', placeholder='请输入身份证号', v-model="model.idCard", :state="getFieldState('model.idCard')", @click.native="showFieldError($event, 'model.idCard')")
           fb-field(v-mt-field-blur="{blur:getBank}", label='银行卡号', placeholder='请输入银行卡号', v-model="bankCardForShow", :state="getFieldState('model.bankCard')", @click.native="showFieldError($event, 'model.bankCard')")
             span(slot="label") 银行卡号
-              i.iconfont.icon-info(@click="showSupportBanks()")
+              i.iconfont.icon-wenhao(@click="showSupportBanks()")
           input(type="hidden", v-model='model.bankCard')
-          mt-cell(title="开户行", :value="model.bankName | fbFalse")
+          mt-cell.field-cell(:class="{'empty': model.bankName === '自动匹配'}", title="开户行", :value="model.bankName")
+        .fields
+          .fields-header
           mt-field(label='银行预留手机号', placeholder='请输入银行预留手机号', v-model="model.bankReservePhone", :state="getFieldState('model.bankReservePhone')", @click.native="showFieldError($event, 'model.bankReservePhone')")
           mt-field(label='验证码', placeholder='请输入验证码', v-model='model.captcha', :state="getFieldState('model.captcha')", @click.native="showFieldError($event, 'model.captcha')")
             mt-button(type='default', @click.stop.prevent='toGetMsgCode()', :disabled='countdownVisible')
-              span(v-show='!countdownVisible') 发送验证码
+              span(v-show='!countdownVisible') 获取验证码
               fb-countdown(ref='fnCountdown', v-show='countdownVisible' @countdown-over='onCountdownOver()')
-          //- template(v-if='contractInfoHasHistory')
-          //-   mt-cell(title='身份证号', :value="model.idCard")
-          //-   mt-cell(title='银行卡号')
-          //-     span {{bankCardForShow}}
-
-          //-   mt-cell(title="开户行", :value="model.bankName | fbFalse")
-          //-   mt-cell(title='银行预留手机号',  :value="model.bankReservePhone")
-          //-   mt-cell(@click.native="goChangeBankCard()")
-          //-     a.small 变更银行卡
-        //- small.note *由于清明假期三方支付休假，今日放款预计4月5日下午到账，还款日期会根据实际到账时间顺延。
-      .form-buttons.fixed
-          mt-button.mint-button-block(type='primary', size='large') 立即提款
+      .form-buttons
+          mt-button.mint-button-block(type='primary', size='large') 开始借款
     //- fb-msgbox(ref="vocationMsgbox", title="十一期间放款安排", msgbox-class="shiyi-option-msgbox")
       div(style="text-align:left")
         p 您的借款的应还款日是{{repayDate}}。
@@ -304,7 +297,7 @@ export default {
         idCard: null,
         bankCard: null,
         captcha: '',
-        bankName: '',
+        bankName: '自动匹配',
         bankReservePhone: null
       },
       user: stateUser
