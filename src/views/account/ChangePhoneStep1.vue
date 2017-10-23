@@ -47,7 +47,7 @@ export default {
             name: this.model.verifyType ? 'changeBankPhoneStep2' : 'changePhoneStep2',
             params: {
               bankCardId: this.model.bankCardId || null,
-              from: this.from
+              from: this.$route.params.from
             }
           })
         }
@@ -70,7 +70,6 @@ export default {
   data() {
     const user = this.$store.getters.user
     return {
-      from: this.$route.params.from || '',
       model: {
         // id: user.id,
         phone: user.phone,

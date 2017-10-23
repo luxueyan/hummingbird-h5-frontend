@@ -58,7 +58,7 @@ module.exports = router => {
   })
 
   // 删除银行卡信息
-  router.post('/bank_cards/delete', (req, res) => {
+  router.post('/bank_cards/unbind', (req, res) => {
     res.jsonOk({
       'id': '599794a4f87ca703c05df02c',
       'bankCard': '62200000000000',

@@ -7,7 +7,9 @@ section.bank-detail.single-page-tip
     mt-cell(title="手机号",
     :value="model.bankReservePhone",
     is-link, @click.native="changeBankPhone()")
-  .footer
+  .remove-bind(@click='deleteBankCard()', v-show="model.bankCard")
+    | 解除绑定
+  //- .footer
     mt-button.mint-button-block(type='primary', size='large', @click='deleteBankCard()') 解除绑定
 </template>
 
@@ -32,13 +34,33 @@ export default {
         name: 'changeBankPhoneStep1',
         params: {
           bankCardId: this.model.id,
-          from: this.$route.name
+          from: this.$route
         }
       })
     },
 
     async deleteBankCard() {
-      const action = await this.$msgBox.confirm('确认解除绑定银行卡吗?')
+      const bankCardsCount = this.$store.getters.bankCardsCount
+      if (this.model.bankCard && bankCardsCount === 1) {
+        const action = await this.$msgBox({
+          title: '提示',
+          message: '您无法解绑唯一的卡片，请先添加一张新的银行卡。',
+          confirmButtonText: '前往添加',
+          showCancelButton: true
+        }).catch(action => action)
+
+        if (action === 'confirm') {
+          this.$router.push({
+            name: 'addBankStep1',
+            params: {
+              from: this.$route
+            }
+          })
+        }
+        return
+      }
+
+      const action = await this.$msgBox.confirm('您确认解除绑定该银行卡吗？').catch(action => action)
       if (action === 'confirm') {
         const data = await bankCardDelete.save({ id: this.model.id }).then(res => res.json())
         if (data.code === RET_CODE_MAP.OK) {
@@ -63,9 +85,22 @@ export default {
 </script>
 
 <style lang="scss">
+@import "~assets/scss/_variables.scss";
 .bank-detail {
+  padding-top: 10px;
   .cells-title {
     padding: 10px;
+  }
+  .remove-bind {
+    font-size: $font-size-m;
+    height: 45px;
+    line-height: 45px;
+    margin-top: 15px;
+    background: white;
+    padding: 0 15px;
+    &:active {
+      background: rgba(0, 0, 0, .01);
+    }
   }
 }
 </style>

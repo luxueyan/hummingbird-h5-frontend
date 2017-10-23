@@ -1,27 +1,34 @@
+@import "~assets/scss/_variables.scss";
+$topbar-height: 50px;
+$bottombar-height: 45px;
 .writingDiv {
   position: relative;
   width: 100%;
   height: 100%;
+  color: $primary-font-color;
+  font-size: $font-size-m;
   .topBar,
   .bottomBar {
     position: absolute;
-    height: 44px;
+    height: $topbar-height;
     background: snow;
     left: 0;
+    right: 0;
   }
   .topBar {
     display: flex;
-    top: 45px;
-    width: 100%;
+    top: $header-height;
     z-index: 99;
+    padding: 0 20px;
+    align-items: center;
     label {
       flex: 1;
-      text-align: center;
-      line-height: 44px;
+      text-align: left;
+      line-height: $topbar-height;
     }
   }
   .bottomBar {
-    height: 44px;
+    height: $bottombar-height;
     bottom: 0;
     width: 100%;
     clear: both;
@@ -29,9 +36,9 @@
   .paperCanvas {
     position: absolute;
     left: 0;
-    bottom: 44px;
-    top: 44px;
-    background: url(~assets/images/bg_paper.jpg);
+    bottom: $bottombar-height;
+    top: $header-height + $topbar-height; // background: url(~assets/images/bg_paper.jpg);
+    background-color: $primary-bg-color;
     width: 100%;
   }
   .ePaperCanvas {
@@ -41,28 +48,42 @@
     padding: 0;
     display: block;
   }
-  .textButton,
-  .textButton_Done {
-    padding: 0;
-    height: 44px;
-    line-height: 44px;
-    border-radius: 5px;
-    color: #18b4ed;
-    font-size: 17px;
+  .textButton {
+    padding: 0 10px;
+    height: 28px;
+    line-height: 27px;
+    color: $font-color-em;
+    font-size: $font-size-xs;
     background: transparent;
     display: inline-block;
-    border: none;
+    border: 0;
     text-align: center;
-  }
-  // .textButton:active,
-  // .textButton_Done:active {
-  //   text-align: end;
-  // }
-  .textButton {
+    position: relative;
     margin-left: 10px;
+    &:after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 200%;
+      height: 200%;
+      transform-origin: 0 0;
+      transform: scale(0.5);
+      border: 1px solid $font-color-em;
+    }
   }
   .textButton_Done {
-    margin-right: 10px;
+    height: 45px;
+    line-height: 45px;
+    background: $primary-color;
+    border-radius: 2px;
+    width: 256px;
+    position: absolute;
+    border: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    bottom: $bottombar-height + 5px;
   }
   .bottomCol {
     display: block;
@@ -107,24 +128,21 @@
     background: url(~assets/images/clear.png) no-repeat;
     background-size: 28px;
     top: 10px;
-  }
-  // .clear:active {
+  } // .clear:active {
   //   background: url(~assets/images/clear_press.png) no-repeat;
   //   background-size: 28px;
   // }
   .color {
     background: url(~assets/images/color.png) no-repeat;
     background-size: 28px;
-  }
-  // .color:active {
+  } // .color:active {
   //   background: url(~assets/images/color_press.png) no-repeat;
   //   background-size: 28px;
   // }
   .stroke {
     background: url(~assets/images/stroke.png) no-repeat;
     background-size: 28px;
-  }
-  // .stroke:active {
+  } // .stroke:active {
   //   background: url(~assets/images/stroke_press.png) no-repeat;
   //   background-size: 28px;
   // }

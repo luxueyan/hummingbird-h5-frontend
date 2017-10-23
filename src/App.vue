@@ -7,7 +7,7 @@
     mt-button.of-v(v-if="btnVisible(['mine'])", slot="left", @click="$router.push({name: 'messageList'})")
       i.iconfont.icon-xiaoxi-solid.ft18.pos-r
         span.badge-red.badge-top 10
-    mt-button(slot="right", v-if="btnVisible(['signature'])")
+    //- mt-button(slot="right", v-if="btnVisible(['signature'])")
       small
         router-link(:to="{name:'loanAgreement', params:{'transitionName': 'slideRightFade'}}") 查看
     mt-button(slot="right", v-if="btnVisible(['messageList'])")
@@ -119,7 +119,8 @@ export default {
       this.transitionName = to.params.transitionName || 'fade'
       this.updateContainerHeight(to, from)
       if (from.fullPath !== '/' && !to.params.notSaveCrumbed) {
-        this.routerCrumbs.push(from)
+        if (!this.isPopStated) this.routerCrumbs.push(from)
+        else this.routerCrumbs.pop() // 如果是history.back，那么需要删除当前页面的crumbs,因为上一步记录了此页面路由
       }
       // console.log(to.params, from, this.routerCrumbs)
       // this.mineMenuVisible = false
@@ -127,7 +128,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['route', 'stateCode']),
+    ...mapGetters(['route', 'stateCode', 'isPopStated']),
     tabBarVisible() {
       return this.$route.meta.tabBarVisible && (~process.env.NODE_ENV.indexOf('app') || ~process.env.NODE_ENV.indexOf('development'))
     },
@@ -147,7 +148,6 @@ export default {
 
   data() {
     return {
-      // preRoute: null,
       title: '',
       tabSelected: '',
       transitionName: 'slideRightFade'
@@ -160,7 +160,7 @@ export default {
 <style lang="scss">
 @import '~assets/scss/_variables.scss';
 // @import '~assets/fonts/iconfont/iconfont.css';
-@import url('//at.alicdn.com/t/font_432625_7jr2hr3e6k73nmi.css');
+@import url('//at.alicdn.com/t/font_432625_2c8ivqome62edn29.css');
 @import '~assets/scss/base.scss';
 @import '~assets/scss/common.scss';
 @import '~assets/scss/transition.scss';

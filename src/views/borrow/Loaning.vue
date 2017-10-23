@@ -1,8 +1,7 @@
 <template lang="pug">
-section.change-bank-card-step3.single-page-tip
-  .logo
-    i.iconfont.icon-dengdai
-    //- h3 您的提款请求已发送成功，请耐心等待。
+section.single-page-tip
+  header
+
   article
     //- p 您的提款请求已发送成功，请耐心等待。
     table

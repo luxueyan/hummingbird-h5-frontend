@@ -15,7 +15,9 @@
               input.mint-radio-input(type='radio', :value="bankCard.id", v-model="defaultBankCardId")
               span.mint-radio-core
             span.mint-radio-label 设为默认
-    router-link.add-bankcard(:to="{name: 'addBankStep1', params: {transitionName: 'slideRightFade'}}") + 添加银行卡
+    router-link.add-bankcard(:to="{name: 'addBankStep1', params: {transitionName: 'slideRightFade'}}")
+      em +
+      | 添加银行卡
 </template>
 
 <script>
@@ -47,6 +49,10 @@ export default {
     }
   },
 
+  mounted() {
+    this.$store.commit('updateBankCardsCount', this.bankCards.length)
+  },
+
   watch: {
     defaultBankCardId() {
       bankCardDefault.save({ id: this.defaultBankCardId })
@@ -62,6 +68,9 @@ export default {
 }
 </script>
 
-<style lang="scss">
-@import '~views/bank/fb-bank-cards.scss';
+<style lang="scss" src="@/views/bank/fb-bank-cards.scss"></style>
+<style lang="scss" scoped>
+.fb-bank-cards {
+  padding-top: 10px;
+}
 </style>

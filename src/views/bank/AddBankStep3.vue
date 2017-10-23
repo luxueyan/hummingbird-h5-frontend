@@ -1,8 +1,8 @@
 <template lang="pug">
 section.add-bank-step3.single-page-tip
-  .logo
-    i.iconfont.icon-xiao
-    h3 您的银行卡添加成功
+  header
+    img(src="~assets/images/success-icon.png")
+    h2 您的银行卡添加成功
   .cells-title
     | 银行卡信息
   .cells
@@ -12,13 +12,11 @@ section.add-bank-step3.single-page-tip
     :value="model.bankReservePhone",
     is-link, @click.native="changeBankPhone()")
   .footer
-    mt-button.mint-button-block(type='primary', size='large', @click='goOn()') {{confirmValue}}
+    mt-button.mint-button-block(type='primary', size='large', @click='goOn()') 完成
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import { CUST_STATE_CODE_MAP } from '@/constants.js'
-import { includes } from 'lodash'
 
 export default {
   mounted() {
@@ -27,7 +25,7 @@ export default {
 
   methods: {
     goOn() {
-      this.$router.push({
+      this.$router.push(this.$route.params.from || {
         name: 'borrowInfo'
       })
     },
@@ -36,42 +34,14 @@ export default {
         name: 'changeBankPhoneStep1',
         params: {
           bankCardId: this.model.bankCardId,
-          from: this.$route.name
+          from: this.$route
         }
       })
     }
   },
 
   computed: {
-    ...mapGetters(['stateCode']),
-    borrowOrRepay() {
-      if (
-        includes([
-          CUST_STATE_CODE_MAP.FIRST_BORROWER,
-          CUST_STATE_CODE_MAP.CONTRACT_INFO_FILLED,
-          CUST_STATE_CODE_MAP.DEBT_SETTELED,
-          CUST_STATE_CODE_MAP.LOANING,
-          CUST_STATE_CODE_MAP.LOAN_FAILED
-        ], this.stateCode)) {
-        return 'borrow'
-      } else if (
-        includes([
-          CUST_STATE_CODE_MAP.DEBT_NOT_SETTLED,
-          CUST_STATE_CODE_MAP.REPAYING,
-          CUST_STATE_CODE_MAP.REPAY_FAILED
-        ], this.stateCode)) {
-        return 'repay'
-      }
-      return 'unknown'
-    },
-    confirmValue() {
-      if (this.borrowOrRepay === 'borrow') {
-        return '继续借款'
-      } else if (this.borrowOrRepay === 'repay') {
-        return '继续还款'
-      }
-      return '完成'
-    }
+    ...mapGetters(['stateCode'])
   },
   data() {
     return {
@@ -87,9 +57,26 @@ export default {
 </script>
 
 <style lang="scss">
+@import "~assets/scss/_variables.scss";
 .add-bank-step3 {
+  header {
+    background-color: $primary-color;
+    height: 155px;
+    text-align: center;
+    color: white;
+    img {
+      margin-top: 10px;
+      width: 144px;
+    }
+    h2 {
+      font-size: $font-size-xxl;
+      margin-top: 10px;
+      font-weight: normal;
+    }
+  }
   .cells-title {
-    padding: 10px;
+    padding: 10px 15px;
+    color: $minor-font-color;
   }
 }
 </style>

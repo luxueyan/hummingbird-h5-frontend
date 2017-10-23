@@ -5,9 +5,14 @@
     padding: 15px 10px;
     text-align: center;
     background: white;
+    color: inherit;
     display: block;
     &:active {
       background: rgba(0, 0, 0, .01);
+    }
+    em {
+      font-size: 1.2em;
+      margin-right: .2em;
     }
   }
   .mint-cell {
@@ -23,6 +28,17 @@
     font-size: 14px;
     margin-top: -5px;
     float: left;
+    color: $primary-color;
+  }
+  .mint-radio-input:checked+.mint-radio-core {
+    background-color: $primary-color;
+    border-color: $primary-color;
+  }
+  .mint-radio-label {
+    color: $primary-color;
+  }
+  .mint-radio-core {
+    border-color: $primary-color;
   }
   .title {
     display: flex;

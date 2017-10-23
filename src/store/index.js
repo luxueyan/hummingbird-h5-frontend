@@ -13,6 +13,8 @@ const state = {
   updaterProgressValue: 0,
   updaterProgressVisible: false,
   now: new Date(),
+  bankCardsCount: 0,
+  isPopStated: false, // 是否是利用了history.back方式跳转的路由，用来控制routerCrumbs
   token: token
 }
 

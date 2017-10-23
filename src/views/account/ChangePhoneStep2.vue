@@ -11,7 +11,7 @@ section.change-phone-step2
           span(v-show='!countdownVisible') 获取验证码
           fb-countdown(ref='fnCountdown', v-show='countdownVisible', @countdown-over='onCountdownOver()')
     .form-buttons
-      mt-button.mint-button-block(type='primary', size='large') 下一步
+      mt-button.mint-button-block(type='primary', size='large') 完成
 </template>
 
 <script>
@@ -52,8 +52,8 @@ export default {
             message: this.model.verifyType ? `您的尾号${this.model.bankCardId.slice(-4)}的银行卡预留手机号已修改为${this.model.phone}` : `您的注册手机号已修改为${this.model.phone}`,
             confirmButtonText: '知道了',
             callback(action) {
-              _self.$router.push({
-                name: _self.from || 'borrowInfo'
+              _self.$router.push(_self.$route.params.from || {
+                name: 'borrowInfo'
               })
             }
           })
@@ -77,7 +77,6 @@ export default {
   data() {
     // const user = this.$store.getters.user
     return {
-      from: this.$route.params.from || '',
       model: {
         // id: user.id,
         phone: '',

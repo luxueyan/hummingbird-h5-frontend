@@ -61,6 +61,7 @@ export default [{
     meta: {
       title: '银行卡信息',
       tabBarVisible: true,
+      headerHidden: true,
       headerBackShow: true,
       permits: allStates
     }

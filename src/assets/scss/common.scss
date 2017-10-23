@@ -153,33 +153,9 @@ a {
 }
 
 .single-page-tip {
-  padding-top: 20px;
-  h3 {
-    font-weight: normal;
-    margin: 10px 0;
-  }
-  .logo {
-    text-align: center;
-    .iconfont {
-      font-size: 60px; // line-height: 90px;
-      margin-bottom: 10px;
-    }
-    .icon-chenggong,
-    .icon-xiao {
-      color: #00bb21;
-    }
-    .icon-dengdai {
-      color: $el-orange;
-    }
-  }
   em {
     font-style: normal;
     color: $font-color-em;
-  }
-  article {
-    text-align: center;
-    margin-bottom: 15px;
-    line-height: 1.8em;
   }
   table {
     table-layout: fixed;
@@ -208,29 +184,6 @@ a {
     padding: 20px 15px;
     &.no-padding-top {
       padding-top: 0;
-    }
-  }
-  .simple-btns {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    a {
-      display: inline-block;
-      min-width: 100px;
-      text-align: center;
-      &.large {
-        font-size: 15px;
-      }
-      &.small {
-        font-size: 11px;
-      }
-    }
-  }
-  .btns-group {
-    display: flex;
-    .mint-button {
-      margin: 0 10px;
     }
   }
 }

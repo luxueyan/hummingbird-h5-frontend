@@ -25,5 +25,13 @@ export default {
 
   updateNow(state, date) {
     state.now = date
+  },
+
+  updateBankCardsCount(state, count = 0) {
+    state.bankCardsCount = count
+  },
+
+  updateIsPopStated(state, isPopStated = false) {
+    state.isPopStated = isPopStated
   }
 }

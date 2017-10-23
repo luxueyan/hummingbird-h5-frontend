@@ -16,7 +16,9 @@ section.fb-bank-cards
             .title
               h3 {{defaultBankCard.bankName}}
             p {{defaultBankCard.bankCard | fbBankCardSpace}}
-    router-link.add-bankcard(:to="{name: 'addBankStep1', params: {transitionName: 'slideRightFade'}}") + 添加银行卡
+    router-link.add-bankcard(:to="{name: 'addBankStep1', params: {transitionName: 'slideRightFade'}}")
+      em +
+      | 添加银行卡
 </template>
 
 <script>
@@ -31,6 +33,7 @@ export default {
     const data = await bankCards.get().then(res => res.json())
     if (data.code === RET_CODE_MAP.OK) {
       this.defaultBankCard = find(data.data.bankCards, bd => bd.isDefault)
+      this.$store.commit('updateBankCardsCount', data.data.bankCards.length)
     }
   },
 

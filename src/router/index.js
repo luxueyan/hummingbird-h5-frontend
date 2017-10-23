@@ -152,4 +152,9 @@ router.push = function(location = {}) {
   oldPush.call(router, location)
 }
 
+// 记录路由是否是通过history.back方式
+window.addEventListener('popstate', () => {
+  store.commit('updateIsPopStated', true)
+})
+
 export default router

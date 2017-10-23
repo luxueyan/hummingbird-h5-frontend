@@ -47,7 +47,8 @@ export default {
           this.$router.push({
             name: 'addBankStep3',
             params: {
-              model: this.model
+              model: this.model,
+              from: this.$route.from
             }
           })
         }
@@ -68,7 +69,7 @@ export default {
   data() {
     return {
       model: {
-        bankReservePhone: '13333333333',
+        bankReservePhone: '',
         captcha: ''
       },
       validatePhoneModel: 'model.bankReservePhone'

@@ -29,7 +29,8 @@ export default {
         this.$router.push({
           name: 'addBankStep2',
           params: {
-            model: this.model
+            model: this.model,
+            from: this.$route.from
           }
         })
       } else {

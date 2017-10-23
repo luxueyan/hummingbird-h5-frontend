@@ -42,22 +42,23 @@ export function setCurrentLanguageType(a) {
   }
 }
 
-function u(a) {
-  var d = document.getElementById("writingDiv").querySelectorAll("input"),
-    b = document.getElementById("palette"),
-    c = document.getElementById("penSize"),
-    f = 0,
-    e = 0;
-  a.cancelButton = d[0];
-  a.doneButton = d[1];
-  a.R = d[2];
-  a.O = d[3];
-  a.K = d[4];
-  a.L = d[5];
-  a.P = d[6];
-  a.cancelButton.onmousedown = function() {
-    a.I(null, null, !0)
-  };
+function init(a) {
+  var writingDiv = document.getElementById("writingDiv")
+  var inputs = writingDiv.querySelectorAll("input")
+  var palette = document.getElementById("palette")
+  var penSize = document.getElementById("penSize")
+  var f = 0;
+  var e = 0;
+  // a.cancelButton = doucment;
+  a.doneButton = writingDiv.querySelector('.textButton_Done');
+  a.undo = inputs[0];
+  a.redo = inputs[1];
+  a.clear = inputs[2];
+  a.color = inputs[3];
+  a.stoke = inputs[4];
+  // a.cancelButton.onmousedown = function() {
+  //   a.I(null, null, !0)
+  // };
   a.doneButton.onmousedown = function() {
     var b;
     if (0 >= a.b.length) b = null;
@@ -100,7 +101,7 @@ function u(a) {
     }
     a.I(b, c + "]}", !1)
   };
-  a.R.onmousedown = function() {
+  a.undo.onmousedown = function() {
     if ("edit" === a.status)
       if (a.u && a.u.length) a.b = a.u,
         a.u = null,
@@ -111,26 +112,26 @@ function u(a) {
       y(a)
     }
   };
-  a.O.onmousedown = function() {
+  a.redo.onmousedown = function() {
     "edit" === a.status && a.B.length && (a.b = a.b.concat(a.B.pop()), y(a))
   };
-  a.K.onmousedown = function() {
+  a.clear.onmousedown = function() {
     B(a)
   };
-  a.L.onmousedown = function() {
-    f ? (f = e = 0, c.style.display = "none", b.style.display = "none") : (f = 1, b.style.display = "inline", e = 0, c.style.display = "none")
+  a.color.onmousedown = function() {
+    f ? (f = e = 0, penSize.style.display = "none", palette.style.display = "none") : (f = 1, palette.style.display = "inline", e = 0, penSize.style.display = "none")
   };
-  a.P.onmousedown = function() {
-    e ? (f = e = 0, c.style.display = "none") : (e = 1, c.style.display = "inline", f = 0);
-    b.style.display = "none"
+  a.stoke.onmousedown = function() {
+    e ? (f = e = 0, penSize.style.display = "none") : (e = 1, penSize.style.display = "inline", f = 0);
+    palette.style.display = "none"
   };
-  b.onclick = function(d) {
+  palette.onclick = function(d) {
     d = d.target;
-    "LI" == d.tagName && (a.color = d.getAttribute("value"), f = e = 0, c.style.display = "none", b.style.display = "none")
+    "LI" == d.tagName && (a.color = d.getAttribute("value"), f = e = 0, penSize.style.display = "none", palette.style.display = "none")
   };
-  c.onclick = function(d) {
+  penSize.onclick = function(d) {
     d = d.target;
-    "DIV" == d.tagName && (a.h = parseInt(d.getAttribute("value")), f = e = 0, c.style.display = "none", b.style.display = "none")
+    "DIV" == d.tagName && (a.h = parseInt(d.getAttribute("value")), f = e = 0, penSize.style.display = "none", palette.style.display = "none")
   }
 }
 
@@ -145,19 +146,19 @@ function EPaper(a, d) {
   E(this);
   this.b = [];
   this.B = [];
-  u(this)
+  init(this)
 }
 
 EPaper.init = function(a, data = {}) {
   document.getElementById(a).innerHTML = `<div id='writingDiv' class='writingDiv'>
                                             <div class='topBar'>
-                                              <input class='textButton' type='button' value='返回'/>
-                                              <label>手写您的姓名（${data.name}）</label>
-                                              <input class='textButton_Done' type='button' value='\u5b8c\u6210'/>
+                                              <label>请在下方手写您的姓名</label>
+                                              <button class='textButton'>查看合同</button>
                                             </div>
                                             <div class='paperCanvas'>
                                               <canvas id='ePaperCanvas' height='100%' width='100%' class='ePaperCanvas'></canvas>
                                             </div>
+                                            <button class="textButton_Done">完成</button>
                                             <div class='bottomBar'>
                                               <div class='bottomCol'><input class='bottomButton undo' type='button'/></div>
                                               <div class='bottomCol'><input class='bottomButton redo' type='button'/></div>

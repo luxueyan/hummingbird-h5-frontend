@@ -29,5 +29,13 @@ export default {
 
   now(state) {
     return state.now
+  },
+
+  bankCardsCount(state) {
+    return state.bankCardsCount
+  },
+
+  isPopStated(state) {
+    return state.isPopStated
   }
 }

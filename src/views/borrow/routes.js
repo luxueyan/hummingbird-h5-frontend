@@ -21,7 +21,7 @@ export default [{
       captchaSendType: CAPTCHA_SEND_TYPE.ADD_BANK_RESERVE_PHONE,
       // headerHidden: true,
       hasFixedButtons: true,
-      permits: [CUST_STATE_CODE_MAP.DEBT_SETTELED]
+      permits: [CUST_STATE_CODE_MAP.DEBT_SETTELED, CUST_STATE_CODE_MAP.CONTRACT_INFO_FILLED]
     }
   }, {
     path: 'signature',
@@ -30,6 +30,7 @@ export default [{
     meta: {
       title: '合同签署',
       tabBarVisible: false,
+      headerBackShow: true,
       permits: [CUST_STATE_CODE_MAP.CONTRACT_INFO_FILLED]
     }
   }, {
