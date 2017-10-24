@@ -68,6 +68,7 @@ body {
       }
       &.is-selected {
         color: $primary-color;
+        background: none;
       }
     }
   }
@@ -212,6 +213,9 @@ body {
     position: absolute;
     transform-origin: left top;
     transform: scale(.5);
+  }
+  &.mint-button.br2::before {
+    border-radius: 4px;
   }
 }
 

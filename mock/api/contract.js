@@ -145,7 +145,7 @@ module.exports = router => {
     res.jsonOk(Mock.mock({
       'errCount|1': [0, 1, 2, 3],
       'bankName': '中国银行',
-      'lastErrMsg': '余额不足',
+      'message': '银行卡余额不足，本卡今日可提交还款1次，<br>请确保卡内余额充足。',
       'bankCard': '622201010008900988'
     }))
   })

@@ -11,10 +11,6 @@ export default {
     state.stateCode = stateCode
   },
 
-  updateStateMsg(state, stateMsg) {
-    state.stateMsg = stateMsg
-  },
-
   updateUpdaterProgressValue(state, value) {
     state.updaterProgressValue = value
   },
@@ -33,5 +29,9 @@ export default {
 
   updateIsPopStated(state, isPopStated = false) {
     state.isPopStated = isPopStated
+  },
+
+  updateTransitionName(state, transitionName = 'fade') {
+    state.transitionName = transitionName
   }
 }

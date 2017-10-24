@@ -25,7 +25,7 @@ export default {
 
   methods: {
     goOn() {
-      this.$router.push(this.$route.params.from || {
+      this.$router.push(this.$route.params.from ? Object.assign({}, this.$route.params.from) : {
         name: 'borrowInfo'
       })
     },

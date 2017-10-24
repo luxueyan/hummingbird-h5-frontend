@@ -25,8 +25,22 @@ export default {
       name: this.user.name
     })
 
-    myepaper.setCallback(async(pngData, pointsData, isCancel) => {
-      if (!isCancel) {
+    myepaper.setCallback(async(action, { pngData, pointsData }) => {
+      if (action === 'cancel') {
+        const data = await contractReset.get().then(res => res.json())
+
+        if (data.code === RET_CODE_MAP.OK) {
+          this.updateStateCode(CUST_STATE_CODE_MAP.DEBT_SETTELED)
+          this.$router.push({
+            name: 'borrowerInfo'
+          })
+        }
+        return
+      } else if (action === 'agreement') {
+        this.$router.push({
+          name: 'loanAgreement'
+        })
+      } else if (action === 'signdone') {
         if (!pngData) {
           this.$toast(`请手写您的姓名：${this.user.name}`, 'error')
           return
@@ -39,15 +53,6 @@ export default {
         if (data.code === RET_CODE_MAP.OK) {
           this.drawMoney() // 新版接口不需要主动请求放款，未来可能删除
         }
-      } else {
-        const data = await contractReset.get().then(res => res.json())
-        if (data.code === RET_CODE_MAP.OK) {
-          this.updateStateCode(CUST_STATE_CODE_MAP.DEBT_SETTELED)
-          this.$router.push({
-            name: 'borrowerInfo'
-          })
-        }
-        // this.$toast('请签署合同', 'error')
       }
     })
   },

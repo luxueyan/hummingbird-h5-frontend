@@ -29,6 +29,7 @@ export default [{
     meta: {
       title: '还款请求已确认',
       tabBarVisible: true,
+      headerHidden: true,
       permits: [CUST_STATE_CODE_MAP.REPAYING]
     }
   }, {
@@ -38,6 +39,7 @@ export default [{
     meta: {
       title: '还款失败',
       tabBarVisible: true,
+      headerHidden: true,
       permits: [CUST_STATE_CODE_MAP.REPAY_FAILED]
     }
   }]

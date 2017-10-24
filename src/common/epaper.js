@@ -51,14 +51,18 @@ function init(a) {
   var e = 0;
   // a.cancelButton = doucment;
   a.doneButton = writingDiv.querySelector('.textButton_Done');
+  a.checkAgreementButton = writingDiv.querySelector('.textButton_Check_Agreement');
   a.undo = inputs[0];
   a.redo = inputs[1];
   a.clear = inputs[2];
   a.color = inputs[3];
   a.stoke = inputs[4];
   // a.cancelButton.onmousedown = function() {
-  //   a.I(null, null, !0)
+  //   a.I(a.checkAgreementButton.getAttribute('action') || null, {})
   // };
+  a.checkAgreementButton.onmousedown = function() {
+    a.I(a.checkAgreementButton.getAttribute('action') || null, {})
+  }
   a.doneButton.onmousedown = function() {
     var b;
     if (0 >= a.b.length) b = null;
@@ -99,7 +103,7 @@ function init(a) {
         c += '{"x":' + Math.round(100 * e.x) / 100 + ',"y":' + Math.round(100 * e.y) / 100 + ',"t":' + (e.t || 0) + "}";
       c += "]}"
     }
-    a.I(b, c + "]}", !1)
+    a.I('signdone', { pngData: b, pointsData: c + "]}" })
   };
   a.undo.onmousedown = function() {
     if ("edit" === a.status)
@@ -153,7 +157,7 @@ EPaper.init = function(a, data = {}) {
   document.getElementById(a).innerHTML = `<div id='writingDiv' class='writingDiv'>
                                             <div class='topBar'>
                                               <label>请在下方手写您的姓名</label>
-                                              <button class='textButton'>查看合同</button>
+                                              <button class='textButton textButton_Check_Agreement' action="agreement">查看合同</button>
                                             </div>
                                             <div class='paperCanvas'>
                                               <canvas id='ePaperCanvas' height='100%' width='100%' class='ePaperCanvas'></canvas>
@@ -530,7 +534,7 @@ function G(a, d, b) {
 }
 
 r.setCallback = function(a) {
-  "function" === typeof a && 3 === a.length && (this.I = a)
+  "function" === typeof a && (this.I = a)
 }
 
 export default EPaper

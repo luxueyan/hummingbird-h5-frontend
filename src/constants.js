@@ -13,14 +13,21 @@ export const RET_CODE_MAP = {
   DATA_NOT_EXSITED: 200006, // 信息不存在
   PARAMS_INVALID: 200007, // 参数校验失败
   CONTRACT_EXSITED: 200008, // 存在进行中的合同
-  BANK_CARD_NOT_SUPPORTED: 200009 // 银行卡不支持
+  BANK_CARD_NOT_SUPPORTED: 200009, // 银行卡不支持
+  BANK_CARD_CANNOT_DELETE: 200010, // 无法解绑唯一的卡片
+  CANNOT_BORROW: 200011, // 很抱歉，目前您无法使用借款服务！
+  INVITED_OVERDUE: 200012, // 很抱歉，由于您的邀请已过期，目前无法使用借款服务！我们会不定期发出邀请，敬请期待！
+  NOT_INVITED: 200013, // 很抱歉，由于您为非邀请用户，暂时无法使用该服务。我们会不定期发出邀请，敬请期待！
+  CONTRACT_LOANING: 200014, // 该合同放款处理中,暂时不可取消
+  REPAY_REPEAT_SUBMIT: 200015, // 重复提交
+  ACTIVE_REPAY_CANNOT_CONFIRM: 200016 // 该合同不符合主动还款条件或还款处理中
 }
 
 // 用户状态和合同状态合并后的类型映射
 export const CUST_STATE_CODE_MAP = {
   // NOT_LOGIN: '1001', // 未登录
   DEBT_SETTELED: '1002', // 借款结清
-  NOT_INVITED: '1003', // 未邀请
+  // NOT_INVITED: '1003', // 未邀请
   LOANING: '1004', // 放款中
   LOAN_FAILED: '1005', // 放款失败
   DEBT_NOT_SETTLED: '1006', // 借款未结清

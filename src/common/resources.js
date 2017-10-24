@@ -16,7 +16,7 @@ const commonOpts = {
 }
 
 const resource = Vue.resource
-export const login = resource('auth/credentials', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 登录
+export const login = resource('auth/credentials/client', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 登录
 export const wxOpenID = resource('wx/open_id', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 提交用户获取openid的code
 export const captcha = resource('captcha', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 验证码
 export const validateOldPhone = resource('verify/old_phone', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 验旧手机号

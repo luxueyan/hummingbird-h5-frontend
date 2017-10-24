@@ -52,7 +52,7 @@ export default {
             message: this.model.verifyType ? `您的尾号${this.model.bankCardId.slice(-4)}的银行卡预留手机号已修改为${this.model.phone}` : `您的注册手机号已修改为${this.model.phone}`,
             confirmButtonText: '知道了',
             callback(action) {
-              _self.$router.push(_self.$route.params.from || {
+              _self.$router.push(_self.$route.params.from ? Object.assign({}, _self.$route.params.from) : {
                 name: 'borrowInfo'
               })
             }

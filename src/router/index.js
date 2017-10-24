@@ -25,7 +25,7 @@ const custStateRedirectMap = {
   // [CUST_STATE_CODE_MAP.NOT_LOGIN]: { name: 'login' }, // 未登录
   [CUST_STATE_CODE_MAP.DEBT_SETTELED]: { name: 'borrowerInfo' }, // 借款结清
   [CUST_STATE_CODE_MAP.CONTRACT_INFO_FILLED]: { name: 'signature' }, // 合同信息已完成
-  [CUST_STATE_CODE_MAP.NOT_INVITED]: { name: 'unauthorizedTip' }, // 未邀请
+  // [CUST_STATE_CODE_MAP.NOT_INVITED]: { name: 'authorizedTip' }, // 未邀请
   [CUST_STATE_CODE_MAP.LOANING]: { name: 'loaning' }, // 放款中
   [CUST_STATE_CODE_MAP.LOAN_FAILED]: { name: 'loanFailed' }, // 放款失败
   [CUST_STATE_CODE_MAP.DEBT_NOT_SETTLED]: { name: 'repayInfo' }, // 借款未结清
@@ -147,13 +147,14 @@ Vue.isPermit = Vue.prototype.isPermit = function(routeName) {
 // 给push方法添加默认过渡效果
 const oldPush = router.push
 router.push = function(location = {}) {
-  location.params = location.params || {}
+  if (!location.params) location.params = {}
   if (!location.params.transitionName) location.params.transitionName = 'slideRightFade'
   oldPush.call(router, location)
 }
 
 // 记录路由是否是通过history.back方式
 window.addEventListener('popstate', () => {
+  store.commit('updateTransitionName', 'slideLeftFade')
   store.commit('updateIsPopStated', true)
 })
 

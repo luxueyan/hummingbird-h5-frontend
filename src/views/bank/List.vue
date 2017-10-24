@@ -24,6 +24,7 @@
 import { bankCards, bankCardDefault } from '@/common/resources.js'
 import { find } from 'lodash'
 import { bankMixins } from '@/views/common_mixin.js'
+import { RET_CODE_MAP } from '@/constants.js'
 
 export default {
   mixins: [bankMixins],
@@ -51,13 +52,39 @@ export default {
 
   mounted() {
     this.$store.commit('updateBankCardsCount', this.bankCards.length)
+    this.$nextTick(() => {
+      this.$watch('defaultBankCardId', (newValue, oldValue) => {
+        if (!oldValue) return
+        bankCardDefault
+          .save({ id: this.defaultBankCardId })
+          .then(res => res.json())
+          .then(data => {
+            if (data.code === RET_CODE_MAP.OK) {
+              this.$toast('默认银行卡变更成功！')
+              if (this.$route.params.from) {
+                this.$router.push(Object.assign({}, this.$route.params.from))
+              }
+            }
+          })
+      })
+    })
   },
 
-  watch: {
-    defaultBankCardId() {
-      bankCardDefault.save({ id: this.defaultBankCardId })
-    }
-  },
+  // watch: {
+  //   defaultBankCardId(newValue, oldValue) {
+  //     bankCardDefault
+  //       .save({ id: this.defaultBankCardId })
+  //       .then(res => res.json())
+  //       .then(data => {
+  //         if (data.code === RET_CODE_MAP.OK) {
+  //           this.$toast('默认银行卡变更成功！')
+  //           if (this.$route.params.from) {
+  //             this.$router.push(Object.assign({}, this.$route.params.from))
+  //           }
+  //         }
+  //       })
+  //   }
+  // },
 
   data() {
     return {

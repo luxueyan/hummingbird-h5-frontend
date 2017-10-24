@@ -82,7 +82,8 @@ export default {
         const data = await this.login(this.user)
         if (data.code === RET_CODE_MAP.OK) {
           if (this.user.loginType === 2 && !data.data.user.openId) {
-            // 取得当前地址用于回跳，目前直接使用字符串拼接的方式，是因为web下router用的是history模式，所以如果以后换成hash这里要注意兼容问题
+            // 取得当前地址用于回跳，目前直接使用字符串拼接的方式，
+            // 是因为web下router用的是history模式，所以如果以后换成hash这里要注意兼容问题
             const selfLocation = location.href.replace(/(https?:\/\/[^/]+)\/?.*/, '$1') + this.redirect
 
             // 跳转微信授权获取code

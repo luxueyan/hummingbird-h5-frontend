@@ -2,17 +2,18 @@
 .app
   fb-updater-process
   n-progress(parent=".app")
-  mt-header(ref="header", fixed="", :title="headerTitle", v-show="headerShow")
-    mt-button(v-if="headerBackShow", icon="back", slot="left", @click="routerBack()")
-    mt-button.of-v(v-if="btnVisible(['mine'])", slot="left", @click="$router.push({name: 'messageList'})")
-      i.iconfont.icon-xiaoxi-solid.ft18.pos-r
-        span.badge-red.badge-top 10
-    //- mt-button(slot="right", v-if="btnVisible(['signature'])")
-      small
-        router-link(:to="{name:'loanAgreement', params:{'transitionName': 'slideRightFade'}}") 查看
-    mt-button(slot="right", v-if="btnVisible(['messageList'])")
-      small
-        a(@click="emitEvent('messages-mark-read')") 全部已读
+  transition(:name="headerShow ? 'slideRightFade' : 'slideLeftFade'", appear, mode="out-in")
+    mt-header(ref="header", fixed="", :title="headerTitle", v-show="headerShow")
+      mt-button(v-if="headerBackShow", icon="back", slot="left", @click="routerBack()")
+      mt-button.of-v(v-if="btnVisible(['mine'])", slot="left", @click="$router.push({name: 'messageList'})")
+        i.iconfont.icon-xiaoxi-solid.ft18.pos-r
+          span.badge-red.badge-top 10
+      //- mt-button(slot="right", v-if="btnVisible(['signature'])")
+        small
+          router-link(:to="{name:'loanAgreement', params:{'transitionName': 'slideRightFade'}}") 查看
+      mt-button(slot="right", v-if="btnVisible(['messageList'])")
+        small
+          a(@click="emitEvent('messages-mark-read')") 全部已读
   .container(:class="{'header-show': headerShow, 'has-fixed-buttons': hasFixedButtons}", ref="container")
     transition(:name="transitionName", appear, mode="out-in")
       router-view
@@ -116,7 +117,7 @@ export default {
 
   watch: {
     $route(to, from) {
-      this.transitionName = to.params.transitionName || 'fade'
+      this.transitionName = to.params.transitionName || this.$store.getters.transitionName
       this.updateContainerHeight(to, from)
       if (from.fullPath !== '/' && !to.params.notSaveCrumbed) {
         if (!this.isPopStated) this.routerCrumbs.push(from)
@@ -182,6 +183,7 @@ body {
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
+  transition: background .5s;
   &.login {
     background-color: white;
   }

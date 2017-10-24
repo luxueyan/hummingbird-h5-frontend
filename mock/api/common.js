@@ -12,7 +12,7 @@ module.exports = router => {
   })
 
   // 登录
-  router.post('/auth/credentials', (req, res) => {
+  router.post('/auth/credentials/client', (req, res) => {
     const data = req.body
     // console.log(data, req.session.captcha)
     if (Math.random() >= 0.7) {
@@ -74,7 +74,7 @@ module.exports = router => {
       'currentOngoingContract': { //optional 当前正在进行的合同
         'id': '599794a4f87ca703c05df02e',
         'currentContractStatus': {
-          'key': '1004',
+          'key': '1008',
           'value': '待还款'
         }
       }

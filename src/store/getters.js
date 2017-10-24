@@ -15,10 +15,6 @@ export default {
     return state.stateCode
   },
 
-  stateMsg(state) {
-    return state.stateMsg
-  },
-
   updaterProgressValue(state) {
     return state.updaterProgressValue
   },
@@ -37,5 +33,9 @@ export default {
 
   isPopStated(state) {
     return state.isPopStated
+  },
+
+  transitionName(state) {
+    return state.transitionName
   }
 }

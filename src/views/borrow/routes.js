@@ -39,6 +39,7 @@ export default [{
     component: resolve => require(['@/views/borrow/Loaning.vue'], resolve),
     meta: {
       title: '提款请求已确认',
+      headerHidden: true,
       tabBarVisible: true,
       permits: [CUST_STATE_CODE_MAP.LOANING]
     }
@@ -48,6 +49,7 @@ export default [{
     component: resolve => require(['@/views/borrow/LoanFailed.vue'], resolve),
     meta: {
       title: '提款失败',
+      headerHidden: true,
       tabBarVisible: true,
       permits: [CUST_STATE_CODE_MAP.LOAN_FAILED]
     }

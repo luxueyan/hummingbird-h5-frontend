@@ -1,11 +1,18 @@
 <template lang="pug">
-section.change-bank-card-step3.single-page-tip
-  .logo
-    i.iconfont.icon-xiao
-    //- h3 提款失败！
-  article
-    p 您的还款请求已经提交成功，
-    p 系统将在5-10分钟内完成还款。<br/>感谢您使用蜂鸟速贷！
+section.repaying.single-page-tip
+  header.small-header
+    h2
+      fb-icon(name="chenggong")
+      | 已提交
+    p 您的提款请求已提交成功，系统将在<br>半小时内完成还款，感谢您使用极速蜂鸟。
+  //- article
+    h4 您还可以这样还款
+    ul
+      li
+        | 方式一：更换一张充足余额的银行卡。
+        router-link(:to="{name: 'bankList', params: {transitionName: 'slideRightFade'}}")
+          mt-button.br2(type="default") 前往
+      li 方式二：通过支付宝转账至我们公户fengniaosudai@163.com(请备注姓名+手机号）,转账后在公众号中通知客服。
   //- .footer
     .btns-group
       mt-button.mint-button-block(type='primary', size='large') 关闭
@@ -14,5 +21,5 @@ section.change-bank-card-step3.single-page-tip
 <script>
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 </style>

@@ -13,21 +13,6 @@
           mt-cell(title="应还日期", :value="model.repaymentDate | fbFalse")
           mt-cell(title="应还金额", :value="model.repaymentAmount | fbCurrency")
       fb-bank-cards
-      //- .fields-header
-        | 账户信息
-        //- small
-          i.iconfont.icon-ku
-          | 请填写您的真实信息，否则会影响借款。
-      //- .fields
-        mt-cell(title="姓名", :value="model.name | fbFalse")
-        //- mt-cell(title="登录手机号", :value="user.UserinfoValLogin.Userphone")
-        mt-cell(title='身份证号', :value="model.idCard")
-        mt-cell(title='银行卡号')
-          span {{bankCardForShow}}
-        mt-cell(title="开户行", :value="model.bankName| fbFalse")
-        mt-cell(title='银行预留手机号',  :value="model.bankReservePhone")
-        mt-cell(@click.native="goChangeBankCard()")
-          a.small 变更银行卡
       .form-buttons.fixed
           mt-button.mint-button-block(type='primary', size='large', @click="repayConfirm()") 立即还款
 </template>

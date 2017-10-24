@@ -14,20 +14,10 @@ export default {
     commit('updateToken', token)
   },
 
+  // 提交微信授权的code给后端
   submitCode(store, code) {
     return wxOpenID.save({ code })
   },
-
-  // // 获取用户业务状态码
-  // async getCustStateCode({ commit, dispatch }) {
-  //   const data = await getCustState.get().then(res => res.json())
-  //   if (data.data) {
-  //     console.log(data.data.StateCode = '1008')
-  //     commit('updateStateCode', data.data.StateCode)
-  //     commit('updateStateMsg', data.data.StateMsg)
-  //   }
-  //   return data
-  // },
 
   // 获取用户信息
   async getUser({ commit, dispatch }, params = {}) {
@@ -35,9 +25,7 @@ export default {
     if (data.code === RET_CODE_MAP.OK) {
       const user = data.data
       await dispatch('updateUser', user)
-      if (!user.isInvited) {
-        commit('updateStateCode', CUST_STATE_CODE_MAP.NOT_INVITED)
-      } else if (user.isNew) {
+      if (user.isNew) {
         commit('updateStateCode', CUST_STATE_CODE_MAP.FIRST_BORROWER)
       } else if (user.currentOngoingContract) {
         commit('updateStateCode', user.currentOngoingContract.currentContractStatus.key)
