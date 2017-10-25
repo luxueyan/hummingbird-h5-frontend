@@ -47,6 +47,7 @@ export default {
             name: this.model.verifyType ? 'changeBankPhoneStep2' : 'changePhoneStep2',
             params: {
               bankCardId: this.model.bankCardId || null,
+              bankCard: this.model.bankCard || null,
               from: this.$route.params.from
             }
           })
@@ -60,6 +61,7 @@ export default {
   created() {
     if (this.$route.params.bankCardId) {
       this.model.bankCardId = this.$route.params.bankCardId
+      this.model.bankCard = this.$route.params.bankCard
     }
   },
 

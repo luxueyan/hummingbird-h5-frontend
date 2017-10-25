@@ -70,7 +70,7 @@ export default {
   mounted() {
     this.redirect = decodeURIComponent(this.$route.query.redirect || '')
     // this.$route.query.openid && (this.user.openid = this.$route.query.openid) // eslint-disable-line
-    this.$route.query.loginType && (this.user.loginType = this.$route.query.loginType) // eslint-disable-line
+    // this.$route.query.loginType && (this.user.loginType = this.$route.query.loginType) // eslint-disable-line
     this.user.phone = this.$store.getters.user.phone || read(STORE_KEY_LAST_LOGINED_PHONE) || ''
   },
 
@@ -81,7 +81,7 @@ export default {
       if (success) {
         const data = await this.login(this.user)
         if (data.code === RET_CODE_MAP.OK) {
-          if (this.user.loginType === 2 && !data.data.user.openId) {
+          if (this.isWeixin() && !data.user.openId) {
             // 取得当前地址用于回跳，目前直接使用字符串拼接的方式，
             // 是因为web下router用的是history模式，所以如果以后换成hash这里要注意兼容问题
             const selfLocation = location.href.replace(/(https?:\/\/[^/]+)\/?.*/, '$1') + this.redirect
@@ -101,14 +101,14 @@ export default {
   },
 
   data() {
-    const NODE_ENV = process.env.NODE_ENV
+    // const NODE_ENV = process.env.NODE_ENV
     return {
       redirect: null, //登录后跳转页面
       agreement: false,
       user: {
         phone: '',
-        captcha: '',
-        loginType: this.isWeixin() ? 2 : (~NODE_ENV.indexOf('app') ? 1 : 0)
+        captcha: ''
+        // loginType: this.isWeixin() ? 2 : (~NODE_ENV.indexOf('app') ? 1 : 0)
       }
     }
   }

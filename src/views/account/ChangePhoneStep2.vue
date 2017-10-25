@@ -26,6 +26,7 @@ import {
 import {
   mapGetters
 } from 'vuex'
+import msgBox from '@/common/custom_msgbox.js'
 
 export default {
   mixins: [CommonMixin, ValidatorMixin],
@@ -41,22 +42,23 @@ export default {
   methods: {
     async submit() {
       const success = await this.$validate()
-
       if (success) {
         const data = await changePhone.save(this.model).then(res => res.json())
 
         if (data.code === RET_CODE_MAP.OK) {
           const _self = this
-          this.$msgBox({
+          msgBox({
             title: '手机号变更成功',
-            message: this.model.verifyType ? `您的尾号${this.model.bankCardId.slice(-4)}的银行卡预留手机号已修改为${this.model.phone}` : `您的注册手机号已修改为${this.model.phone}`,
+            message: this.model.verifyType ? `您的尾号${this.model.bankCard.slice(-4)}的银行卡预留手机号已修改为${this.model.phone}` : `您的注册手机号已修改为${this.model.phone}`,
             confirmButtonText: '知道了',
+            classes: ['custom-msgbox', 'success-msgbox'],
             callback(action) {
               _self.$router.push(_self.$route.params.from ? Object.assign({}, _self.$route.params.from) : {
                 name: 'borrowInfo'
               })
             }
           })
+          // this.$msgBox()
         }
       } else {
         this.$toast(this.validation.firstError(), 'error')
@@ -67,6 +69,7 @@ export default {
   created() {
     if (this.$route.params.bankCardId) {
       this.model.bankCardId = this.$route.params.bankCardId
+      this.model.bankCard = this.$route.params.bankCard
     }
   },
 

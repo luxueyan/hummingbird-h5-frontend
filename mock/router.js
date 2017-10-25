@@ -28,7 +28,7 @@ router.use(jwt({
 }).unless({
   path: [
     '/api/captcha',
-    '/api/auth/credentials'
+    '/api/auth/credentials/client'
   ]
 }), (req, res, next) => {
   req.session.captcha = 123456

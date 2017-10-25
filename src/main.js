@@ -34,6 +34,7 @@ import FbField from '@/components/FbField.vue'
 import FbCountdown from '@/components/FbCountdown.vue'
 import FbIcon from '@/components/FbIcon.vue'
 import FbCheckbox from '@/components/FbCheckbox.vue'
+import FbMsgbox from '@/components/FbMsgbox.vue'
 
 // vuex化路由
 sync(store, router)
@@ -56,6 +57,7 @@ Vue.component(FbField.name, FbField)
 Vue.component(FbCountdown.name, FbCountdown)
 Vue.component(FbIcon.name, FbIcon)
 Vue.component(FbCheckbox.name, FbCheckbox)
+Vue.component(FbMsgbox.name, FbMsgbox)
 
 Vue.use(FbFilters)
 Vue.use(FbMixins)

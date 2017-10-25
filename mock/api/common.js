@@ -27,14 +27,14 @@ module.exports = router => {
       })
     } else {
       res.jsonOk(Mock.mock({
-        token: jwt.sign({ foo: 'bar' }, SECRET),
-        user: {
-          id: '@guid',
-          phone: 13312312311,
-          avatarUrl: '@image("200x100", "#4A7BF7", "Hello")',
-          'isInvited|1': true,
-          'isNew|1': true
-        }
+        token: jwt.sign({ foo: 'bar' }, SECRET)
+        // user: {
+        //   id: '@guid',
+        //   phone: 13312312311,
+        //   avatarUrl: '@image("200x100", "#4A7BF7", "Hello")',
+        //   'isInvited|1': true,
+        //   'isNew|1': true
+        // }
       }))
     }
   })
@@ -74,10 +74,19 @@ module.exports = router => {
       'currentOngoingContract': { //optional 当前正在进行的合同
         'id': '599794a4f87ca703c05df02e',
         'currentContractStatus': {
-          'key': '1008',
+          'key': '104',
           'value': '待还款'
         }
       }
+      // 用户状态和合同状态合并后的类型映射
+      // CONTRACT_INFO_FILLED: '101', // 合同信息完成，带签署
+      // LOANING: '102', // 放款中
+      // LOAN_FAILED: '103', // 放款失败
+      // REPAYING: '104', // 还款中
+      // REPAY_FAILED: '105', // 还款失败
+      // DEBT_SETTELED: '106', // 借款结清
+      // DEBT_NOT_SETTLED: '107', // 借款未结清
+      // FIRST_BORROWER: '108', // 首次借款
     }))
   })
 

@@ -52,6 +52,12 @@
         small|（享费率7折优惠）
       div(slot="confirmButtonContent")
         h3 仍然在{{repayDate}}还款
+    //- fb-msgbox(ref="vocationMsgbox", msgbox-class="custom-msgbox", :showCancelButton="false")
+    //-   div
+    //-     h3 无法使用
+    //-     p 很抱歉，由于您为未邀请用户，暂时无法使用该服务！
+    //-   div(slot="confirmButtonContent")
+    //-     | 我知道了
 </template>
 
 <script>
@@ -81,13 +87,11 @@ import store from '@/store'
 import moment from 'moment'
 import { inRange, pick } from 'lodash'
 import Vue from 'vue'
-import FbMsgbox from '@/components/FbMsgbox.vue'
 import FbBankCards from '@/components/FbBankCards.vue'
 
 export default {
   mixins: [ValidatorMixin, CommonMixin],
   components: {
-    FbMsgbox,
     FbBankCards
   },
   async beforeRouteEnter(to, from, next) {
@@ -109,6 +113,7 @@ export default {
   },
 
   mounted() {
+    // this.$refs.vocationMsgbox.open()
     // if (this._vocationJudge([+moment('2017-09-17 00:00:00').toDate(), +moment('2017-09-24 23:59:59')])) {
     //   this.repayDate = moment(this.now).add(this.user.product.Length, 'days').format('MM月DD日')
     //   this.vocationRepayDate = this._vocationRepayDateGet()

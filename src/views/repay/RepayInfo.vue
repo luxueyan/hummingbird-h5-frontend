@@ -41,7 +41,6 @@ export default {
     next(vm => {
       if (data.code === RET_CODE_MAP.OK) {
         Object.assign(vm.model, data.data)
-        vm.bankCardForShow = vm.model.bankCard.replace(/\d{4}(?=(\d{1,4}))/g, '$& ')
       }
     })
   },
@@ -72,7 +71,6 @@ export default {
   data() {
     const stateUser = JSON.parse(JSON.stringify(this.$store.getters.user))
     return {
-      bankCardForShow: '',
       model: {
         name: stateUser.name,
         idCard: null,

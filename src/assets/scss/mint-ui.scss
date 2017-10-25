@@ -141,6 +141,9 @@ body {
     min-width: 0;
     color: $primary-font-color;
     font-size: $font-size-s;
+    &.is-link {
+      margin-right: 14px;
+    }
     span {
       white-space: nowrap;
       overflow: hidden;

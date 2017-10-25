@@ -48,7 +48,8 @@ export default {
     let data = await login.save({}, user).then(res => res.json())
     if (data.code === RET_CODE_MAP.OK) {
       await dispatch('updateToken', data.data.token)
-      await dispatch('getUser')
+      const user = await dispatch('getUser')
+      data.user = user
     }
     return data
   },

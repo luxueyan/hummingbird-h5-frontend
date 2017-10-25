@@ -22,11 +22,11 @@
       div(slot="icon")
         i.iconfont.icon-borrow
       | 借款
-    mt-tab-item#repayInfo(:class="{'is-selected': tabIsSelected(['repayInfo', 'repaying', 'repayFailed'])}")
+    mt-tab-item#creditIndex(:class="{'is-selected': tabIsSelected(['creditIndex', 'creditGrade'])}")
       div(slot="icon")
         i.iconfont.icon-credit
       | 认证
-    mt-tab-item#mine(:class="{'is-selected': tabIsSelected(['mine', 'changeBankCardStep1', 'changeBankCardStep2', 'changeBankCardStep3', 'messageList', 'messageDetail'])}")
+    //- mt-tab-item#mine(:class="{'is-selected': tabIsSelected(['mine', 'changeBankCardStep1', 'changeBankCardStep2', 'changeBankCardStep3', 'messageList', 'messageDetail'])}")
       div(slot="icon")
         i.iconfont.icon-user
       | 我的
@@ -140,7 +140,7 @@ export default {
       return this.$route.meta.hasFixedButtons
     },
     headerBackShow() {
-      return this.$route.meta.headerBackShow && this.routerCrumbs.length
+      return this.$route.meta.headerBackShow
     },
     headerTitle() {
       return this.title || this.$route.meta.title
@@ -160,7 +160,7 @@ export default {
 
 <style lang="scss">
 @import '~assets/scss/_variables.scss';
-// @import '~assets/fonts/iconfont/iconfont.css';
+@import '~assets/fonts/franklin/franklin.css';
 @import url('//at.alicdn.com/t/font_432625_2c8ivqome62edn29.css');
 @import '~assets/scss/base.scss';
 @import '~assets/scss/common.scss';
@@ -194,6 +194,9 @@ body {
   &.changeBankPhoneStep2,
   &.addBankStep2 {
     background-color: white;
+  }
+  &.creditGrade {
+    background: url("~assets/images/xinyong_lv_bg.jpg") no-repeat center/contain;
   }
 }
 

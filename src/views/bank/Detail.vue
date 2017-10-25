@@ -34,6 +34,7 @@ export default {
         name: 'changeBankPhoneStep1',
         params: {
           bankCardId: this.model.id,
+          bankCard: this.model.bankCard,
           from: this.$route
         }
       })
@@ -99,7 +100,7 @@ export default {
     background: white;
     padding: 0 15px;
     &:active {
-      background: rgba(0, 0, 0, .01);
+      background: darken(white, 5%);
     }
   }
 }

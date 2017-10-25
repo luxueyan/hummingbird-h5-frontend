@@ -20,6 +20,10 @@ module.exports = router => {
 
   // 老用户创建合同
   router.post('/contracts/return', (req, res) => {
+    // res.json({
+    //   code: 200011 + parseInt(Math.random() * 2, 10),
+    //   message: '用户被禁用或者状态异常'
+    // })
     res.jsonOk({
       'contractId': '599794a4f87ca703c05df02c',
       'payments': {

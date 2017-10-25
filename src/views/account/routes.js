@@ -1,4 +1,4 @@
-import { CUST_STATE_CODE_MAP } from '@/constants.js'
+import { CUST_STATE_CODE_MAP, CAPTCHA_SEND_TYPE } from '@/constants.js'
 import { values } from 'lodash'
 const allStates = values(CUST_STATE_CODE_MAP)
 
@@ -48,6 +48,30 @@ export default [{
     meta: {
       title: '我的',
       tabBarVisible: true,
+      permits: allStates
+    }
+  }, {
+    path: 'change_user_phone/step1',
+    name: 'changePhoneStep1',
+    component: resolve => require(['@/views/account/ChangePhoneStep1.vue'], resolve),
+    meta: {
+      title: '变更注册手机号',
+      verifyType: 0,
+      captchaSendType: CAPTCHA_SEND_TYPE.CHANGE_USER_PHONE,
+      tabBarVisible: true,
+      headerBackShow: true,
+      permits: allStates
+    }
+  }, {
+    path: 'change_user_phone/step2',
+    name: 'changePhoneStep2',
+    component: resolve => require(['@/views/account/ChangePhoneStep2.vue'], resolve),
+    meta: {
+      title: '变更注册手机号',
+      verifyType: 0,
+      captchaSendType: CAPTCHA_SEND_TYPE.CHANGE_USER_PHONE,
+      tabBarVisible: true,
+      headerBackShow: true,
       permits: allStates
     }
   }]

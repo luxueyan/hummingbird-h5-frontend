@@ -8,7 +8,7 @@
     color: inherit;
     display: block;
     &:active {
-      background: rgba(0, 0, 0, .01);
+      background: darken(white, 5%);
     }
     em {
       font-size: 1.2em;
@@ -17,7 +17,7 @@
   }
   .mint-cell {
     &:active {
-      background-color: rgba(0, 0, 0, .01);
+      background-color: darken(white, 5%);
     }
   }
   .mint-cell-mask {

@@ -35,6 +35,7 @@ export default {
         vm.bankCards = data.data.bankCards || []
         const defaultBankCard = find(vm.bankCards, bd => bd.isDefault)
         vm.defaultBankCardId = defaultBankCard.id
+        this.$store.commit('updateBankCardsCount', vm.bankCards.length)
       }
     })
   },

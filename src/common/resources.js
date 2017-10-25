@@ -34,3 +34,4 @@ export const contractReset = resource('self/contracts/reset', {}, {}, { _showLoa
 export const contractSign = resource('self/contracts/sign', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 签署合同
 export const repayments = resource('repayments', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 提前还款
 export const repaymentError = resource('repayment_error', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 还款失败具体错误信息
+export const systemPrivileges = resource('system/privileges', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 信用积分及特权列表

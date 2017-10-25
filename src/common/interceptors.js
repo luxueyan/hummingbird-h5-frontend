@@ -1,10 +1,18 @@
 import Vue from 'vue'
-import { includes, isObject } from 'lodash'
+import { includes, isObject, keys } from 'lodash'
 import { MessageBox, Indicator } from 'mint-ui'
 import store from '@/store'
 import { read, save } from '@/storage'
 import { RET_CODE_MAP } from '@/constants.js'
 import moment from 'moment'
+import msgBox from '@/common/custom_msgbox.js'
+
+// 不同的状态不同的标题
+const retCodeTitleMap = {
+  [RET_CODE_MAP.CANNOT_BORROW]: '无法借款',
+  [RET_CODE_MAP.INVITED_OVERDUE]: '邀请失效',
+  [RET_CODE_MAP.NOT_INVITED]: '无法使用'
+}
 
 const CACHE_URLS = [] // 需要缓存的接口
 const requestMap = {} // 请求地址
@@ -100,7 +108,14 @@ export default [
         MessageBox('提示', res.body.message || '抱歉！服务器忙。')
       } else if (res.status === 200) {
         if (!request.notApi && !request.params.skipAuth && (!res.body || res.body.code !== RET_CODE_MAP.OK)) {
-          MessageBox('提示', res.body ? res.body.message : '登录失败或者访问无权限')
+          if (includes(keys(retCodeTitleMap), res.body.code + '')) {
+            msgBox({
+              title: retCodeTitleMap[res.body.code] || '提示',
+              message: res.body.message || '请求失败！'
+            })
+          } else {
+            MessageBox('提示', res.body ? res.body.message : '登录失败或者访问无权限')
+          }
           if (!res.body || res.body.code === RET_CODE_MAP.AUTH_FAILED || res.body.code === RET_CODE_MAP.USER_FORBIDDENED || res.body.code === RET_CODE_MAP.USER_FORBIDDENED) {
             store.dispatch('logout')
           }
