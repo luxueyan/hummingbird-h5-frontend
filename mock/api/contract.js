@@ -72,8 +72,17 @@ module.exports = router => {
       'paymentDate': '2017-08-14 13:00:02',
       'paymentStatus': 0,
       'idCard': '220122198404162518',
+      'productInfo': {
+        'id': '599794a4f87ca703c05df02e',
+        'amount': 1000.00,
+        'loanDays': 14,
+        'manageFee': 45.00,
+        'creditFee': 25.00,
+        'discountAmount': 15.00,
+        'loanAmount': 945.00
+      },
       'bankReservePhone': '13312331231',
-      'serviceFee': 56,
+      // 'serviceFee': 56,
       'bankCardId': '599794a4f87ca703c05df02e',
       'bankCard': '6222600910023101987',
       'bankName': '中国工商银行',
@@ -85,7 +94,7 @@ module.exports = router => {
   })
 
   // 取消签署合同
-  router.get('/self/contracts/reset', (req, res) => {
+  router.get('/contracts/give_up', (req, res) => {
     res.jsonOk({
       'contractId': '599794a4f87ca703c05df02c',
       'contractCreateDate': '2017-08-14 12:00:01',
@@ -108,7 +117,7 @@ module.exports = router => {
   })
 
   // 签署合同
-  router.post('/self/contracts/sign', (req, res) => {
+  router.post('/contracts/sign', (req, res) => {
     res.jsonOk({
       'contractId': '599794a4f87ca703c05df02c',
       'contractCreateDate': '2017-08-14 12:00:01',
@@ -145,12 +154,12 @@ module.exports = router => {
   })
 
   // 还款失败原因
-  router.get('/repayment_error', (req, res) => {
+  router.get('/repayment/reason', (req, res) => {
     res.jsonOk(Mock.mock({
-      'errCount|1': [0, 1, 2, 3],
-      'bankName': '中国银行',
-      'message': '银行卡余额不足，本卡今日可提交还款1次，<br>请确保卡内余额充足。',
-      'bankCard': '622201010008900988'
+      'userBankCard': '622200000000',
+      'repaymentReasonCode': 0,
+      'repaymentReasonMsg': '',
+      'repaymentFail': 1 //当日该银行卡还款失败次数
     }))
   })
 }

@@ -5,7 +5,6 @@ section.repaying.single-page-tip
       fb-icon(name="chenggong")
       | 已提交
     p 您的提款请求已提交成功，系统将在<br>半小时内完成还款，感谢您使用极速蜂鸟。
-  //- p 您的提款请求已发送成功，请耐心等待。
   .table-card
     table
       caption
@@ -24,9 +23,7 @@ section.repaying.single-page-tip
     .tfoot
       | 查看
       router-link(:to="{name:'loanAgreement', params:{'transitionName': 'slideRightFade'}}") 《借款服务协议》
-  //- .footer
-    .btns-group
-      mt-button.mint-button-block(type='primary', size='large') 关闭
+
 </template>
 
 <script>

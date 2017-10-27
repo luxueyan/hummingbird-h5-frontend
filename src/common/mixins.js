@@ -19,7 +19,7 @@ export default {
                 notSaveCrumbed: true,
                 transitionName: 'slideLeftFade'
               }
-            })
+            }, true)
           } else {
             this.$router.back()
           }

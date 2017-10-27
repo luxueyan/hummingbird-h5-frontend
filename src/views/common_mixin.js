@@ -1,6 +1,6 @@
 import { RET_CODE_MAP } from '@/constants.js'
 import { mapActions } from 'vuex'
-import { bankCardInfo } from '@/common/resources.js'
+import { bankCardInfo, supportBankCards } from '@/common/resources.js'
 import { get, find } from 'lodash'
 
 const bankNameIconList = [{
@@ -73,8 +73,15 @@ const bankMixins = {
       return (bank ? bank.icon : '') + 'yinhang'
     },
 
-    showSupportBanks() {
-      this.$msgBox('支持银行列表：', '农业银行、中国银行、工商银行、建设银行、交通银行、兴业银行、中信银行、光大银行、上海银行')
+    async showSupportBanks() {
+      const bankCards = this.$store.getters.supportBankCards
+      if (bankCards.length) {
+        this.$msgBox('支持银行列表：', bankCards.join('、'))
+      } else {
+        const data = await supportBankCards.get().then(res => res.json())
+        this.$store.commit('updateSupportBankCards', data.data)
+        this.$msgBox('支持银行列表：', data.data.join('、'))
+      }
     }
   }
 }
@@ -89,7 +96,7 @@ export default {
     async getBank() {
       if (this.validation.isPassed('model.bankCard')) {
         const data = await bankCardInfo.get({
-          bankCard: this.model.bankCard
+          cardNo: this.model.bankCard
         }).then(res => res.json())
         if (data.code === RET_CODE_MAP.OK) {
           this.model.bankName = data.data.bankName

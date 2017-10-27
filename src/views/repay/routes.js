@@ -18,7 +18,7 @@ export default [{
     meta: {
       title: '立即还款',
       tabBarVisible: true,
-      // headerHidden: true,
+      headerShow: true,
       hasFixedButtons: true,
       permits: [CUST_STATE_CODE_MAP.DEBT_NOT_SETTLED]
     }
@@ -29,7 +29,7 @@ export default [{
     meta: {
       title: '还款请求已确认',
       tabBarVisible: true,
-      headerHidden: true,
+      headerShow: true,
       permits: [CUST_STATE_CODE_MAP.REPAYING]
     }
   }, {
@@ -39,7 +39,7 @@ export default [{
     meta: {
       title: '还款失败',
       tabBarVisible: true,
-      headerHidden: true,
+      headerShow: true,
       permits: [CUST_STATE_CODE_MAP.REPAY_FAILED]
     }
   }]

@@ -20,6 +20,17 @@ form,
     }
   }
   &.simple-form {
+    input::-moz-placeholder {
+      font-size: $font-size-m!important;
+    }
+
+    input:-ms-input-placeholder {
+      font-size: $font-size-m!important;
+    }
+
+    input::-webkit-input-placeholder {
+      font-size: $font-size-m!important;
+    }
     .fields-header {
       h3 {
         font-size: $font-size-xxl;

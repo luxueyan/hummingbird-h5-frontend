@@ -7,7 +7,7 @@ export const RET_CODE_MAP = {
   OK: 0, // 成功,
   DATA_EXSITED: 200001, // 信息已存在,
   CAPTCHA_INVALID: 200002, // 验证码错误
-  AUTH_FAILED: 200003, // 鉴权失败
+  CAPTCHA_LOCKED: 200003, // 鉴权失败
   USER_FORBIDDENED: 200004, // 用户已被禁用
   USER_EXCEPTIONAL: 200005, // 用户状态异常
   DATA_NOT_EXSITED: 200006, // 信息不存在
@@ -25,6 +25,7 @@ export const RET_CODE_MAP = {
 
 // 用户状态和合同状态合并后的类型映射
 export const CUST_STATE_CODE_MAP = {
+  FIRST_BORROWER: '100', // 首次借款
   CONTRACT_INFO_FILLED: '101', // 合同信息完成，带签署
   LOANING: '102', // 放款中
   LOAN_FAILED: '103', // 放款失败
@@ -32,8 +33,7 @@ export const CUST_STATE_CODE_MAP = {
   REPAY_FAILED: '105', // 还款失败
   DEBT_SETTELED: '106', // 借款结清
   DEBT_NOT_SETTLED: '107', // 借款未结清
-  FIRST_BORROWER: '108', // 首次借款
-  UNKNOWN: '1111' // 未知状态
+  UNKNOWN: '108' // 未知状态
 }
 
 // 验证码发送类型

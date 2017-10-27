@@ -30,7 +30,7 @@
         </tr>
         <tr>
           <td>综合服务费</td>
-          <td colspan="3">{{contract.serviceFee | fbCurrency('￥', '元')}}</td>
+          <td colspan="3">{{serviceFee | fbCurrency('￥', '元')}}</td>
         </tr>
         <tr>
           <td colspan="4">借款明细</td>
@@ -49,7 +49,7 @@
           <td>借款出借日</td>
           <td>{{contract.paymentDate}}</td>
           <td>借款到期日</td>
-          <td>{{contract.repaymentDate}}</td>
+          <td>{{contract.shouldRepaymentDate}}</td>
         </tr>
         <tr>
           <td>起息日</td>
@@ -62,7 +62,7 @@
         </tr>
         <tr>
           <td>还款日</td>
-          <td>{{contract.repaymentDate}}</td>
+          <td>{{contract.shouldRepaymentDate}}</td>
           <td>还款金额</td>
           <td>应还款{{contract.repaymentAmount | fbCurrency('￥', '元')}}</td>
         </tr>
@@ -166,19 +166,12 @@ export default {
     //   }
     //   return 1
     // },
-    // serviceCharge() {
-    //   const {
-    //     creditMoney,
-    //     manageMoney
-    //   } = this.contract
-    //   return creditMoney + manageMoney
-    // },
-    // virtualMoney() {
-    //   const {
-    //     Limit
-    //   } = this.contract
-    //   return Limit - this.serviceCharge
-    // },
+    serviceFee() {
+      if (this.contract.productInfo) {
+        return this.contract.productInfo.manageFee + this.contract.productInfo.manageFee
+      }
+      return 0
+    },
     bankCardShort() {
       return this.contract.bankCard ? this.contract.bankCard.slice(-4) : ''
     }

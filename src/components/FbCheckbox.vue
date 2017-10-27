@@ -53,6 +53,9 @@ export default {
 @import "~assets/scss/_variables.scss";
 .fb-checkbox {
   font-size: inherit;
+  .mint-field-state .mintui {
+    vertical-align: -2px;
+  }
   .checkbox-label:before {
     color: $primary-color;
     content: '\e625';
@@ -61,6 +64,9 @@ export default {
   }
   a {
     color: $primary-color;
+  }
+  input[type="checkbox"] {
+    display: none;
   }
   input[type="checkbox"]:checked+.checkbox-label:before {
     content: '\e624';

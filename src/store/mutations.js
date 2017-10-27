@@ -3,6 +3,10 @@ export default {
     state.user = user
   },
 
+  updateUserPhone(state, phone) {
+    state.user.phone = phone
+  },
+
   updateToken(state, token) {
     state.token = token
   },
@@ -24,6 +28,7 @@ export default {
   },
 
   updateBankCardsCount(state, count = 0) {
+    console.log(count)
     state.bankCardsCount = count
   },
 
@@ -33,5 +38,9 @@ export default {
 
   updateTransitionName(state, transitionName = 'fade') {
     state.transitionName = transitionName
+  },
+
+  updateSupportBankCards(state, bankCards = []) {
+    state.supportBankCards = bankCards
   }
 }

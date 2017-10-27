@@ -27,7 +27,7 @@ export default {
 
     myepaper.setCallback(async(action, { pngData, pointsData }) => {
       if (action === 'cancel') {
-        const data = await contractReset.get().then(res => res.json())
+        const data = await contractReset.get({contractId: this.user.currentOngoingContract.id}).then(res => res.json())
 
         if (data.code === RET_CODE_MAP.OK) {
           this.updateStateCode(CUST_STATE_CODE_MAP.DEBT_SETTELED)

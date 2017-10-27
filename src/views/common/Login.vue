@@ -118,6 +118,17 @@ export default {
 <style lang="scss">
 @import '~assets/scss/_variables.scss';
 .login {
+  input::-moz-placeholder {
+    font-size: $font-size-xl!important;
+  }
+
+  input:-ms-input-placeholder {
+    font-size: $font-size-xl!important;
+  }
+
+  input::-webkit-input-placeholder {
+    font-size: $font-size-xl!important;
+  }
   .mint-cell-title {
     width: 30px!important;
     .iconfont {
@@ -130,6 +141,9 @@ export default {
   }
   .mint-button {
     height: 50px;
+    font-size: $font-size-xl;
+  }
+  .mint-field-core {
     font-size: $font-size-xl;
   }
   .mint-field-other {

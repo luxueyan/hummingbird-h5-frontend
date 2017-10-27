@@ -2,6 +2,7 @@ import router from '@/router'
 import { login, captcha, userSelf, wxOpenID } from '@/common/resources.js'
 import * as Storage from '@/storage'
 import { STORE_KEY_USER, STORE_KEY_ACCESS_TOKEN, RET_CODE_MAP, CUST_STATE_CODE_MAP, STORE_KEY_LAST_LOGINED_PHONE } from '@/constants'
+import { each } from 'lodash'
 
 export default {
   updateUser: function({ commit }, user = {}) {
@@ -24,12 +25,17 @@ export default {
     const data = await userSelf.get(params).then(res => res.json())
     if (data.code === RET_CODE_MAP.OK) {
       const user = data.data
+      each(user.productInfo, p => {
+        p.serviceFee = p.creditFee + p.manageFee
+      })
       await dispatch('updateUser', user)
       if (user.isNew) {
         commit('updateStateCode', CUST_STATE_CODE_MAP.FIRST_BORROWER)
-      } else if (user.currentOngoingContract) {
-        commit('updateStateCode', user.currentOngoingContract.currentContractStatus.key)
-      } else {
+      }
+
+      if (user.currentOngoingContract) {
+        commit('updateStateCode', '' + user.currentOngoingContract.currentContractStatus.key)
+      } else if (!user.isNew) {
         commit('updateStateCode', CUST_STATE_CODE_MAP.DEBT_SETTELED)
       }
     }

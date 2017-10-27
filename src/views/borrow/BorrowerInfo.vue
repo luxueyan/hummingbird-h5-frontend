@@ -24,7 +24,8 @@
           small.pl5
             | 请填写您的真实信息，否则会影响借款。
         .fields
-          mt-cell(title="姓名", :value="model.name | fbFalse")
+          mt-cell(v-if="user.name" title="姓名", :value="model.name | fbFalse")
+          mt-field(v-if="!user.name", label='姓名', placeholder='请输入真实姓名', v-model="model.name", :state="getFieldState('model.name')", @click.native="showFieldError($event, 'model.name')")
           //- mt-cell(title="登录手机号", :value="user.UserinfoValLogin.Userphone")
           //- template(v-if='!contractInfoHasHistory')
           mt-field(label='身份证号', placeholder='请输入身份证号', v-model="model.idCard", :state="getFieldState('model.idCard')", @click.native="showFieldError($event, 'model.idCard')")
@@ -41,7 +42,7 @@
               span(v-show='!countdownVisible') 获取验证码
               fb-countdown(ref='fnCountdown', v-show='countdownVisible' @countdown-over='onCountdownOver()')
       .form-buttons
-          mt-button.mint-button-block(type='primary', size='large') 开始借款
+          mt-button.mint-button-block(type='primary', size='large') 立即提款
     //- fb-msgbox(ref="vocationMsgbox", title="十一期间放款安排", msgbox-class="shiyi-option-msgbox")
       div(style="text-align:left")
         p 您的借款的应还款日是{{repayDate}}。
@@ -65,6 +66,7 @@ import ValidatorMixin from '@/views/validator_mixin.js'
 import CommonMixin from '@/views/common_mixin.js'
 import {
   contractReturn,
+  contractUpdate,
   contractInitial,
   selfContracts
 } from '@/common/resources.js'
@@ -96,7 +98,7 @@ export default {
   },
   async beforeRouteEnter(to, from, next) {
     const user = store.getters.user
-    if (!user.currentOngoingContract.id) {
+    if (!user.currentOngoingContract || !user.currentOngoingContract.id) {
       next()
       return
     }
@@ -105,7 +107,6 @@ export default {
     next(vm => {
       if (data.data) {
         vm.contractInfoHasHistory = true
-        // Object.assign(vm.model, pick(contractInfo(data.data.content), ['name', 'idCard', 'bankCard', 'bank', 'bankPhone']))
         Object.assign(vm.model, pick(data.data, ['idCard', 'bankCard', 'bankName', 'bankReservePhone']))
         vm.bankCardForShow = vm.model.bankCard.replace(/\d{4}(?=(\d{1,4}))/g, '$& ')
       }
@@ -133,6 +134,9 @@ export default {
   //   }
   // },
   validators: {
+    'model.name' (value) {
+      return this.validate(value).required()
+    },
     'model.idCard' (value) {
       return this.validate(value).required('请输入身份证号').length(18, '请正确输入18位身份证')
         .custom(() => {
@@ -167,8 +171,8 @@ export default {
     showServiceChargeTip() {
       this.$msgBox('服务费包含', `
         <table>
-          <tr><th>审核费用：</th><td style="text-align:left;">${Vue.filter('fbCurrency')(this.creditMoney, '', '元')}</td></tr>
-          <tr><th>账户管理费：</th><td style="text-align:left;">${Vue.filter('fbCurrency')(this.manageMoney, '', '元')}</td></tr>
+          <tr><th>审核费用：</th><td style="text-align:left;">${Vue.filter('fbCurrency')(this.product.creditFee)}</td></tr>
+          <tr><th>账户管理费：</th><td style="text-align:left;">${Vue.filter('fbCurrency')(this.product.manageFee)}</td></tr>
         </table>`)
     },
 
@@ -221,8 +225,13 @@ export default {
           this.$toast(this.validation.firstError(), 'error')
           return
         }
+      } else if (this.stateCode === CUST_STATE_CODE_MAP.CONTRACT_INFO_FILLED) {
+        data = await contractUpdate.save({
+          contractId: this.user.currentOngoingContract.id,
+          productId: this.model.productId
+        }).then(res => res.json())
       } else {
-        data = await contractReturn.save().then(res => res.json())
+        data = await contractReturn.save({ productId: this.model.productId }).then(res => res.json())
       }
 
       if (data.code === RET_CODE_MAP.OK) {
@@ -299,7 +308,7 @@ export default {
       model: {
         productId: product.id,
         name: stateUser.name,
-        idCard: null,
+        idCard: stateUser.idCard,
         bankCard: null,
         captcha: '',
         bankName: '自动匹配',

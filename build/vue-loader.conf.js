@@ -9,6 +9,10 @@ module.exports = {
       : config.dev.cssSourceMap,
     extract: isProduction
   }),
+  cssModules: {
+    localIdentName: '[path][name]---[local]---[hash:base64:5]',
+    camelCase: true
+  },
   postcss: [
     require('autoprefixer')({
       browsers: ['last 5 versions']

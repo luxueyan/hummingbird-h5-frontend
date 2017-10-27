@@ -6,7 +6,7 @@ section.authorized-tip
       | 免审核额度！
     img(src="~assets/images/authorized-bg.jpg")
   .body
-    mt-button.mint-button-block(type='danger', size='large', @click='getMoney()') 开始借款
+    mt-button.mint-button-block(type='danger', size='large', @click='getMoney()') 立即提款
   .footer
     h3 借贷流程
     .borrow-flow
@@ -71,7 +71,7 @@ header {
 }
 
 .mint-button-block {
-  width: 264px;
+  width: 264px!important;
   margin: 50px auto;
   border-radius: 0;
   overflow: visible;

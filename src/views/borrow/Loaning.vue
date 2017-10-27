@@ -5,7 +5,6 @@ section.single-page-tip
       fb-icon(name="dengdai")
       | 已提交
     p 您的提款请求已提交，系统将在<br>1小时内放款，请耐心等待。
-  //- p 您的提款请求已发送成功，请耐心等待。
   .table-card
     table
       caption
@@ -20,18 +19,14 @@ section.single-page-tip
           td {{contract.bankCard | fbCardNo}}
         tr
           th 应还日期：
-          td {{contract.repaymentDate | fbFalse}}
+          td {{contract.shouldRepaymentDate | fbFalse}}
         tr
           th 还款金额：
           td {{contract.repaymentAmount | fbCurrency}}
     .tfoot
       | 查看
-      router-link(:to="{name:'loanAgreement', params:{'transitionName': 'slideRightFade'}}") 《借款服务协议》
+      a(@click.prevent="$router.push({name:'loanAgreement'})") 《借款服务协议》
 
-  //- .footer.no-padding-top
-    .simple-btns
-      //- a(@click="checkLoanAgreement()") 查看《借款服务协议》
-    //- mt-button.mint-button-block(type='primary', size='large') 关闭
 </template>
 
 <script>

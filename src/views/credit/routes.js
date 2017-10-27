@@ -18,7 +18,7 @@ export default [{
     meta: {
       title: '信用',
       tabBarVisible: true,
-      headerHidden: true,
+      headerShow: true,
       // headerBackShow: true,
       // hasFixedButtons: false,
       permits: allStates
@@ -31,6 +31,7 @@ export default [{
       title: '信用等级及特权',
       tabBarVisible: true,
       headerBackShow: true,
+      headerShow: true,
       // headerHidden: true,
       // hasFixedButtons: false,
       permits: allStates

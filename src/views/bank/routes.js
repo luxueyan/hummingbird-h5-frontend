@@ -19,7 +19,7 @@ export default [{
       title: '银行卡列表',
       tabBarVisible: true,
       headerBackShow: true,
-      // headerHidden: true,
+      headerShow: true,
       hasFixedButtons: false,
       permits: allStates
     }
@@ -31,6 +31,7 @@ export default [{
       title: '银行卡详情',
       tabBarVisible: true,
       headerBackShow: true,
+      headerShow: true,
       permits: allStates
     }
   }, {
@@ -41,6 +42,7 @@ export default [{
       title: '添加银行卡',
       tabBarVisible: true,
       headerBackShow: true,
+      headerShow: true,
       permits: allStates
     }
   }, {
@@ -52,6 +54,7 @@ export default [{
       captchaSendType: CAPTCHA_SEND_TYPE.ADD_BANK_RESERVE_PHONE,
       tabBarVisible: true,
       headerBackShow: true,
+      headerShow: true,
       permits: allStates
     }
   }, {
@@ -61,7 +64,7 @@ export default [{
     meta: {
       title: '银行卡信息',
       tabBarVisible: true,
-      headerHidden: true,
+      headerShow: true,
       headerBackShow: true,
       permits: allStates
     }
@@ -75,6 +78,7 @@ export default [{
       captchaSendType: CAPTCHA_SEND_TYPE.CHANGE_BANK_RESERVE_PHONE,
       tabBarVisible: true,
       headerBackShow: true,
+      headerShow: true,
       permits: allStates
     }
   }, {
@@ -87,6 +91,7 @@ export default [{
       captchaSendType: CAPTCHA_SEND_TYPE.CHANGE_BANK_RESERVE_PHONE,
       tabBarVisible: true,
       headerBackShow: true,
+      headerShow: true,
       permits: allStates
     }
   }]

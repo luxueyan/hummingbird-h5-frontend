@@ -24,7 +24,8 @@ import {
   RET_CODE_MAP
 } from '@/constants.js'
 import {
-  mapGetters
+  mapGetters,
+  mapMutations
 } from 'vuex'
 import msgBox from '@/common/custom_msgbox.js'
 
@@ -40,6 +41,7 @@ export default {
   },
 
   methods: {
+    ...mapMutations(['updateUserPhone']),
     async submit() {
       const success = await this.$validate()
       if (success) {
@@ -53,6 +55,7 @@ export default {
             confirmButtonText: '知道了',
             classes: ['custom-msgbox', 'success-msgbox'],
             callback(action) {
+              if (_self.model.verifyType === 0) _self.updateUserPhone(_self.model.phone)
               _self.$router.push(_self.$route.params.from ? Object.assign({}, _self.$route.params.from) : {
                 name: 'borrowInfo'
               })

@@ -77,7 +77,8 @@ router.beforeEach((to, from, next) => {
         if (includes(to.meta.permits, code)) {
           next()
         } else {
-          next({ ...getRedirectRoute(code),
+          next({
+            ...getRedirectRoute(code),
             params: {
               transitionName: to.params.transitionName || 'slideRightFade' // 保证redirect时候仍然有动效
             }
@@ -146,9 +147,10 @@ Vue.isPermit = Vue.prototype.isPermit = function(routeName) {
 
 // 给push方法添加默认过渡效果
 const oldPush = router.push
-router.push = function(location = {}) {
+router.push = function(location = {}, isBackPush) {
   if (!location.params) location.params = {}
   if (!location.params.transitionName) location.params.transitionName = 'slideRightFade'
+  if (!isBackPush) store.commit('updateIsPopStated', false)
   oldPush.call(router, location)
 }
 

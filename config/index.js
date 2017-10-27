@@ -56,20 +56,25 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      // '/api.aspx': {
-      //   target: 'http://fn.91zhengxin.com:8080',
-      //   changeOrigin: true,
-      //   pathRewrite: function(path, req) {
-      //     return path.replace('/api.aspx/', '/api.aspx')
-      //   }
-      // }
       '/api': {
-        target: 'http://localhost:3001',
+        target: 'http://core-test.fnsudai.com',
         changeOrigin: true,
+        onProxyRes: function(proxyRes, req, res) {
+          // console.log(proxyRes.headers, '\n')
+          // proxyRes.headers['x-auth-token'] = 'adfa-adsfaf-asf'
+          // delete proxyRes.headers['set-cookie'] // 删除Rap上的cookie设置因为会影响到/api/usermanage的cookie设置
+        },
         pathRewrite: function(path, req) {
-          return path
+          return path.replace('/api/', '/')
         }
       }
+      // '/api': {
+      //   target: 'http://localhost:3001',
+      //   changeOrigin: true,
+      //   pathRewrite: function(path, req) {
+      //     return path
+      //   }
+      // }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README

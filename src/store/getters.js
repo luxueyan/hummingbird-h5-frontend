@@ -37,5 +37,9 @@ export default {
 
   transitionName(state) {
     return state.transitionName
+  },
+
+  supportBankCards(state) {
+    return state.supportBankCards
   }
 }

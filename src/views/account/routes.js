@@ -19,6 +19,7 @@ export default [{
       title: '消息中心',
       tabBarVisible: true,
       headerBackShow: true,
+      headerShow: true,
       permits: allStates
     }
   }, {
@@ -29,6 +30,7 @@ export default [{
       title: '消息通知',
       tabBarVisible: true,
       headerBackShow: true,
+      headerShow: true,
       permits: allStates
     }
   }]
@@ -48,6 +50,7 @@ export default [{
     meta: {
       title: '我的',
       tabBarVisible: true,
+      headerShow: true,
       permits: allStates
     }
   }, {
@@ -60,6 +63,7 @@ export default [{
       captchaSendType: CAPTCHA_SEND_TYPE.CHANGE_USER_PHONE,
       tabBarVisible: true,
       headerBackShow: true,
+      headerShow: true,
       permits: allStates
     }
   }, {
@@ -72,6 +76,7 @@ export default [{
       captchaSendType: CAPTCHA_SEND_TYPE.CHANGE_USER_PHONE,
       tabBarVisible: true,
       headerBackShow: true,
+      headerShow: true,
       permits: allStates
     }
   }]

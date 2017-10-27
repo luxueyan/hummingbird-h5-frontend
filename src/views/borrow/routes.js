@@ -19,7 +19,7 @@ export default [{
       title: '立即提款',
       tabBarVisible: true,
       captchaSendType: CAPTCHA_SEND_TYPE.ADD_BANK_RESERVE_PHONE,
-      // headerHidden: true,
+      headerShow: true,
       hasFixedButtons: true,
       permits: [CUST_STATE_CODE_MAP.DEBT_SETTELED, CUST_STATE_CODE_MAP.CONTRACT_INFO_FILLED]
     }
@@ -31,6 +31,7 @@ export default [{
       title: '合同签署',
       tabBarVisible: false,
       headerBackShow: true,
+      headerShow: true,
       permits: [CUST_STATE_CODE_MAP.CONTRACT_INFO_FILLED]
     }
   }, {
@@ -39,7 +40,7 @@ export default [{
     component: resolve => require(['@/views/borrow/Loaning.vue'], resolve),
     meta: {
       title: '提款请求已确认',
-      headerHidden: true,
+      headerShow: true,
       tabBarVisible: true,
       permits: [CUST_STATE_CODE_MAP.LOANING]
     }
@@ -49,7 +50,7 @@ export default [{
     component: resolve => require(['@/views/borrow/LoanFailed.vue'], resolve),
     meta: {
       title: '提款失败',
-      headerHidden: true,
+      headerShow: true,
       tabBarVisible: true,
       permits: [CUST_STATE_CODE_MAP.LOAN_FAILED]
     }

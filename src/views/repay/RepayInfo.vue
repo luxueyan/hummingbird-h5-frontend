@@ -10,7 +10,7 @@
               |《借款服务协议》
         .fields
           mt-cell(title="借款金额", :value="model.paymentAmount | fbCurrency")
-          mt-cell(title="应还日期", :value="model.repaymentDate | fbFalse")
+          mt-cell(title="应还日期", :value="model.shouldRepaymentDate | fbFalse")
           mt-cell(title="应还金额", :value="model.repaymentAmount | fbCurrency")
       fb-bank-cards
       .form-buttons.fixed

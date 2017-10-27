@@ -22,7 +22,7 @@
 
 <script>
 import { bankCards, bankCardDefault } from '@/common/resources.js'
-import { find } from 'lodash'
+import { find, merge } from 'lodash'
 import { bankMixins } from '@/views/common_mixin.js'
 import { RET_CODE_MAP } from '@/constants.js'
 
@@ -35,7 +35,7 @@ export default {
         vm.bankCards = data.data.bankCards || []
         const defaultBankCard = find(vm.bankCards, bd => bd.isDefault)
         vm.defaultBankCardId = defaultBankCard.id
-        this.$store.commit('updateBankCardsCount', vm.bankCards.length)
+        vm.$store.commit('updateBankCardsCount', data.data.bankCards.length)
       }
     })
   },
@@ -52,7 +52,6 @@ export default {
   },
 
   mounted() {
-    this.$store.commit('updateBankCardsCount', this.bankCards.length)
     this.$nextTick(() => {
       this.$watch('defaultBankCardId', (newValue, oldValue) => {
         if (!oldValue) return
@@ -63,7 +62,7 @@ export default {
             if (data.code === RET_CODE_MAP.OK) {
               this.$toast('默认银行卡变更成功！')
               if (this.$route.params.from) {
-                this.$router.push(Object.assign({}, this.$route.params.from))
+                this.$router.push(merge({ params: { fromDefaultBankSet: true } }, this.$route.params.from))
               }
             }
           })

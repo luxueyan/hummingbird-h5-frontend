@@ -116,9 +116,6 @@ export default [
           } else {
             MessageBox('提示', res.body ? res.body.message : '登录失败或者访问无权限')
           }
-          if (!res.body || res.body.code === RET_CODE_MAP.AUTH_FAILED || res.body.code === RET_CODE_MAP.USER_FORBIDDENED || res.body.code === RET_CODE_MAP.USER_FORBIDDENED) {
-            store.dispatch('logout')
-          }
         } else {
           if (request.cache) { // 缓存需要缓存的接口
             let key = Vue.url(request.url, request.params)

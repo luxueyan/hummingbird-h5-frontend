@@ -13,6 +13,8 @@ export default [{
     title: '蜂鸟速贷',
     captchaSendType: CAPTCHA_SEND_TYPE.USER_LOGIN, // 验证码发送的类型
     tabBarVisible: false,
+    headerShow: true,
+    headerBackShow: true,
     skipAuth: true
   }
 }, {
@@ -21,7 +23,7 @@ export default [{
   component: resolve => require(['@/views/common/AuthorizedTip.vue'], resolve),
   meta: {
     title: '蜂鸟速贷',
-    headerHidden: true,
+    headerShow: true,
     tabBarVisible: false,
     permits: [CUST_STATE_CODE_MAP.FIRST_BORROWER]
   }
@@ -33,6 +35,7 @@ export default [{
     title: '借款服务协议',
     tabBarVisible: false,
     headerBackShow: true,
+    headerShow: true,
     permits: allStates
   }
 }, {
@@ -44,6 +47,7 @@ export default [{
     tabBarVisible: false,
     skipAuth: true,
     headerBackShow: true,
+    headerShow: true,
     permits: allStates
   }
 }]

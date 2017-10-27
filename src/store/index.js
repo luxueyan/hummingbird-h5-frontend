@@ -13,6 +13,7 @@ const state = {
   updaterProgressVisible: false,
   now: new Date(),
   bankCardsCount: 0,
+  supportBankCards: [],
   transitionName: 'fade', // 路由切换的过渡效果
   isPopStated: false, // 是否是利用了history.back方式跳转的路由，用来控制routerCrumbs
   token: token

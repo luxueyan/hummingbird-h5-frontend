@@ -4,7 +4,8 @@ section.add-bank-step1
     .fields-header
       p 请添加持卡人本人的银行卡
     .fields
-      mt-cell(title="持卡人", :value="model.name")
+      mt-cell(v-if="user.name", title="持卡人", :value="model.name")
+      mt-field(v-if="!user.name", label='姓名', placeholder='请输入真实姓名', v-model="model.name", :state="getFieldState('model.name')", @click.native="showFieldError($event, 'model.name')")
       fb-field(v-mt-field-blur="{blur:getBank}", placeholder="点击问号查看支持银行卡", label='银行卡号', v-model="bankCardForShow", :state="getFieldState('model.bankCard')", @click.native="showFieldError($event, 'model.bankCard')")
         span(slot="label") 银行卡号
           i.iconfont.icon-wenhao(@click="showSupportBanks()")
@@ -19,6 +20,7 @@ section.add-bank-step1
 import CommonMixin from '@/views/common_mixin.js'
 import ValidatorMixin from '@/views/validator_mixin.js'
 import { isBankCard } from '@/common/utils.js'
+import { mapGetters } from 'vuex'
 
 export default {
   mixins: [CommonMixin, ValidatorMixin],
@@ -39,6 +41,10 @@ export default {
     }
   },
 
+  computed: {
+    ...mapGetters(['user'])
+  },
+
   validators: {
     'model.bankCard' (value) {
       return this.validate(value).required('请输入银行卡号')
@@ -54,6 +60,9 @@ export default {
       return this.validate(value).required('请输入手机号').digit('请正确输入手机号').regex('^1[3-9]\\d{9}$', '请正确输入手机号')
     },
     'model.bankName' (value) {
+      return this.validate(value).required()
+    },
+    'model.name' (value) {
       return this.validate(value).required()
     }
   },

@@ -4,7 +4,7 @@ Vue.use(VueResource)
 
 const previousRequestMap = {}
 const commonOpts = {
-  emulateJSON: true,
+  // emulateJSON: true,
   before(request) {
     const key = Vue.url(request.url, request.params)
     if (previousRequestMap[key]) {
@@ -24,14 +24,16 @@ export const changePhone = resource('change/phone', {}, {}, { _showLoadingStatus
 export const userSelf = resource('users/self', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 用户信息
 export const bankCardInfo = resource('bank_cards/info', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 获取开户银行
 export const bankCards = resource('bank_cards{/id}', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 银行卡列表和详情
+export const supportBankCards = resource('bank_cards/support_cards', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 可用银行卡列表和详情
 export const bankCardDelete = resource('bank_cards/unbind', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 删除银行卡
 export const bankCardDefault = resource('bank_cards/default', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 设置默认银行卡
 export const contractReturn = resource('contracts/return', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 再次生成合同
 export const contractInitial = resource('contracts/initial', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 首次生成合同
+export const contractUpdate = resource('contracts/update', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 已存在待签约合同，更新合同
 export const contractLoan = resource('contracts/loan', {}, {}, { _showLoadingStatus: true, ...commonOpts }) //请求放款
 export const selfContracts = resource('self/contracts{/id}', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 查询我的合同信息
-export const contractReset = resource('self/contracts/reset', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 放弃合同信息
-export const contractSign = resource('self/contracts/sign', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 签署合同
-export const repayments = resource('repayments', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 提前还款
-export const repaymentError = resource('repayment_error', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 还款失败具体错误信息
+export const contractReset = resource('contracts/give_up', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 放弃合同信息
+export const contractSign = resource('contracts/sign', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 签署合同
+export const repayments = resource('repayment/reason', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 提前还款
+export const repaymentError = resource('repayment_reason', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 还款失败具体错误信息
 export const systemPrivileges = resource('system/privileges', {}, {}, { _showLoadingStatus: true, ...commonOpts }) // 信用积分及特权列表

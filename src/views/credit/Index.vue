@@ -12,7 +12,7 @@
           span.level Lv.{{user.privilegeInfo.nextLevel}}
       p
         | 认证越多，使用越多，信用积分越高
-        router-link.go-grade(:to="{name: 'creditGrade', params: {transitionName: 'slideRightFade'}}") 信用等级及特权
+        //- router-link.go-grade(:to="{name: 'creditGrade', params: {transitionName: 'slideRightFade'}}") 信用等级及特权
     .form
       section.base-info
         .fields-header
@@ -20,7 +20,7 @@
         .fields
           mt-cell(title="手机号", is-link, @click.native="$router.push({name: 'changePhoneStep1', params: {from: $route}})", :value="user.phone")
             i.iconfont.icon-phone(slot="icon")
-          mt-cell(title="身份证号", :value="user.phone")
+          mt-cell(title="身份证号", :value="user.idCard | fbCardNo")
             i.iconfont.icon-shenfen(slot="icon")
           mt-cell(title="银行卡", is-link, @click.native="$router.push({name: 'bankList'})", :value="bankCardsCount | fbAppend('张')")
             i.iconfont.icon-bank-card2(slot="icon")
@@ -121,10 +121,10 @@ header {
       position: absolute;
       width: 0;
       height: 0;
-      border-width: 10px 15px;
+      border-width: 8px 12px;
       border-style: solid;
       border-color: transparent transparent transparent white;
-      right: -60px;
+      right: -55px;
       top: 50%;
       transform: translateY(-50%);
     }

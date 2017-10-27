@@ -110,6 +110,7 @@
     "webpack-dev-middleware": "^1.10.0",
     "webpack-hot-middleware": "^2.16.1",
     "webpack-merge": "^2.6.1",
+    "webpack-require-http": "^0.4.3",
     "webpack-svgstore-plugin": "^4.0.1"
   },
   "engines": {

@@ -2,30 +2,30 @@
 .app
   fb-updater-process
   n-progress(parent=".app")
-  transition(:name="headerShow ? 'slideRightFade' : 'slideLeftFade'", appear, mode="out-in")
+  transition(:name="transitionName", appear, mode="out-in")
     mt-header(ref="header", fixed="", :title="headerTitle", v-show="headerShow")
-      mt-button(v-if="headerBackShow", icon="back", slot="left", @click="routerBack()")
-      mt-button.of-v(v-if="btnVisible(['mine'])", slot="left", @click="$router.push({name: 'messageList'})")
+      mt-button(v-if="headerBackShow", icon="back", slot="left", @click="routerBack()") 返回
+      mt-button.of-v(v-if="msgCountBtnVisible", slot="left", @click="$router.push({name: 'messageList'})")
         i.iconfont.icon-xiaoxi-solid.ft18.pos-r
           span.badge-red.badge-top 10
       //- mt-button(slot="right", v-if="btnVisible(['signature'])")
         small
           router-link(:to="{name:'loanAgreement', params:{'transitionName': 'slideRightFade'}}") 查看
-      mt-button(slot="right", v-if="btnVisible(['messageList'])")
+      mt-button(slot="right", v-if="msgListBtnVisible")
         small
           a(@click="emitEvent('messages-mark-read')") 全部已读
   .container(:class="{'header-show': headerShow, 'has-fixed-buttons': hasFixedButtons}", ref="container")
     transition(:name="transitionName", appear, mode="out-in")
       router-view
   mt-tabbar(v-model="tabSelected", :fixed="true", v-show="tabBarVisible", ref="tabbar")
-    mt-tab-item#borrowerInfo(:class="{'is-selected': tabIsSelected(['borrowerInfo', 'loaning', 'signature', 'loanFailed', 'repayFailed', 'repayInfo', 'repaying'])}")
+    mt-tab-item#borrowerInfo(:class="{'is-selected': fisrtTabItemIsSelected}")
       div(slot="icon")
         i.iconfont.icon-borrow
       | 借款
-    mt-tab-item#creditIndex(:class="{'is-selected': tabIsSelected(['creditIndex', 'creditGrade'])}")
+    mt-tab-item#creditIndex(:class="{'is-selected': secondTabItemIsSelected}")
       div(slot="icon")
         i.iconfont.icon-credit
-      | 认证
+      | 信用
     //- mt-tab-item#mine(:class="{'is-selected': tabIsSelected(['mine', 'changeBankCardStep1', 'changeBankCardStep2', 'changeBankCardStep3', 'messageList', 'messageDetail'])}")
       div(slot="icon")
         i.iconfont.icon-user
@@ -48,6 +48,12 @@ import {
   includes,
   each
 } from 'lodash'
+
+if (~process.env.NODE_ENV.indexOf('app')) {
+  require('assets/fonts/iconfont/iconfont.css')
+} else {
+  require('http://at.alicdn.com/t/font_432625_6c9h7212f7d2huxr.css')
+}
 
 export default {
   components: {
@@ -80,16 +86,6 @@ export default {
       this.$router.push({
         name: tab
       })
-    },
-
-    // 菜单是否被选中
-    tabIsSelected(routeNames) {
-      return includes(routeNames, this.$route.name)
-    },
-
-    // 菜单是否禁用
-    tabIsDisabled(routeName) {
-      return !includes(this.getPermits(routeName), this.stateCode)
     },
 
     // 右侧按钮触发事件
@@ -130,25 +126,38 @@ export default {
 
   computed: {
     ...mapGetters(['route', 'stateCode', 'isPopStated']),
+    fisrtTabItemIsSelected() {
+      return includes(['borrowerInfo', 'loaning', 'signature', 'loanFailed', 'repayFailed', 'repayInfo', 'repaying'], this.$store.state.route.name)
+    },
+    secondTabItemIsSelected() {
+      return includes(['creditIndex', 'creditGrade'], this.$store.state.route.name)
+    },
+    msgCountBtnVisible() {
+      return includes(['mine'], this.$store.state.route.name)
+    },
+    msgListBtnVisible() {
+      return includes(['messageList'], this.$store.state.route.name)
+    },
     tabBarVisible() {
-      return this.$route.meta.tabBarVisible && (~process.env.NODE_ENV.indexOf('app') || ~process.env.NODE_ENV.indexOf('development'))
+      return this.$store.state.route.meta.tabBarVisible && (~process.env.NODE_ENV.indexOf('app') || ~process.env.NODE_ENV.indexOf('development'))
     },
     headerShow() {
-      return !this.$route.meta.headerHidden && (~process.env.NODE_ENV.indexOf('app') || ~process.env.NODE_ENV.indexOf('development'))
+      return !this.isWeixin && this.$store.state.route.meta.headerShow && (~process.env.NODE_ENV.indexOf('app') || ~process.env.NODE_ENV.indexOf('development'))
     },
     hasFixedButtons() {
-      return this.$route.meta.hasFixedButtons
+      return this.$store.state.route.meta.hasFixedButtons
     },
     headerBackShow() {
-      return this.$route.meta.headerBackShow
+      return this.$store.state.route.meta.headerBackShow
     },
     headerTitle() {
-      return this.title || this.$route.meta.title
+      return this.title || this.$store.state.route.meta.title
     }
   },
 
   data() {
     return {
+      isWeixin: this.isWeixin(),
       title: '',
       tabSelected: '',
       transitionName: 'slideRightFade'
@@ -161,7 +170,7 @@ export default {
 <style lang="scss">
 @import '~assets/scss/_variables.scss';
 @import '~assets/fonts/franklin/franklin.css';
-@import url('//at.alicdn.com/t/font_432625_2c8ivqome62edn29.css');
+// @import url('//at.alicdn.com/t/font_432625_6c9h7212f7d2huxr.css');
 @import '~assets/scss/base.scss';
 @import '~assets/scss/common.scss';
 @import '~assets/scss/transition.scss';
@@ -174,7 +183,6 @@ html {
 }
 
 body {
-  font-family: -apple-system;
   font-family: '-apple-system', "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
   background-color: $primary-bg-color;
   min-height: 100%;
