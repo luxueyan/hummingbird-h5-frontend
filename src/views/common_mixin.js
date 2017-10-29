@@ -7,7 +7,7 @@ const bankNameIconList = [{
   name: '农业',
   icon: 'nongye'
 }, {
-  name: '中国',
+  name: '中国银行',
   icon: 'zhongguo'
 }, {
   name: '兴业',
@@ -25,7 +25,7 @@ const bankNameIconList = [{
   name: '北京',
   icon: 'beijing'
 }, {
-  name: '民生',
+  name: '民生银行',
   icon: 'minsheng'
 }, {
   name: '光大',
@@ -95,18 +95,20 @@ export default {
     // 获取银行卡开户行
     async getBank() {
       if (this.validation.isPassed('model.bankCard')) {
-        const data = await bankCardInfo.get({
-          cardNo: this.model.bankCard
-        }).then(res => res.json())
-        if (data.code === RET_CODE_MAP.OK) {
-          this.model.bankName = data.data.bankName
-          this.model.bankCode = data.data.bankCode
-        } else {
-          this.model.bankName = '自动生成'
-          this.model.bankCode = ''
-        }
-        this.bankCardNotSupported = data.code === RET_CODE_MAP.BANK_CARD_NOT_SUPPORTED
-        this.$validate('model.bankCard')
+        setTimeout(async() => {
+          const data = await bankCardInfo.get({
+            cardNo: this.model.bankCard
+          }).then(res => res.json())
+          if (data.code === RET_CODE_MAP.OK) {
+            this.model.bankName = data.data.bankName
+            this.model.bankCode = data.data.bankCode
+          } else {
+            this.model.bankName = '自动生成'
+            this.model.bankCode = ''
+          }
+          this.bankCardNotSupported = data.code === RET_CODE_MAP.BANK_CARD_NOT_SUPPORTED
+          this.$validate('model.bankCard')
+        }, 100) // 异步执行避免影响到点击清除的功能
       }
     },
 

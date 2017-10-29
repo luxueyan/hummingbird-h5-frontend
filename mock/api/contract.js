@@ -70,6 +70,7 @@ module.exports = router => {
       'paymentId': '599794a4f87ca703c05df02d',
       'paymentAmount': 1000,
       'paymentDate': '2017-08-14 13:00:02',
+      'shouldRepaymentDate': '2017-08-14 13:00:02',
       'paymentStatus': 0,
       'idCard': '220122198404162518',
       'productInfo': {

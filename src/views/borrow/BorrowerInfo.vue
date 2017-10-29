@@ -34,8 +34,8 @@
               i.iconfont.icon-wenhao(@click="showSupportBanks()")
           input(type="hidden", v-model='model.bankCard')
           mt-cell.field-cell(:class="{'empty': model.bankName === '自动匹配'}", title="开户行", :value="model.bankName")
+        .fields-header
         .fields
-          .fields-header
           mt-field(label='银行预留手机号', placeholder='请输入银行预留手机号', v-model="model.bankReservePhone", :state="getFieldState('model.bankReservePhone')", @click.native="showFieldError($event, 'model.bankReservePhone')")
           mt-field(label='验证码', placeholder='请输入验证码', v-model='model.captcha', :state="getFieldState('model.captcha')", @click.native="showFieldError($event, 'model.captcha')")
             mt-button(type='default', @click.stop.prevent='toGetMsgCode()', :disabled='countdownVisible')
@@ -135,7 +135,7 @@ export default {
   // },
   validators: {
     'model.name' (value) {
-      return this.validate(value).required()
+      return this.validate(value).required('请输入您的姓名')
     },
     'model.idCard' (value) {
       return this.validate(value).required('请输入身份证号').length(18, '请正确输入18位身份证')
@@ -166,7 +166,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['updateStateCode']),
+    ...mapMutations(['updateStateCode', 'updateOnGoingContractId']),
     // 显示服务费详情
     showServiceChargeTip() {
       this.$msgBox('服务费包含', `
@@ -236,6 +236,7 @@ export default {
 
       if (data.code === RET_CODE_MAP.OK) {
         this.updateStateCode(CUST_STATE_CODE_MAP.CONTRACT_INFO_FILLED)
+        this.updateOnGoingContractId(data.data.contractId)
         this.$router.push({
           name: 'signature'
         })

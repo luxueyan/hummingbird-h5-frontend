@@ -17,6 +17,7 @@ section.add-bank-step3.single-page-tip
 
 <script>
 import { mapGetters } from 'vuex'
+import { merge } from 'lodash'
 
 export default {
   mounted() {
@@ -25,7 +26,11 @@ export default {
 
   methods: {
     goOn() {
-      this.$router.push(this.$route.params.from ? Object.assign({}, this.$route.params.from) : {
+      this.$router.push(this.$route.params.from ? merge({
+        params: {
+          fromDefaultBankSet: this.$route.params.from.name === 'repayFailed' // 用于触发再次还款
+        }
+      }, this.$route.params.from) : {
         name: 'borrowInfo'
       })
     },

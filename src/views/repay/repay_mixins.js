@@ -13,7 +13,9 @@ export default {
   methods: {
     ...mapMutations(['updateStateCode']),
     async repay() {
-      const data = await repayments.get().then(res => res.json())
+      const data = await repayments.save({
+        contractId: this.$store.getters.user.currentOngoingContract.id
+      }).then(res => res.json())
       if (data.code === RET_CODE_MAP.OK) {
         const status = data.data.repaymentStatus
         if (status === 0) {

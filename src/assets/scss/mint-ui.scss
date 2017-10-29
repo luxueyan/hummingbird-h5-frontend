@@ -1,10 +1,11 @@
 // ----- 放到body空间下，避免加载顺序导致不生效------
 body {
   .mint-cell-wrapper {
-    background-image: none;
+    // background-image: none;
     padding: 0 15px;
     font-size: $font-size-m;
   }
+
   .mint-field-core {
     font-size: $font-size-m;
   }
@@ -14,10 +15,18 @@ body {
   }
 
   .mint-cell {
-    background-image: linear-gradient(0deg, $border-color, $border-color 50%, transparent 50%);
-    background-size: 100% 1px;
-    background-repeat: no-repeat;
-    background-position: bottom;
+    // background-image: linear-gradient(0deg, $border-color, $border-color 50%, transparent 50%);
+    // background-size: 100% 1px;
+    // background-repeat: no-repeat;
+    // background-position: bottom;
+    &:first-child {
+      .mint-cell-wrapper {
+        background-image: none;
+      }
+    }
+    &:last-child {
+      background-image: none;
+    }
     min-height: 45px;
     &.field-cell {
       .mint-cell-title {
@@ -38,6 +47,13 @@ body {
   .mint-msgbox {
     border-radius: 12px;
     width: 75%;
+  }
+  .mint-msgbox-content {
+    border-bottom: 0;
+    background-image: linear-gradient(0deg, $border-color, $border-color 50%, transparent 50%);
+    background-size: 100% 1px;
+    background-repeat: no-repeat;
+    background-position: bottom;
   }
   .mint-msgbox-confirm {
     color: $primary-color;
@@ -81,6 +97,11 @@ body {
   }
   .mint-msgbox-cancel {
     color: $minor-font-color;
+    border-right: 0;
+    background-image: linear-gradient(90deg, $border-color, $border-color 50%, transparent 50%);
+    background-size: 1px 100%;
+    background-repeat: no-repeat;
+    background-position: right;
   }
   .mint-msgbox-message {
     line-height: 1.5em;
@@ -246,7 +267,8 @@ body {
     //   margin-right: -10px;
     // }
     .mint-button {
-      min-width: 85px;
+      min-width: 70px;
+      margin-left: 5px;
       font-size: $font-size-xxs;
       border-radius: 0;
       height: 25px;

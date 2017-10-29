@@ -17,7 +17,7 @@
   .container(:class="{'header-show': headerShow, 'has-fixed-buttons': hasFixedButtons}", ref="container")
     transition(:name="transitionName", appear, mode="out-in")
       router-view
-  mt-tabbar(v-model="tabSelected", :fixed="true", v-show="tabBarVisible", ref="tabbar")
+  mt-tabbar(:fixed="true", v-show="tabBarVisible", ref="tabbar")
     mt-tab-item#borrowerInfo(:class="{'is-selected': fisrtTabItemIsSelected}")
       div(slot="icon")
         i.iconfont.icon-borrow
@@ -75,11 +75,6 @@ export default {
 
   methods: {
     ...mapActions(['getUser']),
-
-    // 按钮在哪一页可见
-    btnVisible(routes = []) {
-      return includes(routes, this.$route.name)
-    },
 
     // tab点击事件
     tabClick(event, tab) {
@@ -139,7 +134,7 @@ export default {
       return includes(['messageList'], this.$store.state.route.name)
     },
     tabBarVisible() {
-      return this.$store.state.route.meta.tabBarVisible && (~process.env.NODE_ENV.indexOf('app') || ~process.env.NODE_ENV.indexOf('development'))
+      return this.$store.state.route.meta.tabBarVisible
     },
     headerShow() {
       return !this.isWeixin && this.$store.state.route.meta.headerShow && (~process.env.NODE_ENV.indexOf('app') || ~process.env.NODE_ENV.indexOf('development'))
@@ -159,7 +154,6 @@ export default {
     return {
       isWeixin: this.isWeixin(),
       title: '',
-      tabSelected: '',
       transitionName: 'slideRightFade'
       // mineMenuVisible: false
     }

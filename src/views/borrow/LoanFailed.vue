@@ -13,16 +13,16 @@ section.single-page-tip.warning
       tbody
         tr
           th 提款金额：
-          td {{contract.paymentAmount | fbCurrency}}
+          td {{contract.contractAmount | fbCurrency}}
         tr
           th {{contract.bankName}}：
           td {{contract.bankCard | fbCardNo}}
         tr
           th 应还日期：
-          td {{contract.shouldRepaymentDate | fbFalse}}
+          td {{contract.contractEndDate | fbFalse}}
         tr
           th 还款金额：
-          td {{contract.repaymentAmount | fbCurrency}}
+          td {{contract.contractAmount | fbCurrency}}
     .tfoot
       | 查看
       a(@click.prevent="$router.push({name:'loanAgreement'})") 《借款服务协议》

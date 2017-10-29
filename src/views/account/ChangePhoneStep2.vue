@@ -96,4 +96,9 @@ export default {
 </script>
 
 <style lang="scss">
+.change-phone-step2 {
+  .mint-cell-wrapper {
+    background-image: none;
+  }
+}
 </style>

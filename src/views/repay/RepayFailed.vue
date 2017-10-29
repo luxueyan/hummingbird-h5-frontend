@@ -9,25 +9,50 @@ section.repay-failed.single-page-tip.error
     h4 您还可以这样还款
     ul
       li
-        | 方式一：更换一张充足余额的银行卡。
+        | 方式一：我已确保尾号{{contract.bankCard.slice(-4)}}的银行卡余额充足。
+        a(@click.prevent="repayRetry()")
+          mt-button.br2(type="default") 重新还款
+      li
+        | 方式二：更换一张充足余额的银行卡。
         router-link(:to="{name: 'bankList', params: {transitionName: 'slideRightFade', from: $route}}")
           mt-button.br2(type="default") 前往
-      li 方式二：通过支付宝转账至我们公户fengniaosudai@163.com(请备注姓名+手机号）,转账后在公众号中通知客服。
+      li 方式三：通过支付宝转账至我们公户fengniaosudai@163.com(请备注姓名+手机号），转账后在公众号中通知客服。
 
 </template>
 
 <script>
-import { repaymentError } from '@/common/resources.js'
+import { repaymentError, selfContracts } from '@/common/resources.js'
 import repayMixins from '@/views/repay/repay_mixins.js'
+import store from '@/store'
+import { RET_CODE_MAP, CUST_STATE_CODE_MAP } from '@/constants.js'
 
 export default {
   mixins: [repayMixins],
 
   async beforeRouteEnter(to, from, next) {
-    const data = await repaymentError.get({ contractId: this.$store.getters.user.currentOngoingContract.id }).then(res => res.json())
+    const user = store.getters.user
+    const datas = await Promise.all([
+      selfContracts.get({ id: user.currentOngoingContract.id }).then(res => res.json()),
+      repaymentError.get({ contractId: user.currentOngoingContract.id }).then(res => res.json())
+    ])
+
     next(vm => {
-      vm.err = data.data
+      if (datas[0].code === RET_CODE_MAP.OK) {
+        vm.contract = Object.assign({}, datas[0].data)
+      }
+      if (datas[1].code === RET_CODE_MAP.OK) {
+        vm.err = datas[1].data
+      }
     })
+  },
+
+  methods: {
+    repayRetry() {
+      this.$store.commit('updateStateCode', CUST_STATE_CODE_MAP.DEBT_NOT_SETTLED)
+      this.$router.push({
+        name: 'repayInfo'
+      })
+    }
   },
 
   filters: {
@@ -44,6 +69,7 @@ export default {
 
   data() {
     return {
+      contract: { bankCard: '' },
       err: {
         message: '银行卡余额不足，本卡今日可提交还款1次，<br>请确保卡内余额充足。'
       }

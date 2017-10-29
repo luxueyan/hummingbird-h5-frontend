@@ -81,7 +81,7 @@ export default {
       if (success) {
         const data = await this.login(this.user)
         if (data.code === RET_CODE_MAP.OK) {
-          if (this.isWeixin() && !data.user.openId) {
+          if (process.env.NODE_ENV === 'production' && this.isWeixin() && !data.user.openId) {
             // 取得当前地址用于回跳，目前直接使用字符串拼接的方式，
             // 是因为web下router用的是history模式，所以如果以后换成hash这里要注意兼容问题
             const selfLocation = location.href.replace(/(https?:\/\/[^/]+)\/?.*/, '$1') + this.redirect
@@ -138,6 +138,17 @@ export default {
   }
   .mint-cell {
     min-height: 60px;
+    &:first-child {
+      .mint-cell-wrapper {
+        background-image: none;
+      }
+    }
+    &:last-child {
+      background-image: linear-gradient(0deg, $border-color, $border-color 50%, transparent 50%);
+      background-size: 100% 1px;
+      background-repeat: no-repeat;
+      background-position: bottom;
+    }
   }
   .mint-button {
     height: 50px;

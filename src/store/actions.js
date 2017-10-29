@@ -38,6 +38,7 @@ export default {
       } else if (!user.isNew) {
         commit('updateStateCode', CUST_STATE_CODE_MAP.DEBT_SETTELED)
       }
+      // commit('updateStateCode', CUST_STATE_CODE_MAP.REPAY_FAILED)
     }
     return data
   },

@@ -37,8 +37,13 @@ export default {
 </script>
 
 <style lang="scss">
+@import "~assets/scss/_variables.scss";
 .nprogress-custom-parent #nprogress .spinner,
 #nprogress .spinner {
   display: none;
+}
+
+#nprogress .bar {
+  background: $primary-color!important;
 }
 </style>

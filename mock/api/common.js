@@ -74,7 +74,7 @@ module.exports = router => {
       'currentOngoingContract': { //optional 当前正在进行的合同
         'id': '599794a4f87ca703c05df02e',
         'currentContractStatus': {
-          'key': '103',
+          'key': 101,
           'value': '待还款'
         }
       }

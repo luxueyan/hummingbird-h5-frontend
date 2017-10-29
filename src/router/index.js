@@ -20,18 +20,15 @@ const router = new VueRouter({
   routes
 })
 
-// 业务状态对应页面映射表
+// 根据不同用户状态和合同状态跳转对应页面映射表
 const custStateRedirectMap = {
-  // [CUST_STATE_CODE_MAP.NOT_LOGIN]: { name: 'login' }, // 未登录
   [CUST_STATE_CODE_MAP.DEBT_SETTELED]: { name: 'borrowerInfo' }, // 借款结清
-  [CUST_STATE_CODE_MAP.CONTRACT_INFO_FILLED]: { name: 'signature' }, // 合同信息已完成
-  // [CUST_STATE_CODE_MAP.NOT_INVITED]: { name: 'authorizedTip' }, // 未邀请
+  [CUST_STATE_CODE_MAP.CONTRACT_INFO_FILLED]: { name: 'borrowerInfo' }, // 合同信息已完成
   [CUST_STATE_CODE_MAP.LOANING]: { name: 'loaning' }, // 放款中
   [CUST_STATE_CODE_MAP.LOAN_FAILED]: { name: 'loanFailed' }, // 放款失败
   [CUST_STATE_CODE_MAP.DEBT_NOT_SETTLED]: { name: 'repayInfo' }, // 借款未结清
   [CUST_STATE_CODE_MAP.REPAYING]: { name: 'repaying' }, // 还款中
   [CUST_STATE_CODE_MAP.REPAY_FAILED]: { name: 'repayFailed' }, // 还款失败
-  // [CUST_STATE_CODE_MAP.BLACKLIST]: { name: 'blacklistTip' }, // 黑名单客户
   [CUST_STATE_CODE_MAP.FIRST_BORROWER]: { name: 'authorizedTip' }, // 首次借款
   [CUST_STATE_CODE_MAP.UNKNOWN]: { name: 'login' } // 未知状态
 }
@@ -73,6 +70,7 @@ router.beforeEach((to, from, next) => {
         }
       })
 
+      // 获取相关状态后判断页面访问权限
       stateCodePromise.then(code => {
         if (includes(to.meta.permits, code)) {
           next()

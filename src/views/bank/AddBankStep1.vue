@@ -63,7 +63,7 @@ export default {
       return this.validate(value).required()
     },
     'model.name' (value) {
-      return this.validate(value).required()
+      return this.validate(value).required('请输入您的姓名')
     }
   },
 

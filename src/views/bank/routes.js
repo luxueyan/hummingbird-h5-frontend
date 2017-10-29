@@ -75,7 +75,7 @@ export default [{
     meta: {
       title: '修改预留手机号',
       verifyType: 1,
-      captchaSendType: CAPTCHA_SEND_TYPE.CHANGE_BANK_RESERVE_PHONE,
+      captchaSendType: CAPTCHA_SEND_TYPE.CHANGE_USER_PHONE,
       tabBarVisible: true,
       headerBackShow: true,
       headerShow: true,
@@ -88,7 +88,7 @@ export default [{
     meta: {
       title: '修改预留手机号',
       verifyType: 1,
-      captchaSendType: CAPTCHA_SEND_TYPE.CHANGE_BANK_RESERVE_PHONE,
+      captchaSendType: CAPTCHA_SEND_TYPE.CHANGE_USER_PHONE,
       tabBarVisible: true,
       headerBackShow: true,
       headerShow: true,

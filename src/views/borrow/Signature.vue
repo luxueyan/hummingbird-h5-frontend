@@ -16,10 +16,10 @@ import {
   RET_CODE_MAP,
   CUST_STATE_CODE_MAP
 } from '@/constants.js'
-import borrowMixins from '@/views/borrow/borrow_mixins.js'
+// import borrowMixins from '@/views/borrow/borrow_mixins.js'
 
 export default {
-  mixins: [borrowMixins],
+  // mixins: [borrowMixins],
   mounted() {
     const myepaper = EPaper.init('panel', {
       name: this.user.name
@@ -27,7 +27,7 @@ export default {
 
     myepaper.setCallback(async(action, { pngData, pointsData }) => {
       if (action === 'cancel') {
-        const data = await contractReset.get({contractId: this.user.currentOngoingContract.id}).then(res => res.json())
+        const data = await contractReset.get({ contractId: this.user.currentOngoingContract.id }).then(res => res.json())
 
         if (data.code === RET_CODE_MAP.OK) {
           this.updateStateCode(CUST_STATE_CODE_MAP.DEBT_SETTELED)
@@ -47,11 +47,15 @@ export default {
         }
 
         const data = await contractSign.save({
+          contractId: this.user.currentOngoingContract.id,
           sign: pngData
         }).then(res => res.json())
 
         if (data.code === RET_CODE_MAP.OK) {
-          this.drawMoney() // 新版接口不需要主动请求放款，未来可能删除
+          this.updateStateCode(CUST_STATE_CODE_MAP.LOANING)
+          this.$router.push({
+            name: 'loaning'
+          })
         }
       }
     })

@@ -18,6 +18,10 @@
   position: absolute;
 }
 
+.fw-b {
+  font-weight: bold;
+}
+
 .fr {
   float: right;
 }
@@ -117,10 +121,10 @@ center {
     margin-left: 5px * $i;
   }
   .mt#{$i * 5} {
-    margin-right: 5px * $i;
+    margin-top: 5px * $i;
   }
   .mb#{$i * 5} {
-    margin-left: 5px * $i;
+    margin-bottom: 5px * $i;
   }
   .pr#{$i * 5} {
     padding-right: 5px * $i;
@@ -132,7 +136,7 @@ center {
     padding-top: 5px * $i;
   }
   .pb#{$i * 5} {
-    padding-left: 5px * $i;
+    padding-bottom: 5px * $i;
   }
 
   .ft#{$i * 5} {

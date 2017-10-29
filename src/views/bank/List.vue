@@ -15,7 +15,7 @@
               input.mint-radio-input(type='radio', :value="bankCard.id", v-model="defaultBankCardId")
               span.mint-radio-core
             span.mint-radio-label 设为默认
-    router-link.add-bankcard(:to="{name: 'addBankStep1', params: {transitionName: 'slideRightFade'}}")
+    router-link.add-bankcard(:class="{'no-border': !bankCards.length}", :to="{name: 'addBankStep1', params: {transitionName: 'slideRightFade'}}")
       em +
       | 添加银行卡
 </template>

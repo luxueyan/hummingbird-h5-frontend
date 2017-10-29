@@ -10,10 +10,14 @@ var CordovaLoaderManifest = require('./webpack.cordova.manifest.plugin.js')
 var env = process.env.NODE_ENV === 'testing' ? require('../config/test.env') : config.appDev.env
 var _ = require('lodash')
 
-// 删除base中的图片和字体的loader设置
+// 删除base中的图片和字体的loader设置, 都去掉hash值好做好热更新准备
 _.remove(baseWebpackConfig.module.rules, function(rule) {
-  return rule.loader === 'url-loader'
+  return rule.loader === 'url-loader' || rule.loader === 'vue-svg-loader'
 })
+
+function resolve(dir) {
+  return path.join(__dirname, '..', dir)
+}
 
 var webpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -21,18 +25,26 @@ var webpackConfig = merge(baseWebpackConfig, {
       sourceMap: config.appDev.productionSourceMap,
       extract: true // app
     }).concat([{
-      test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+      test: /\.(png|jpe?g|gif)(\?.*)?$/,
       loader: 'url-loader',
       query: {
         limit: 1000,
         name: utils.assetsPath('img/[name].[ext]')
       }
     }, {
-      test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+      test: /\.(woff2?|eot|ttf|otf|svg)(\?.*)?$/,
       loader: 'url-loader',
+      include: [resolve('src/assets/fonts')],
       query: {
         limit: 1000,
         name: utils.assetsPath('fonts/[name].[ext]')
+      }
+    }, {
+      test: /\.svg$/,
+      loader: 'vue-svg-loader',
+      include: [resolve('src/assets/icons')],
+      query: {
+        name: utils.assetsPath('img/[name].[ext]')
       }
     }])
   },

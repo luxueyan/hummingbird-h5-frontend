@@ -28,7 +28,6 @@ export default {
   },
 
   updateBankCardsCount(state, count = 0) {
-    console.log(count)
     state.bankCardsCount = count
   },
 
@@ -42,5 +41,13 @@ export default {
 
   updateSupportBankCards(state, bankCards = []) {
     state.supportBankCards = bankCards
+  },
+
+  updateOnGoingContractId(state, contractId) {
+    if (state.user.currentOngoingContract) {
+      state.user.currentOngoingContract.id = contractId
+    } else {
+      state.user.currentOngoingContract = { id: contractId }
+    }
   }
 }

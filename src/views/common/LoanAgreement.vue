@@ -37,7 +37,7 @@
         </tr>
         <tr>
           <td>借款本金</td>
-          <td colspan="3">{{contract.paymentAmount | fbCurrency('￥', '元')}}</td>
+          <td colspan="3">{{contract.contractAmount | fbCurrency('￥', '元')}}</td>
         </tr>
         <tr>
           <td>借款年利率</td>
@@ -47,13 +47,13 @@
         </tr>
         <tr>
           <td>借款出借日</td>
-          <td>{{contract.paymentDate}}</td>
+          <td>{{contract.contractStartDate | fbFalse}}</td>
           <td>借款到期日</td>
-          <td>{{contract.shouldRepaymentDate}}</td>
+          <td>{{contract.contractEndDate}}</td>
         </tr>
         <tr>
           <td>起息日</td>
-          <td>{{contract.paymentDate}}</td>
+          <td>{{contract.contractStartDate | fbFalse}}</td>
           <td>还款方式</td>
           <td>从{{contract.bankName}}（{{bankCardShort}}）自动扣款</td>
         </tr>
@@ -62,9 +62,9 @@
         </tr>
         <tr>
           <td>还款日</td>
-          <td>{{contract.shouldRepaymentDate}}</td>
+          <td>{{contract.contractEndDate}}</td>
           <td>还款金额</td>
-          <td>应还款{{contract.repaymentAmount | fbCurrency('￥', '元')}}</td>
+          <td>应还款{{contract.contractAmount | fbCurrency('￥', '元')}}</td>
         </tr>
       </tbody>
     </table>
@@ -168,7 +168,7 @@ export default {
     // },
     serviceFee() {
       if (this.contract.productInfo) {
-        return this.contract.productInfo.manageFee + this.contract.productInfo.manageFee
+        return this.contract.productInfo.manageFee + this.contract.productInfo.creditFee
       }
       return 0
     },

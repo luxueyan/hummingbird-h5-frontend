@@ -77,8 +77,9 @@ module.exports = {
         name: utils.assetsPath('img/[name].[hash:7].[ext]')
       }
     }, {
-      test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+      test: /\.(woff2?|eot|ttf|otf|svg)(\?.*)?$/,
       loader: 'url-loader',
+      include: [resolve('src/assets/fonts')],
       query: {
         limit: 1000,
         name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
@@ -86,6 +87,7 @@ module.exports = {
     }, {
       test: /\.svg$/,
       loader: 'vue-svg-loader',
+      include: [resolve('src/assets/icons')],
       query: {
         name: utils.assetsPath('img/[name].[hash:7].[ext]')
       }

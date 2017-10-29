@@ -9,11 +9,11 @@
             router-link(:to="{name:'loanAgreement', params:{ transitionName: 'slideRightFade'}}")
               |《借款服务协议》
         .fields
-          mt-cell(title="借款金额", :value="model.paymentAmount | fbCurrency")
-          mt-cell(title="应还日期", :value="model.shouldRepaymentDate | fbFalse")
-          mt-cell(title="应还金额", :value="model.repaymentAmount | fbCurrency")
+          mt-cell(title="借款金额", :value="model.contractAmount | fbCurrency")
+          mt-cell(title="应还日期", :value="model.contractEndDate | fbFalse")
+          mt-cell(title="应还金额", :value="model.contractAmount | fbCurrency")
       fb-bank-cards
-      .form-buttons.fixed
+      .form-buttons
           mt-button.mint-button-block(type='primary', size='large', @click="repayConfirm()") 立即还款
 </template>
 
@@ -40,7 +40,7 @@ export default {
     const data = await selfContracts.get({ id: user.currentOngoingContract.id }).then(res => res.json())
     next(vm => {
       if (data.code === RET_CODE_MAP.OK) {
-        Object.assign(vm.model, data.data)
+        vm.model = Object.assign({}, data.data)
       }
     })
   },

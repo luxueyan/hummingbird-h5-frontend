@@ -34,14 +34,15 @@ export default class AppUpdater {
   cacheRoot = cordova.file.dataDirectory + 'cache/' // 缓存更新版本
   dataRoot = cordova.file.dataDirectory + 'www/' // 替代原包内资源路径
   _isUploading = false // 正在更新中
-    // file = new File()
-    // _fs = null
+  // file = new File()
+  // _fs = null
   server = {
     root: 'http://localhost:8000/',
     manifest: 'manifest.json'
   }
   constructor(options = {}) {
     merge(this.server, options)
+    if (this.server.root.slice(-1) !== '/') this.server.root += '/'
     document.addEventListener('resume', this.check.bind(this))
     document.addEventListener('webkitvisibilitychange', this._handleVisibilityChange.bind(this), false)
 
@@ -106,7 +107,7 @@ export default class AppUpdater {
                 Logger.error(err, '更新失败')
                 clear('manifest')
                 Toast({ message: '更新失败！' })
-                  // 提示用户升级app
+                // 提示用户升级app
                 _self._isUploading = false
               })
             } else {
