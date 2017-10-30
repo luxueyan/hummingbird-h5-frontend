@@ -22,7 +22,7 @@
             i.iconfont.icon-phone(slot="icon")
           mt-cell(title="身份证号", :value="user.idCard | fbCardNo")
             i.iconfont.icon-shenfen(slot="icon")
-          mt-cell(title="银行卡", is-link, @click.native="$router.push({name: 'bankList'})", :value="bankCardsCount | fbAppend('张')")
+          mt-cell(title="银行卡", is-link, @click.native="goToBankList()", :value="bankCardsCount | fbAppend('张')")
             i.iconfont.icon-bank-card2(slot="icon")
 </template>
 
@@ -34,6 +34,15 @@ import { RET_CODE_MAP } from '@/constants.js'
 export default {
   computed: {
     ...mapGetters(['user', 'bankCardsCount'])
+  },
+  methods: {
+    goToBankList() {
+      if (this.user.isNew && !this.user.currentOngoingContract) {
+        this.$toast('快去借款页借款吧！')
+      } else {
+        this.$router.push({name: 'bankList'})
+      }
+    }
   },
   async mounted() {
     if (this.bankCardsCount === 0) {
@@ -54,7 +63,7 @@ header {
   background-image: url("~assets/images/credit-header-bg.png"), linear-gradient(135deg, #509ff6 0%, #066fe2 100%);
   background-position: center bottom;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: 100%;
   overflow: hidden;
   color: white;
   text-align: center;
@@ -103,7 +112,7 @@ header {
       height: 4px;
       border-radius: 50%;
       background: white;
-      right: -28px;
+      right: -20px;
       top: 50%;
       transform: translateY(-50%);
       box-shadow: -6px 0 0 rgba(255, 255, 255, .9),
@@ -114,7 +123,7 @@ header {
       -36px 0 0 rgba(255, 255, 255, .4),
       -42px 0 0 rgba(255, 255, 255, .3),
       -48px 0 0 rgba(255, 255, 255, .2),
-      -56px 0 0 rgba(255, 255, 255, .1);
+      -54px 0 0 rgba(255, 255, 255, .1);
     }
     &:before {
       content: '';
@@ -124,7 +133,7 @@ header {
       border-width: 8px 12px;
       border-style: solid;
       border-color: transparent transparent transparent white;
-      right: -55px;
+      right: -47px;
       top: 50%;
       transform: translateY(-50%);
     }

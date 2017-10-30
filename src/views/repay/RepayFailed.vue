@@ -9,9 +9,9 @@ section.repay-failed.single-page-tip.error
     h4 您还可以这样还款
     ul
       li
-        | 方式一：我已确保尾号{{contract.bankCard.slice(-4)}}的银行卡余额充足。
+        | 方式一：继续用尾号{{contract.bankCard.slice(-4)}}还款。
         a(@click.prevent="repayRetry()")
-          mt-button.br2(type="default") 重新还款
+          mt-button.br2(type="default") 重试
       li
         | 方式二：更换一张充足余额的银行卡。
         router-link(:to="{name: 'bankList', params: {transitionName: 'slideRightFade', from: $route}}")
@@ -71,7 +71,7 @@ export default {
     return {
       contract: { bankCard: '' },
       err: {
-        message: '银行卡余额不足，本卡今日可提交还款1次，<br>请确保卡内余额充足。'
+        repaymentReasonMsg: ''
       }
     }
   }

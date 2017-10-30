@@ -43,6 +43,10 @@ export default {
     state.supportBankCards = bankCards
   },
 
+  updateUserName(state, name) {
+    state.user.name = name
+  },
+
   updateOnGoingContractId(state, contractId) {
     if (state.user.currentOngoingContract) {
       state.user.currentOngoingContract.id = contractId

@@ -114,8 +114,6 @@ export default {
         if (!this.isPopStated) this.routerCrumbs.push(from)
         else this.routerCrumbs.pop() // 如果是history.back，那么需要删除当前页面的crumbs,因为上一步记录了此页面路由
       }
-      // console.log(to.params, from, this.routerCrumbs)
-      // this.mineMenuVisible = false
     }
   },
 
@@ -155,7 +153,6 @@ export default {
       isWeixin: this.isWeixin(),
       title: '',
       transitionName: 'slideRightFade'
-      // mineMenuVisible: false
     }
   }
 }
@@ -164,7 +161,6 @@ export default {
 <style lang="scss">
 @import '~assets/scss/_variables.scss';
 @import '~assets/fonts/franklin/franklin.css';
-// @import url('//at.alicdn.com/t/font_432625_6c9h7212f7d2huxr.css');
 @import '~assets/scss/base.scss';
 @import '~assets/scss/common.scss';
 @import '~assets/scss/transition.scss';

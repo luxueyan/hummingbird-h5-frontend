@@ -236,7 +236,8 @@ export default {
 
       if (data.code === RET_CODE_MAP.OK) {
         this.updateStateCode(CUST_STATE_CODE_MAP.CONTRACT_INFO_FILLED)
-        this.updateOnGoingContractId(data.data.contractId)
+        if (!this.contractInfoHasHistory) this.$store.commit('updateUserName', this.model.name)
+        if (data.data.contractId) this.updateOnGoingContractId(data.data.contractId)
         this.$router.push({
           name: 'signature'
         })

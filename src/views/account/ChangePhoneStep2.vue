@@ -68,7 +68,6 @@ export default {
       }
     }
   },
-
   created() {
     if (this.$route.params.bankCardId) {
       this.model.bankCardId = this.$route.params.bankCardId

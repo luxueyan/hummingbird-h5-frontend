@@ -70,22 +70,6 @@ export default {
     })
   },
 
-  // watch: {
-  //   defaultBankCardId(newValue, oldValue) {
-  //     bankCardDefault
-  //       .save({ id: this.defaultBankCardId })
-  //       .then(res => res.json())
-  //       .then(data => {
-  //         if (data.code === RET_CODE_MAP.OK) {
-  //           this.$toast('默认银行卡变更成功！')
-  //           if (this.$route.params.from) {
-  //             this.$router.push(Object.assign({}, this.$route.params.from))
-  //           }
-  //         }
-  //       })
-  //   }
-  // },
-
   data() {
     return {
       defaultBankCardId: '',

@@ -45,7 +45,6 @@ export default {
     })
   },
   methods: {
-    // ...mapMutations(['updateStateCode']),
     // 去修改银行卡
     goChangeBankCard() {
       this.$router.push({
