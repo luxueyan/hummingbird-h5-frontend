@@ -1,5 +1,5 @@
 {
-  "name": "hummingbird-h5-frontend",
+  "name": "fn-h5-frontend",
   "version": "1.0.0",
   "description": "fengniaosudai weixin",
   "author": "luxueyan <luxueyan@kaitongamc.com>",
@@ -13,7 +13,7 @@
     "build:app:dev": "node build/build-app-dev.js",
     "build:app:prod": "node build/build-app-prod.js",
     "manifest": "node node_modules/cordova-app-loader/bin/update-manifest www www/manifest.json",
-    "manifest:dev": "node node_modules/cordova-app-loader/bin/update-manifest ../hummingbird-h5-app/www ../hummingbird-h5-app/www/manifest.json",
+    "manifest:dev": "node node_modules/cordova-app-loader/bin/update-manifest ../fn-h5-app/www ../fn-h5-app/www/manifest.json",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",

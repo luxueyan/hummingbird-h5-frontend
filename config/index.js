@@ -37,8 +37,8 @@ module.exports = {
   },
   appDev: {
     env: require('./app.dev.env'),
-    index: path.resolve(__dirname, '../../hummingbird-h5-app/www/index.html'),
-    assetsRoot: path.resolve(__dirname, '../../hummingbird-h5-app/www'),
+    index: path.resolve(__dirname, '../../fn-h5-app/www/index.html'),
+    assetsRoot: path.resolve(__dirname, '../../fn-h5-app/www'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '', // 去掉绝对路径 '/', cordova打包后的app是file://本地协议
     productionSourceMap: true,

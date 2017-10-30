@@ -1,21 +1,21 @@
-Arguments: 
+Arguments:
   /Users/luxueyan/.nvm/versions/node/v4.4.3/bin/node /Users/luxueyan/.nvm/versions/node/v4.4.3/bin/yarn install
 
-PATH: 
+PATH:
   /Users/luxueyan/.rvm/gems/ruby-2.2.1/bin:/Users/luxueyan/.rvm/gems/ruby-2.2.1@global/bin:/Users/luxueyan/.rvm/rubies/ruby-2.2.1/bin:/Users/luxueyan/.nvm/versions/node/v4.4.3/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:/Users/luxueyan/.rvm/gems/ruby-2.2.1/bin:/Users/luxueyan/.rvm/gems/ruby-2.2.1@global/bin:/Users/luxueyan/.rvm/rubies/ruby-2.2.1/bin:/Applications/node-webkit.app/Contents/MacOS/:/Applications/Sublime Text.app/Contents/SharedSupport/bin:/Applications/Genymotion Shell.app/Contents/MacOS/:/Applications/Genymotion.app/Contents/MacOS/:/usr/local/sbin:/opt/local/bin:/opt/local/sbin:/opt/local/share/man:/Users/luxueyan/work/android-sdk-macosx/tools/:/Users/luxueyan/work/android-sdk-macosx/platform-tools/:/Users/luxueyan/.rvm/bin:/Applications/node-webkit.app/Contents/MacOS/:/Applications/Sublime Text.app/Contents/SharedSupport/bin:/Applications/Genymotion Shell.app/Contents/MacOS/:/Applications/Genymotion.app/Contents/MacOS/:/usr/local/sbin:/opt/local/bin:/opt/local/sbin:/opt/local/share/man:/Users/luxueyan/work/android-sdk-macosx/tools/:/Users/luxueyan/work/android-sdk-macosx/platform-tools/:/Users/luxueyan/.rvm/bin
 
-Yarn version: 
+Yarn version:
   0.18.1
 
-Node version: 
+Node version:
   4.4.3
 
-Platform: 
+Platform:
   darwin x64
 
-npm manifest: 
+npm manifest:
   {
-    "name": "hummingbird-h5-frontend",
+    "name": "fn-h5-frontend",
     "version": "1.0.0",
     "description": "fengniaosudai weixin",
     "author": "luxueyan <luxueyan@kaitongamc.com>",
@@ -101,13 +101,13 @@ npm manifest:
     }
   }
 
-yarn manifest: 
+yarn manifest:
   No manifest
 
-Lockfile: 
+Lockfile:
   No lockfile
 
-Trace: 
+Trace:
   Error: http://r.cnpmjs.org/eslint/download/eslint-3.15.0.tgz: unexpected eof
       at decorate (/Users/luxueyan/.nvm/versions/node/v4.4.3/lib/node_modules/yarn/node_modules/fstream/lib/abstract.js:67:36)
       at Extract.Abstract.error (/Users/luxueyan/.nvm/versions/node/v4.4.3/lib/node_modules/yarn/node_modules/fstream/lib/abstract.js:61:12)

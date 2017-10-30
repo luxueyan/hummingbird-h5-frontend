@@ -1,4 +1,4 @@
-# hummingbird-h5-frontend
+# fn-h5-frontend
 
 > 蜂鸟速贷平台-前端微信
 
@@ -6,10 +6,10 @@
 
 ``` bash
 # install dependencies
-suggest using yarn:
+If your npm\'s version lower then 3 , suggest using yarn:
 First globally install yarn. Run `npm install yarn -g` and then run `yarn install`
 
-Fallback:
+Otherwise use npm(>3) is nice:
 npm install
 
 # serve with hot reload at localhost:8080
