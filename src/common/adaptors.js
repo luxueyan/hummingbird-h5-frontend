@@ -1,4 +1,4 @@
-import moment from 'moment'
+// import moment from 'moment'
 
 /*后端命名规范目前不统一 ---- deprecated*/
 // export function contractInfo(data) {

@@ -16,8 +16,10 @@ export default {
   },
 
   // 提交微信授权的code给后端
-  submitCode(store, code) {
-    return wxOpenID.save({ code })
+  async submitCode({ commit }, code) {
+    const data = await wxOpenID.save({ code }).then(res => res.json())
+    commit('upateOpenId', data.data.openId)
+    return data
   },
 
   // 获取用户信息
@@ -56,6 +58,7 @@ export default {
     if (data.code === RET_CODE_MAP.OK) {
       await dispatch('updateToken', data.data.token)
       const user = await dispatch('getUser')
+      if (data.data.user) user.openId = data.data.user.openId
       data.user = user
     }
     return data

@@ -10,7 +10,7 @@ export default [{
   name: 'login',
   component: resolve => require(['@/views/common/Login.vue'], resolve),
   meta: {
-    title: '蜂鸟速贷',
+    title: '极速蜂鸟',
     captchaSendType: CAPTCHA_SEND_TYPE.USER_LOGIN, // 验证码发送的类型
     tabBarVisible: false,
     headerShow: true,
@@ -22,7 +22,7 @@ export default [{
   name: 'authorizedTip',
   component: resolve => require(['@/views/common/AuthorizedTip.vue'], resolve),
   meta: {
-    title: '蜂鸟速贷',
+    title: '极速蜂鸟',
     headerShow: true,
     tabBarVisible: false,
     permits: [CUST_STATE_CODE_MAP.FIRST_BORROWER]

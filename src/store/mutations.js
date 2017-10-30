@@ -47,6 +47,10 @@ export default {
     state.user.name = name
   },
 
+  upateOpenId(state, openId) {
+    state.uesr.openId = openId
+  },
+
   updateOnGoingContractId(state, contractId) {
     if (state.user.currentOngoingContract) {
       state.user.currentOngoingContract.id = contractId

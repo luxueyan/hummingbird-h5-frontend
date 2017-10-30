@@ -43,7 +43,7 @@ router.beforeEach((to, from, next) => {
     if (!token || !user.phone) {
       next({ name: 'login', query: { redirect: to.fullPath } })
     } else {
-      if (to.query.code) store.dispatch('submitCode', to.query.code) // 上报用户获取openid的code
+      if (to.query.code && !user.openId) store.dispatch('submitCode', to.query.code) // 上报用户获取openid的code
       const stateCodePromise = new Promise((resolve, reject) => {
         if (stateCode) {
           resolve(stateCode)
@@ -134,8 +134,6 @@ Vue.getPermits = Vue.prototype.getPermits = function(routeName) {
     return router ? router.meta.permits : []
   })
   return flattenDeep(permits)
-  // const router = find(flatRoutes, r => r.name === routeName)
-  // return router ? router.meta.permits : []
 }
 
 // 是否有权限
@@ -153,7 +151,8 @@ router.push = function(location = {}, isBackPush) {
 }
 
 // 记录路由是否是通过history.back方式
-window.addEventListener('popstate', () => {
+window.addEventListener('popstate', (ev) => {
+  // console.log(ev)
   store.commit('updateTransitionName', 'slideLeftFade')
   store.commit('updateIsPopStated', true)
 })

@@ -69,6 +69,18 @@ module.exports = {
         }
       }
       // '/api': {
+      //   target: 'http://pub.fnsudai.com',
+      //   changeOrigin: true,
+      //   onProxyRes: function(proxyRes, req, res) {
+      //     // console.log(proxyRes.headers, '\n')
+      //     // proxyRes.headers['x-auth-token'] = 'adfa-adsfaf-asf'
+      //     // delete proxyRes.headers['set-cookie'] // 删除Rap上的cookie设置因为会影响到/api/usermanage的cookie设置
+      //   },
+      //   pathRewrite: function(path, req) {
+      //     // return path.replace('/api/', '/')
+      //   }
+      // }
+      // '/api': {
       //   target: 'http://localhost:3001',
       //   changeOrigin: true,
       //   pathRewrite: function(path, req) {
