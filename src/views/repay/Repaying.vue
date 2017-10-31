@@ -22,7 +22,7 @@ section.repaying.single-page-tip
           td {{contract.repaymentDate | fbFalse}}
     .tfoot
       | 查看
-      router-link(:to="{name:'loanAgreement', params:{'transitionName': 'slideRightFade'}}") 《借款服务协议》
+      router-link(:to="{name:'loanAgreement'}") 《借款服务协议》
 
 </template>
 

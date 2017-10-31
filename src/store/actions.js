@@ -18,7 +18,7 @@ export default {
   // 提交微信授权的code给后端
   async submitCode({ commit }, code) {
     const data = await wxOpenID.save({ code }).then(res => res.json())
-    commit('upateOpenId', data.data.openId)
+    commit('upateOpenId', data.data.openId || '')
     return data
   },
 
@@ -40,7 +40,7 @@ export default {
       } else if (!user.isNew) {
         commit('updateStateCode', CUST_STATE_CODE_MAP.DEBT_SETTELED)
       }
-      // commit('updateStateCode', CUST_STATE_CODE_MAP.REPAY_FAILED)
+      // commit('updateStateCode', CUST_STATE_CODE_MAP.FIRST_BORROWER)
     }
     return data
   },

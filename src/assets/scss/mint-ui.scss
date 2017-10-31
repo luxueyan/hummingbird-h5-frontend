@@ -30,7 +30,7 @@ body {
     min-height: 45px;
     &.field-cell {
       .mint-cell-title {
-        flex-basis: 120px;
+        // flex-basis: 120px;
         width: 120px;
         flex: none;
       }
@@ -124,6 +124,7 @@ body {
   }
   .mint-field-core {
     display: flex;
+    padding: 0;
   }
   .mint-button--primary,
   .mint-header-button {

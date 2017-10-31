@@ -7,6 +7,14 @@ $bottombar-height: 45px;
   height: 100%;
   color: $primary-font-color;
   font-size: $font-size-m;
+  &.no-header {
+    .topBar {
+      top: 0;
+    }
+    .paperCanvas {
+      top: $topbar-height;
+    }
+  }
   .topBar,
   .bottomBar {
     position: absolute;

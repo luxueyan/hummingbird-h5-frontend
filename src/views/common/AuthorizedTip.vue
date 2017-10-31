@@ -2,7 +2,7 @@
 section.authorized-tip
   header
     h2 恭喜您<br>获得
-      em {{user.productInfo[0].amount}}元
+      em {{user.productInfo[0].amount || '---'}}元
       | 免审核额度！
     img(src="~assets/images/authorized-bg.jpg")
   .body

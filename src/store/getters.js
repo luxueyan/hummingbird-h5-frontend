@@ -41,5 +41,9 @@ export default {
 
   supportBankCards(state) {
     return state.supportBankCards
+  },
+
+  currentState(state) {
+    return state.currentState
   }
 }

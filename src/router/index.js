@@ -38,10 +38,13 @@ function getRedirectRoute(stateCode) {
 }
 
 router.beforeEach((to, from, next) => {
+  const nextAsync = function(opt) {
+    setTimeout(() => { opt ? next(opt) : next() })
+  }
   const { user, token, stateCode } = store.getters
   if (!to.meta.skipAuth) { // 需要登录权限的页面
     if (!token || !user.phone) {
-      next({ name: 'login', query: { redirect: to.fullPath } })
+      nextAsync({ name: 'login', query: { redirect: to.fullPath } })
     } else {
       if (to.query.code && !user.openId) store.dispatch('submitCode', to.query.code) // 上报用户获取openid的code
       const stateCodePromise = new Promise((resolve, reject) => {
@@ -52,11 +55,11 @@ router.beforeEach((to, from, next) => {
             if (res.code === RET_CODE_MAP.OK) {
               const newStateCode = store.getters.stateCode
               resolve(newStateCode)
-              if (newStateCode === CUST_STATE_CODE_MAP.CONTRACT_INFO_FILLED) {
-                Toast({
-                  message: '您有一笔合同已提交但没有签署'
-                })
-              }
+              // if (newStateCode === CUST_STATE_CODE_MAP.CONTRACT_INFO_FILLED) {
+              //   Toast({
+              //     message: '您有一笔合同已提交但没有签署'
+              //   })
+              // }
               // 状态异常账户
               if (newStateCode === CUST_STATE_CODE_MAP.UNKNOWN) {
                 Toast({
@@ -73,9 +76,9 @@ router.beforeEach((to, from, next) => {
       // 获取相关状态后判断页面访问权限
       stateCodePromise.then(code => {
         if (includes(to.meta.permits, code)) {
-          next()
+          nextAsync()
         } else {
-          next({
+          nextAsync({
             ...getRedirectRoute(code),
             params: {
               transitionName: to.params.transitionName || 'slideRightFade' // 保证redirect时候仍然有动效
@@ -83,11 +86,11 @@ router.beforeEach((to, from, next) => {
           })
         }
       }).catch(() => {
-        next({ name: 'login', query: { redirect: to.fullPath } })
+        nextAsync({ name: 'login', query: { redirect: to.fullPath } })
       })
     }
   } else { // 不需要权限的页面不拦截
-    next()
+    nextAsync()
   }
 })
 
@@ -141,7 +144,7 @@ Vue.isPermit = Vue.prototype.isPermit = function(routeName) {
   return includes(Vue.getPermits(routeName), store.getters.stateCode)
 }
 
-// 给push方法添加默认过渡效果
+// 给push方法添加默认过渡效果和记录堆栈
 const oldPush = router.push
 router.push = function(location = {}, isBackPush) {
   if (!location.params) location.params = {}
@@ -150,11 +153,13 @@ router.push = function(location = {}, isBackPush) {
   oldPush.call(router, location)
 }
 
-// 记录路由是否是通过history.back方式
-window.addEventListener('popstate', (ev) => {
-  // console.log(ev)
-  store.commit('updateTransitionName', 'slideLeftFade')
-  store.commit('updateIsPopStated', true)
-})
+// 替换replace方法
+const oldReplace = router.replace
+router.replace = function(location = {}, isBackPush) {
+  if (!location.params) location.params = {}
+  if (!location.params.transitionName) location.params.transitionName = 'slideRightFade'
+  if (!isBackPush) store.commit('updateIsPopStated', false)
+  oldReplace.call(router, location)
+}
 
 export default router

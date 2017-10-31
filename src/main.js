@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from '@/App'
 import store from '@/store'
 import { sync } from 'vuex-router-sync'
+import '@/common/global_set.js'
 import router from '@/router'
 import '@/common/resources.js'
 import interceptors from '@/common/interceptors.js'
@@ -124,16 +125,7 @@ Vue.$toast = Vue.prototype.$toast = function toast(msg = '', type = '') {
 }
 Vue.$indicator = Vue.prototype.$indicator = Indicator
 
-// 激活ios设备上面css的active效果
-document.body.addEventListener('touchstart', () => {})
-
-// 避免bfcache导致的问题
-window.onpageshow = function(event) {
-  if (event.persisted) {
-    window.location.reload()
-  }
-}
-
+// 主函数
 function main() {
   /* eslint-disable no-new */
   new Vue({

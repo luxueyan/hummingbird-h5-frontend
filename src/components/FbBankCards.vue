@@ -16,7 +16,7 @@ section.fb-bank-cards
             .title
               h3 {{defaultBankCard.bankName}}
             p {{defaultBankCard.bankCard | fbBankCardSpace}}
-    router-link.add-bankcard(:to="{name: 'addBankStep1', params: {transitionName: 'slideRightFade'}}")
+    router-link.add-bankcard(:to="{name: 'addBankStep1'}")
       em +
       | 添加银行卡
 </template>

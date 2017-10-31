@@ -43,12 +43,16 @@ export default {
     state.supportBankCards = bankCards
   },
 
+  updateCurrentStateIndex(state, index = -1) {
+    if (state.currentState) state.currentState.index = index
+  },
+
   updateUserName(state, name) {
     state.user.name = name
   },
 
-  upateOpenId(state, openId) {
-    state.uesr.openId = openId
+  upateOpenId(state, openId = '') {
+    state.user.openId = openId
   },
 
   updateOnGoingContractId(state, contractId) {

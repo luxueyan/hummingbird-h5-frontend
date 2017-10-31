@@ -10,7 +10,7 @@
           span.badge-red.badge-top 10
       //- mt-button(slot="right", v-if="btnVisible(['signature'])")
         small
-          router-link(:to="{name:'loanAgreement', params:{'transitionName': 'slideRightFade'}}") 查看
+          router-link(:to="{name:'loanAgreement'}") 查看
       mt-button(slot="right", v-if="msgListBtnVisible")
         small
           a(@click="emitEvent('messages-mark-read')") 全部已读

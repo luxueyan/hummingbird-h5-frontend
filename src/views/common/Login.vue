@@ -19,7 +19,7 @@ section.login
       .note-line
         fb-checkbox(v-model="agreement", :value="false", :state="getFieldState('agreement')")
           span.pl10 我已阅读并同意
-          router-link(:to="{name: 'registerAgreement', params:{transitionName: 'slideRightFade'}}")
+          router-link(:to="{name: 'registerAgreement'}")
             |《注册与服务合同》
 </template>
 
@@ -104,7 +104,7 @@ export default {
     // const NODE_ENV = process.env.NODE_ENV
     return {
       redirect: null, //登录后跳转页面
-      agreement: false,
+      agreement: true,
       user: {
         phone: '',
         captcha: ''

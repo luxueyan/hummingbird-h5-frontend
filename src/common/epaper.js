@@ -154,7 +154,8 @@ function EPaper(a, d) {
 }
 
 EPaper.init = function(a, data = {}) {
-  document.getElementById(a).innerHTML = `<div id='writingDiv' class='writingDiv'>
+  const headerShow = process.env.NODE_ENV.indexOf('app') > -1
+  document.getElementById(a).innerHTML = `<div id='writingDiv' class='writingDiv ${!headerShow ? "no-header" : ""}'>
                                             <div class='topBar'>
                                               <label>请在下方手写您的姓名</label>
                                               <button class='textButton textButton_Check_Agreement' action="agreement">查看合同</button>

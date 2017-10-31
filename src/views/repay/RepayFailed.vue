@@ -14,7 +14,7 @@ section.repay-failed.single-page-tip.error
           mt-button.br2(type="default") 重试
       li
         | 方式二：更换一张充足余额的银行卡。
-        router-link(:to="{name: 'bankList', params: {transitionName: 'slideRightFade', from: $route}}")
+        router-link(:to="{name: 'bankList', params: {from: $route}}")
           mt-button.br2(type="default") 前往
       li 方式三：通过支付宝转账至我们公户fengniaosudai@163.com(请备注姓名+手机号），转账后在公众号中通知客服。
 

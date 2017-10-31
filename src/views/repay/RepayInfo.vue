@@ -6,7 +6,7 @@
           i.iconfont.icon-fangan
           | 还款计划
           small.fr.loan-agreement 查看
-            router-link(:to="{name:'loanAgreement', params:{ transitionName: 'slideRightFade'}}")
+            router-link(:to="{name:'loanAgreement'}")
               |《借款服务协议》
         .fields
           mt-cell(title="借款金额", :value="model.contractAmount | fbCurrency")

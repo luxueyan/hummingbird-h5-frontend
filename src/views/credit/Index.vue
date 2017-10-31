@@ -12,7 +12,7 @@
           span.level Lv.{{user.privilegeInfo.nextLevel}}
       p
         | 认证越多，使用越多，信用积分越高
-        //- router-link.go-grade(:to="{name: 'creditGrade', params: {transitionName: 'slideRightFade'}}") 信用等级及特权
+        //- router-link.go-grade(:to="{name: 'creditGrade'}") 信用等级及特权
     .form
       section.base-info
         .fields-header
@@ -24,6 +24,8 @@
             i.iconfont.icon-shenfen(slot="icon")
           mt-cell(title="银行卡", is-link, @click.native="goToBankList()", :value="bankCardsCount | fbAppend('张')")
             i.iconfont.icon-bank-card2(slot="icon")
+    .form-buttons
+      mt-button.mint-button-block(type="primary", @click="$store.dispatch('logout')") 退出登录
 </template>
 
 <script>
@@ -40,7 +42,7 @@ export default {
       if (this.user.isNew && !this.user.currentOngoingContract) {
         this.$toast('快去借款页借款吧！')
       } else {
-        this.$router.push({name: 'bankList'})
+        this.$router.push({ name: 'bankList' })
       }
     }
   },
